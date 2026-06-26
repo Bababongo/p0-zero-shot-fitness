@@ -4,6 +4,8 @@
 
 This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. The first version uses a tiny synthetic enzyme DMS fixture and a deterministic placeholder scorer so the full analysis pipeline works before downloading or running ESM.
 
+Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
+
 ## Why This Matters
 
 Protein language models can capture evolutionary and stability constraints, but enzyme function often depends on chemistry: catalytic residues, active-site geometry, cofactors, and transition-state stabilization. A model can rank generic damaging mutations well while still failing on the residues a protein engineer cares about most.
@@ -93,7 +95,7 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 2. Add binding-pocket residue labels from structure or ligand-contact analysis.
 3. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
 4. Add confidence intervals by bootstrapping residue groups.
-5. Turn `docs/protein_gym_tem1_result.md` into a public technical writeup.
+5. Expand from TEM-1 to a small enzyme panel.
 
 ## Portfolio Signal
 
