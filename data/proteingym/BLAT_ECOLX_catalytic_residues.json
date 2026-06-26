@@ -2,29 +2,38 @@
   "protein_id": "BLAT_ECOLX",
   "assay_id": "BLAT_ECOLX_Firnberg_2014",
   "residue_numbering": "1-indexed positions in the 286-aa ProteinGym target sequence",
-  "catalytic_residues": [68, 71, 128, 166, 232],
+  "catalytic_residues": [68, 71, 128, 164],
+  "substrate_binding_residues": [232, 233, 234],
   "mapped_from_common_TEM1_motifs": [
     {
       "motif": "SXXK",
       "target_positions": [68, 71],
-      "target_sequence_window": "MMSTFKVLLC"
+      "target_sequence_window": "MMSTFKVLLC",
+      "uniprot_feature_support": ["Active site 68", "Active site 71"],
+      "ambler_numbering": ["Ser70", "Lys73"]
     },
     {
       "motif": "SDN",
-      "target_positions": [128, 130],
-      "target_sequence_window": "TMSDNTAANL"
+      "target_positions": [128],
+      "target_sequence_window": "TMSDNTAANL",
+      "uniprot_feature_support": ["Active site 128"],
+      "ambler_numbering": ["Ser130"]
     },
     {
       "motif": "E166",
-      "target_positions": [166],
-      "target_sequence_window": "RWEPELNEAI"
+      "target_positions": [164],
+      "target_sequence_window": "RWEPELNEAI",
+      "uniprot_feature_support": ["Active site 164"],
+      "ambler_numbering": ["Glu166"]
     },
     {
       "motif": "KSG",
-      "target_positions": [232],
-      "target_sequence_window": "WFIADKSGAGERGS"
+      "target_positions": [232, 233, 234],
+      "target_sequence_window": "WFIADKSGAGERGS",
+      "uniprot_feature_support": ["Binding site 232-234"],
+      "ambler_numbering": ["Lys234", "Ser235", "Gly236"]
     }
   ],
-  "source": "Manual motif-based mapping for TEM-family class A beta-lactamase active-site residues onto the ProteinGym BLAT_ECOLX target sequence.",
-  "evidence": "Use as a curated starting point. Before publication, validate against UniProt feature annotations and a structure such as the ProteinGym BLAT_ECOLX PDB mapping."
+  "source": "UniProt P62593 BLAT_ECOLX features plus TEM-family/Ambler motif mapping onto the 286-aa ProteinGym target sequence.",
+  "evidence": "UniProt P62593 annotates active sites at target positions 68, 71, 128, and 164, and a substrate binding site spanning target positions 232-234. UniProt notes that Ambler/class-A beta-lactamase numbering differs from natural UniProt numbering."
 }

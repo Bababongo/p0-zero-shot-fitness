@@ -11,7 +11,6 @@
       70,
       71,
       72,
-      73,
       126,
       127,
       128,
@@ -19,11 +18,11 @@
       130,
       131,
       132,
+      162,
+      163,
       164,
       165,
       166,
-      167,
-      168,
       230,
       231,
       232,
@@ -31,8 +30,37 @@
       234,
       235,
       236
+    ],
+    "structure_ligand_contact_5a": [
+      67,
+      68,
+      71,
+      102,
+      103,
+      128,
+      130,
+      164,
+      168,
+      232,
+      233,
+      234,
+      235,
+      236,
+      238,
+      270
+    ],
+    "uniprot_active_site": [
+      68,
+      71,
+      128,
+      164
+    ],
+    "uniprot_substrate_binding_site": [
+      232,
+      233,
+      234
     ]
   },
-  "source": "Manual active-site motif-neighborhood labels around the curated TEM-family motif positions in BLAT_ECOLX_catalytic_residues.json.",
-  "evidence": "Use as a transparent first-pass active-site-neighborhood slice. Before publication, replace or compare with structure-derived ligand-contact or pocket labels."
+  "source": "UniProt P62593 BLAT_ECOLX active-site and substrate-binding features plus manual motif-neighborhood windows.",
+  "evidence": "UniProt P62593 annotates active sites at target positions 68, 71, 128, and 164, and substrate binding at 232-234. The active_site_neighborhood group is a transparent +/-2 residue window around those UniProt-supported feature positions. The structure_ligand_contact_5a group is derived from heavy-atom contacts within 5.0 Angstrom of the CB4 inhibitor in PDB 1M40 chain A, using a -2 residue-number offset from PDB to ProteinGym/UniProt target numbering."
 }

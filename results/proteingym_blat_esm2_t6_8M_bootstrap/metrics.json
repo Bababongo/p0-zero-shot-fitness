@@ -7,7 +7,7 @@
   "data_scope": "External DMS dataset",
   "dataset": "ProteinGym BLAT_ECOLX_Firnberg_2014",
   "input_files": {
-    "catalytic_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_catalytic_residues.json",
+    "catalytic_json": "data/proteingym/BLAT_ECOLX_catalytic_residues.json",
     "dms_csv": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_Firnberg_2014.csv",
     "residue_groups_json": "data/proteingym/BLAT_ECOLX_residue_groups.json",
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX.fasta"
@@ -15,18 +15,18 @@
   "metrics": {
     "bootstrap_ci": {
       "spearman_catalytic": {
-        "ci_high": 0.7643029775243749,
-        "ci_low": 0.42190440806795665,
-        "estimate": 0.6230337482909463,
+        "ci_high": 0.5334831678185347,
+        "ci_low": 0.050842970752904205,
+        "estimate": 0.3022910420214368,
         "iterations": 1000,
-        "n": 81
+        "n": 57
       },
       "spearman_non_catalytic": {
-        "ci_high": 0.41332093626305594,
-        "ci_low": 0.36431931128259254,
-        "estimate": 0.3888848635691467,
+        "ci_high": 0.4292463849509247,
+        "ci_low": 0.37847563168781273,
+        "estimate": 0.4042061337564988,
         "iterations": 1000,
-        "n": 4702
+        "n": 4726
       },
       "spearman_overall": {
         "ci_high": 0.4342430001867459,
@@ -62,39 +62,111 @@
         "spearman": 0.3710814762183618
       }
     },
-    "n_catalytic": 81,
-    "n_non_catalytic": 4702,
+    "n_catalytic": 57,
+    "n_non_catalytic": 4726,
     "n_variants": 4783,
     "residue_group_bootstrap_ci": {
       "active_site_neighborhood": {
         "in_group": {
-          "ci_high": 0.6564236395241818,
-          "ci_low": 0.5302247286404197,
-          "estimate": 0.5948628787192081,
+          "ci_high": 0.6993761955138169,
+          "ci_low": 0.5825153872212062,
+          "estimate": 0.6452980728256481,
           "iterations": 1000,
-          "n": 480
+          "n": 461
         },
         "outside_group": {
-          "ci_high": 0.4053980721364798,
-          "ci_low": 0.3510405179433931,
-          "estimate": 0.37847102477292605,
+          "ci_high": 0.4005932834728486,
+          "ci_low": 0.34969777589751483,
+          "estimate": 0.37522190050848253,
           "iterations": 1000,
-          "n": 4303
+          "n": 4322
+        }
+      },
+      "structure_ligand_contact_5a": {
+        "in_group": {
+          "ci_high": 0.6779056433697955,
+          "ci_low": 0.5273681685416151,
+          "estimate": 0.6076010303391136,
+          "iterations": 1000,
+          "n": 277
+        },
+        "outside_group": {
+          "ci_high": 0.4223777374484149,
+          "ci_low": 0.3754543346398644,
+          "estimate": 0.3996521607091182,
+          "iterations": 1000,
+          "n": 4506
+        }
+      },
+      "uniprot_active_site": {
+        "in_group": {
+          "ci_high": 0.5341418715561863,
+          "ci_low": 0.0477626031310121,
+          "estimate": 0.3022910420214368,
+          "iterations": 1000,
+          "n": 57
+        },
+        "outside_group": {
+          "ci_high": 0.42782544990084426,
+          "ci_low": 0.3782905028770195,
+          "estimate": 0.4042061337564988,
+          "iterations": 1000,
+          "n": 4726
+        }
+      },
+      "uniprot_substrate_binding_site": {
+        "in_group": {
+          "ci_high": 0.6698693250906116,
+          "ci_low": 0.1569251066091742,
+          "estimate": 0.4382802761547867,
+          "iterations": 1000,
+          "n": 55
+        },
+        "outside_group": {
+          "ci_high": 0.42322028062062467,
+          "ci_low": 0.37321085366295675,
+          "estimate": 0.39915196344522225,
+          "iterations": 1000,
+          "n": 4728
         }
       }
     },
     "residue_group_breakdown": {
       "active_site_neighborhood": {
-        "mean_fitness": 0.24452645833333334,
-        "mean_model_score": -3.0379697165,
-        "n": 480,
-        "outside_n": 4303,
-        "outside_spearman": 0.37847102477292605,
-        "spearman": 0.5948628787192081
+        "mean_fitness": 0.26227310195227765,
+        "mean_model_score": -2.949223910672451,
+        "n": 461,
+        "outside_n": 4322,
+        "outside_spearman": 0.37522190050848253,
+        "spearman": 0.6452980728256481
+      },
+      "structure_ligand_contact_5a": {
+        "mean_fitness": 0.2742036101083033,
+        "mean_model_score": -2.799739834368231,
+        "n": 277,
+        "outside_n": 4506,
+        "outside_spearman": 0.3996521607091182,
+        "spearman": 0.6076010303391136
+      },
+      "uniprot_active_site": {
+        "mean_fitness": 0.0036385964912280704,
+        "mean_model_score": -5.605373578947368,
+        "n": 57,
+        "outside_n": 4726,
+        "outside_spearman": 0.4042061337564988,
+        "spearman": 0.3022910420214368
+      },
+      "uniprot_substrate_binding_site": {
+        "mean_fitness": 0.0859490909090909,
+        "mean_model_score": -4.866820181818182,
+        "n": 55,
+        "outside_n": 4728,
+        "outside_spearman": 0.39915196344522225,
+        "spearman": 0.4382802761547867
       }
     },
-    "spearman_catalytic": 0.6230337482909463,
-    "spearman_non_catalytic": 0.3888848635691467,
+    "spearman_catalytic": 0.3022910420214368,
+    "spearman_non_catalytic": 0.4042061337564988,
     "spearman_overall": 0.4113191200304927,
     "top_5_enrichment_fitness_ge_0_7": 2.623697202413604
   },

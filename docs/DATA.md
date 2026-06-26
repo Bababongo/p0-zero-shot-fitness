@@ -15,23 +15,37 @@ The assay file is used here as a portfolio benchmark for zero-shot variant-effec
 
 ## Catalytic Residue Labels
 
-The first-pass catalytic set is:
+The UniProt-validated active-site set is:
 
 ```text
-[68, 71, 128, 166, 232]
+[68, 71, 128, 164]
 ```
 
-These positions are mapped onto the 286-aa ProteinGym target sequence using TEM-family active-site motifs. They should be validated against external UniProt and structural annotations before treating the result as publication-grade.
+UniProt P62593 (`BLAT_ECOLX`) annotates active sites at positions 68, 71, 128, and 164 in natural 286-aa sequence numbering. It also annotates a substrate-binding site spanning positions 232-234.
+
+Many beta-lactamase papers use Ambler/class-A numbering. In that convention, the corresponding common residue names are Ser70, Lys73, Ser130, Glu166, and Lys234. The benchmark uses ProteinGym/UniProt numbering.
 
 ## Residue Groups
 
-The first-pass residue-group file is:
+The residue-group file is:
 
 - `data/proteingym/BLAT_ECOLX_residue_groups.json`
 
-It defines `active_site_neighborhood`, a motif-window group around the curated TEM-family active-site labels. This group covers 480 single-mutant rows in the ProteinGym assay.
+It defines:
 
-This is not a structure-derived binding pocket. It is a transparent intermediate slice for measuring whether ESM-2 behaves differently near active-site chemistry before adding ligand-contact labels.
+- `uniprot_active_site`: positions 68, 71, 128, and 164
+- `uniprot_substrate_binding_site`: positions 232-234
+- `active_site_neighborhood`: a +/-2 residue window around the UniProt-supported active-site and substrate-binding positions
+- `structure_ligand_contact_5a`: residues with any heavy atom within 5.0 Angstrom of the `CB4` inhibitor in PDB 1M40 chain A
+
+The PDB residue numbers in 1M40 are offset by +2 relative to ProteinGym/UniProt target numbering. The contact derivation uses `scripts/derive_ligand_contacts.py` with `--pdb-to-target-offset -2`.
+
+Source records:
+
+- `data/proteingym/source_records/uniprot_P62593_BLAT_ECOLX.json`
+- `data/proteingym/source_records/rcsb_1M40_entry.json`
+- `data/proteingym/source_records/1M40_CB4_contacts_5A.json`
+- `data/proteingym/structures/1M40.pdb`
 
 ## Model Outputs
 

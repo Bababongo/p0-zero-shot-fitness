@@ -13,7 +13,8 @@ Protein language models can capture evolutionary and stability constraints, but 
 ## What This Version Demonstrates
 
 - mutation parsing and validation against a wild-type sequence,
-- catalytic versus non-catalytic residue labeling,
+- UniProt-backed catalytic versus non-catalytic residue labeling,
+- structure-derived ligand-contact residue grouping from PDB 1M40,
 - a swappable model-scoring interface,
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
@@ -82,25 +83,31 @@ First real result:
 
 | Scorer | Overall Spearman | Catalytic Spearman | Non-catalytic Spearman | Top-5 Enrichment |
 | --- | ---: | ---: | ---: | ---: |
-| Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
-| ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
+| Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
+| ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
 
-Active-site-neighborhood slice:
+Mechanism-relevant residue slices:
 
-| Scorer | Active-site-neighborhood Spearman | Outside-neighborhood Spearman | Neighborhood Variants |
-| --- | ---: | ---: | ---: |
-| Placeholder | 0.3076 | 0.0249 | 480 |
-| ESM-2 8M | 0.5949 | 0.3785 | 480 |
+| Scorer | Group | Spearman | Outside-group Spearman | Variants |
+| --- | --- | ---: | ---: | ---: |
+| Placeholder | UniProt active site | 0.1231 | 0.0342 | 57 |
+| Placeholder | PDB 1M40 ligand contact, 5 A | 0.1777 | 0.0361 | 277 |
+| Placeholder | Active-site neighborhood | 0.2916 | 0.0278 | 461 |
+| ESM-2 8M | UniProt active site | 0.3023 | 0.4042 | 57 |
+| ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
+| ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
 
 ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 | Group | Spearman | 95% Bootstrap CI |
 | --- | ---: | ---: |
 | Overall | 0.4113 | 0.3846 to 0.4342 |
-| Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
-| Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
-| Active-site neighborhood | 0.5949 | 0.5302 to 0.6564 |
-| Outside active-site neighborhood | 0.3785 | 0.3510 to 0.4054 |
+| UniProt active-site positions | 0.3023 | 0.0478 to 0.5341 |
+| Non-active-site positions | 0.4042 | 0.3783 to 0.4278 |
+| PDB 1M40 ligand-contact positions | 0.6076 | 0.5274 to 0.6779 |
+| Outside ligand-contact positions | 0.3997 | 0.3755 to 0.4224 |
+| Active-site neighborhood | 0.6453 | 0.5825 to 0.6994 |
+| Outside active-site neighborhood | 0.3752 | 0.3497 to 0.4006 |
 
 ## Current Scope
 
@@ -108,11 +115,10 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 
 ## Next Scientific Steps
 
-1. Validate catalytic residue labels from UniProt and structure annotations.
-2. Replace the first-pass active-site-neighborhood labels with structure-derived ligand-contact labels.
-3. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
-4. Run the SLURM templates in `hpc/` on LBNL compute.
-5. Expand from TEM-1 to a small enzyme panel.
+1. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
+2. Run the SLURM templates in `hpc/` on LBNL compute.
+3. Expand from TEM-1 to a small enzyme panel.
+4. Add more structures or ligands to test contact-label robustness.
 
 ## Portfolio Signal
 

@@ -2,9 +2,9 @@
 
 ## Short Answer
 
-In this first TEM-1 beta-lactamase benchmark, ESM-2 8M performs better than a simple placeholder baseline overall. It also performs better on mutations at catalytic positions and within a first-pass active-site motif neighborhood than on the rest of the protein.
+In this first TEM-1 beta-lactamase benchmark, ESM-2 8M performs better than a simple placeholder baseline overall. After validating residue labels against UniProt and PDB 1M40, the active-site-only subset is small and noisy, while broader ligand-contact and active-site-neighborhood slices show a stronger ESM-2 signal.
 
-That result is interesting, but not final. The catalytic subset is small, the labels are first-pass motif mappings, and this run uses the smallest ESM-2 model. The main contribution is the evaluation shape: separating aggregate protein language model performance from performance on chemically important residue subsets.
+That result is interesting, but not final. This run uses the smallest ESM-2 model and only one enzyme. The main contribution is the evaluation shape: separating aggregate protein language model performance from performance on chemically important residue subsets.
 
 ## Why I Built This
 
@@ -38,69 +38,83 @@ The first real protein language model baseline is:
 
 The placeholder is not intended to be biologically meaningful. It exists as a sanity check for the benchmark pipeline.
 
-## Catalytic Residue Group
+## Residue Groups
 
-I mapped TEM-family active-site motifs onto the 286-aa ProteinGym target sequence:
+I validated the TEM-1 labels against UniProt P62593 (`BLAT_ECOLX`). UniProt uses natural 286-aa sequence numbering, while many beta-lactamase papers use Ambler/class-A numbering.
 
-| Motif | Target Positions |
-| --- | ---: |
-| `SXXK` | 68, 71 |
-| `SDN` | 128 |
-| `E166` | 166 |
-| `KSG` | 232 |
+| Feature | ProteinGym/UniProt Positions | Common Ambler Positions |
+| --- | ---: | --- |
+| Active site | 68, 71, 128, 164 | Ser70, Lys73, Ser130, Glu166 |
+| Substrate binding | 232-234 | Lys234, Ser235, Gly236 |
 
-Current catalytic set:
+Current UniProt active-site set:
 
 ```text
-[68, 71, 128, 166, 232]
+[68, 71, 128, 164]
 ```
 
-This creates 81 catalytic-position variants and 4,702 non-catalytic variants in the DMS assay.
+This creates 57 active-site variants and 4,726 non-active-site variants in the DMS assay.
 
-This label set should be treated as first-pass. The next version should validate the positions against UniProt feature annotations and a structure-derived active site or ligand-contact map.
+I also added two larger mechanism-relevant groups:
 
-I also added an `active_site_neighborhood` group around these motif windows. This group contains 480 single-mutant assay rows. It is not a structure-derived binding pocket yet; it is a transparent motif-neighborhood slice that can later be replaced or compared against ligand-contact labels.
+- `active_site_neighborhood`: a +/-2 residue window around UniProt-supported active-site and substrate-binding positions.
+- `structure_ligand_contact_5a`: residues with any heavy atom within 5.0 Angstrom of the `CB4` inhibitor in PDB 1M40 chain A.
 
 ## Result
 
-| Scorer | Overall Spearman | Catalytic Spearman | Non-catalytic Spearman | Top-5 Enrichment |
+| Scorer | Overall Spearman | UniProt active-site Spearman | Non-active-site Spearman | Top-5 Enrichment |
 | --- | ---: | ---: | ---: | ---: |
-| Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
-| ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
+| Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
+| ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
 
-Active-site-neighborhood slice:
+Mechanism-relevant residue slices:
 
-| Scorer | Active-site-neighborhood Spearman | Outside-neighborhood Spearman | Neighborhood Variants |
-| --- | ---: | ---: | ---: |
-| Placeholder | 0.3076 | 0.0249 | 480 |
-| ESM-2 8M | 0.5949 | 0.3785 | 480 |
+| Scorer | Group | Spearman | Outside-group Spearman | Variants |
+| --- | --- | ---: | ---: | ---: |
+| Placeholder | UniProt active site | 0.1231 | 0.0342 | 57 |
+| Placeholder | PDB 1M40 ligand contact, 5 A | 0.1777 | 0.0361 | 277 |
+| Placeholder | Active-site neighborhood | 0.2916 | 0.0278 | 461 |
+| ESM-2 8M | UniProt active site | 0.3023 | 0.4042 | 57 |
+| ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
+| ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
 
 For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 
 | Group | Spearman | 95% Bootstrap CI |
 | --- | ---: | ---: |
 | Overall | 0.4113 | 0.3846 to 0.4342 |
-| Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
-| Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
-| Active-site neighborhood | 0.5949 | 0.5302 to 0.6564 |
-| Outside active-site neighborhood | 0.3785 | 0.3510 to 0.4054 |
+| UniProt active-site positions | 0.3023 | 0.0478 to 0.5341 |
+| Non-active-site positions | 0.4042 | 0.3783 to 0.4278 |
+| PDB 1M40 ligand-contact positions | 0.6076 | 0.5274 to 0.6779 |
+| Outside ligand-contact positions | 0.3997 | 0.3755 to 0.4224 |
+| Active-site neighborhood | 0.6453 | 0.5825 to 0.6994 |
+| Outside active-site neighborhood | 0.3752 | 0.3497 to 0.4006 |
 
 ## Interpretation
 
 ESM-2 8M gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay.
 
-The most interesting first-pass observation is that ESM-2's catalytic-position Spearman correlation is higher than its non-catalytic Spearman correlation:
+The most interesting observation changed after label validation. ESM-2 is not better on the tiny UniProt active-site-only subset than on the rest of the protein:
 
 ```text
-catalytic:      0.6230
-non-catalytic:  0.3889
-overall:        0.4113
+UniProt active site:       0.3023
+non-active-site:           0.4042
+overall:                   0.4113
+```
+
+But ESM-2 is much stronger on broader chemistry-adjacent slices:
+
+```text
+PDB 1M40 ligand contact:   0.6076
+outside ligand contact:    0.3997
+active-site neighborhood:  0.6453
+outside neighborhood:      0.3752
 ```
 
 This does not prove catalytic residues are generally easier for protein language models. A few caveats matter:
 
-- The catalytic-position subset has only 81 variants.
-- The catalytic and active-site-neighborhood labels are motif-derived and need external validation.
+- The UniProt active-site subset has only 57 variants.
+- The ligand-contact group comes from one inhibitor-bound structure.
 - TEM-1 beta-lactamase is one enzyme, not a general enzyme benchmark.
 - ESM-2 8M is a small model; scaling behavior may differ.
 - DMS fitness reflects the assay context, not pure catalytic mechanism.
@@ -113,8 +127,9 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 - loads ProteinGym DMS data,
 - validates mutation strings against the wild-type sequence,
-- labels catalytic-position variants,
-- labels first-pass active-site-neighborhood variants,
+- labels UniProt active-site and substrate-binding variants,
+- labels structure-derived ligand-contact variants from PDB 1M40,
+- labels active-site-neighborhood variants,
 - runs a swappable scorer interface,
 - supports ESM-2 masked-marginal scoring,
 - computes overall and subgroup Spearman correlations,
@@ -124,11 +139,10 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Validate catalytic labels against UniProt and structure annotations.
-2. Replace or compare the motif-neighborhood group with structure-derived ligand-contact labels.
-3. Run larger ESM-2 models on LBNL compute.
-4. Run the existing SLURM templates on LBNL compute for larger ESM-2 models.
-5. Repeat the benchmark across multiple enzyme DMS assays.
+1. Run larger ESM-2 models on LBNL compute.
+2. Add ESM-1v or an MSA-based baseline.
+3. Repeat the benchmark across multiple enzyme DMS assays.
+4. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
 
 ## Why This Matters For AI Biology
 

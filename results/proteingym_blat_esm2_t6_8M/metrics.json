@@ -7,7 +7,7 @@
   "data_scope": "External DMS dataset",
   "dataset": "ProteinGym BLAT_ECOLX_Firnberg_2014",
   "input_files": {
-    "catalytic_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_catalytic_residues.json",
+    "catalytic_json": "data/proteingym/BLAT_ECOLX_catalytic_residues.json",
     "dms_csv": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_Firnberg_2014.csv",
     "residue_groups_json": "data/proteingym/BLAT_ECOLX_residue_groups.json",
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX.fasta"
@@ -39,21 +39,45 @@
         "spearman": 0.3710814762183618
       }
     },
-    "n_catalytic": 81,
-    "n_non_catalytic": 4702,
+    "n_catalytic": 57,
+    "n_non_catalytic": 4726,
     "n_variants": 4783,
     "residue_group_breakdown": {
       "active_site_neighborhood": {
-        "mean_fitness": 0.24452645833333334,
-        "mean_model_score": -3.0379697165,
-        "n": 480,
-        "outside_n": 4303,
-        "outside_spearman": 0.37847102477292605,
-        "spearman": 0.5948628787192081
+        "mean_fitness": 0.26227310195227765,
+        "mean_model_score": -2.949223910672451,
+        "n": 461,
+        "outside_n": 4322,
+        "outside_spearman": 0.37522190050848253,
+        "spearman": 0.6452980728256481
+      },
+      "structure_ligand_contact_5a": {
+        "mean_fitness": 0.2742036101083033,
+        "mean_model_score": -2.799739834368231,
+        "n": 277,
+        "outside_n": 4506,
+        "outside_spearman": 0.3996521607091182,
+        "spearman": 0.6076010303391136
+      },
+      "uniprot_active_site": {
+        "mean_fitness": 0.0036385964912280704,
+        "mean_model_score": -5.605373578947368,
+        "n": 57,
+        "outside_n": 4726,
+        "outside_spearman": 0.4042061337564988,
+        "spearman": 0.3022910420214368
+      },
+      "uniprot_substrate_binding_site": {
+        "mean_fitness": 0.0859490909090909,
+        "mean_model_score": -4.866820181818182,
+        "n": 55,
+        "outside_n": 4728,
+        "outside_spearman": 0.39915196344522225,
+        "spearman": 0.4382802761547867
       }
     },
-    "spearman_catalytic": 0.6230337482909463,
-    "spearman_non_catalytic": 0.3888848635691467,
+    "spearman_catalytic": 0.3022910420214368,
+    "spearman_non_catalytic": 0.4042061337564988,
     "spearman_overall": 0.4113191200304927,
     "top_5_enrichment_fitness_ge_0_7": 2.623697202413604
   },

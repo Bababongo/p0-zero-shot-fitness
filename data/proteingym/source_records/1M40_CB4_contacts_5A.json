@@ -1,0 +1,123 @@
+{
+  "chain": "A",
+  "contacts": [
+    {
+      "min_distance_angstrom": 3.456,
+      "pdb_position": 69,
+      "residue_name": "MET",
+      "target_position": 67
+    },
+    {
+      "min_distance_angstrom": 1.491,
+      "pdb_position": 70,
+      "residue_name": "SER",
+      "target_position": 68
+    },
+    {
+      "min_distance_angstrom": 3.73,
+      "pdb_position": 73,
+      "residue_name": "LYS",
+      "target_position": 71
+    },
+    {
+      "min_distance_angstrom": 4.817,
+      "pdb_position": 104,
+      "residue_name": "GLU",
+      "target_position": 102
+    },
+    {
+      "min_distance_angstrom": 3.641,
+      "pdb_position": 105,
+      "residue_name": "TYR",
+      "target_position": 103
+    },
+    {
+      "min_distance_angstrom": 2.702,
+      "pdb_position": 130,
+      "residue_name": "SER",
+      "target_position": 128
+    },
+    {
+      "min_distance_angstrom": 2.904,
+      "pdb_position": 132,
+      "residue_name": "ASN",
+      "target_position": 130
+    },
+    {
+      "min_distance_angstrom": 4.803,
+      "pdb_position": 166,
+      "residue_name": "GLU",
+      "target_position": 164
+    },
+    {
+      "min_distance_angstrom": 3.85,
+      "pdb_position": 170,
+      "residue_name": "ASN",
+      "target_position": 168
+    },
+    {
+      "min_distance_angstrom": 4.256,
+      "pdb_position": 234,
+      "residue_name": "LYS",
+      "target_position": 232
+    },
+    {
+      "min_distance_angstrom": 3.984,
+      "pdb_position": 235,
+      "residue_name": "SER",
+      "target_position": 233
+    },
+    {
+      "min_distance_angstrom": 3.371,
+      "pdb_position": 236,
+      "residue_name": "GLY",
+      "target_position": 234
+    },
+    {
+      "min_distance_angstrom": 2.76,
+      "pdb_position": 237,
+      "residue_name": "ALA",
+      "target_position": 235
+    },
+    {
+      "min_distance_angstrom": 3.328,
+      "pdb_position": 238,
+      "residue_name": "GLY",
+      "target_position": 236
+    },
+    {
+      "min_distance_angstrom": 2.983,
+      "pdb_position": 240,
+      "residue_name": "GLU",
+      "target_position": 238
+    },
+    {
+      "min_distance_angstrom": 3.818,
+      "pdb_position": 272,
+      "residue_name": "MET",
+      "target_position": 270
+    }
+  ],
+  "cutoff_angstrom": 5.0,
+  "ligand": "CB4",
+  "pdb": "1M40.pdb",
+  "pdb_to_target_offset": -2,
+  "target_positions": [
+    67,
+    68,
+    71,
+    102,
+    103,
+    128,
+    130,
+    164,
+    168,
+    232,
+    233,
+    234,
+    235,
+    236,
+    238,
+    270
+  ]
+}
