@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "fitness_scatter_svg": "fitness_scatter.svg",
+    "scored_variants_csv": "scored_variants.csv"
+  },
+  "benchmark": "P0 - Zero-Shot Fitness",
+  "data_scope": "Synthetic fixture data for pipeline development",
+  "metrics": {
+    "mutation_class_breakdown": {
+      "charge_preserving": {
+        "mean_fitness": 0.6766666666666666,
+        "mean_model_score": 0.0840764840443929,
+        "n": 3,
+        "spearman": 0.4999999999999999
+      },
+      "class_changing": {
+        "mean_fitness": 0.46375,
+        "mean_model_score": 0.3065161406993866,
+        "n": 8,
+        "spearman": -0.7142857142857143
+      },
+      "hydrophobic_or_special_preserving": {
+        "mean_fitness": 0.56375,
+        "mean_model_score": -0.3680514991283417,
+        "n": 8,
+        "spearman": 0.30952380952380953
+      },
+      "polar_preserving": {
+        "mean_fitness": 0.22,
+        "mean_model_score": 1.2575247287750244,
+        "n": 1,
+        "spearman": null
+      }
+    },
+    "n_catalytic": 6,
+    "n_non_catalytic": 14,
+    "n_variants": 20,
+    "spearman_catalytic": -0.14285714285714285,
+    "spearman_non_catalytic": -0.1076923076923077,
+    "spearman_overall": -0.21654135338345865,
+    "top_5_enrichment_fitness_ge_0_7": 0.5714285714285715
+  },
+  "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
+  "scorer": "ESM2MaskedMarginalScorer"
+}

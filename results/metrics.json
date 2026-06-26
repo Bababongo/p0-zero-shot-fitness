@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "fitness_scatter_svg": "fitness_scatter.svg",
+    "scored_variants_csv": "scored_variants.csv"
+  },
+  "benchmark": "P0 - Zero-Shot Fitness",
+  "data_scope": "Synthetic fixture data for pipeline development",
+  "metrics": {
+    "mutation_class_breakdown": {
+      "charge_preserving": {
+        "mean_fitness": 0.6766666666666666,
+        "mean_model_score": 0.82,
+        "n": 3,
+        "spearman": -0.9999999999999998
+      },
+      "class_changing": {
+        "mean_fitness": 0.46375,
+        "mean_model_score": 0.6074999999999999,
+        "n": 8,
+        "spearman": 0.2809451943313383
+      },
+      "hydrophobic_or_special_preserving": {
+        "mean_fitness": 0.56375,
+        "mean_model_score": 0.8375,
+        "n": 8,
+        "spearman": 0.654770229717306
+      },
+      "polar_preserving": {
+        "mean_fitness": 0.22,
+        "mean_model_score": 0.86,
+        "n": 1,
+        "spearman": null
+      }
+    },
+    "n_catalytic": 6,
+    "n_non_catalytic": 14,
+    "n_variants": 20,
+    "spearman_catalytic": 0.5296408977028497,
+    "spearman_non_catalytic": 0.017778875273088746,
+    "spearman_overall": 0.28258227131576,
+    "top_5_enrichment_fitness_ge_0_7": 1.142857142857143
+  },
+  "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
+  "scorer": "PlaceholderConservationScorer"
+}

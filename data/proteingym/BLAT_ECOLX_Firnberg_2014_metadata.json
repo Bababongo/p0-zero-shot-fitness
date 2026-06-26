@@ -1,0 +1,17 @@
+{
+  "DMS_id": "BLAT_ECOLX_Firnberg_2014",
+  "DMS_filename": "BLAT_ECOLX_Firnberg_2014.csv",
+  "UniProt_ID": "BLAT_ECOLX",
+  "source_organism": "Escherichia coli",
+  "seq_len": 286,
+  "molecule_name": "Beta-lactamase TEM",
+  "selection_assay": "Growth (0.25-1024 ug/mL ampicillin) doubling",
+  "selection_type": "Growth",
+  "title": "A Comprehensive, High-Resolution Map of a Gene's Fitness Landscape",
+  "year": 2014,
+  "ProteinGym_version": "v1.3",
+  "source": "ProteinGym DMS substitution benchmark",
+  "source_url": "https://github.com/OATML-Markslab/ProteinGym",
+  "download_url": "https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/DMS_ProteinGym_substitutions.zip",
+  "notes": "Processed ProteinGym assay file. Higher DMS_score indicates higher fitness in the assay."
+}

@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "P0 - Zero-Shot Fitness"
+message: "If you use this benchmark scaffold, please cite the repository and the upstream ProteinGym and ESM resources."
+type: software
+authors:
+  - family-names: "Project Lab"
+    given-names: "Protein ML"
+year: 2026
+repository-code: "https://github.com/USERNAME/p0-zero-shot-fitness"
+references:
+  - type: article
+    title: "ProteinGym: Large-Scale Benchmarks for Protein Fitness Prediction and Design"
+    year: 2023
+  - type: software
+    title: "Evolutionary Scale Modeling"
+    repository: "https://github.com/facebookresearch/esm"

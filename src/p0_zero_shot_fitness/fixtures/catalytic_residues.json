@@ -1,0 +1,7 @@
+{
+  "protein_id": "toy_enzyme",
+  "residue_numbering": "1-indexed wild-type sequence positions",
+  "catalytic_residues": [4, 6, 14],
+  "source": "Synthetic fixture for pipeline development",
+  "evidence": "Placeholder active-site labels; replace with curated literature or UniProt evidence in real benchmark."
+}
