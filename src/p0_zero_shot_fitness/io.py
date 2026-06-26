@@ -43,11 +43,12 @@ def write_scored_variants(path: Path, records: list[VariantRecord]) -> None:
         "mutant",
         "fitness",
         "is_catalytic",
+        "residue_groups",
         "mutation_class",
         "model_score",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         for record in records:
             writer.writerow(record.to_row())

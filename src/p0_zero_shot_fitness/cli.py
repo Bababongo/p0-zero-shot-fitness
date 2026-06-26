@@ -27,6 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dms-csv", type=Path, default=None, help="External DMS CSV path.")
     parser.add_argument("--wild-type-fasta", type=Path, default=None, help="External FASTA path.")
     parser.add_argument("--catalytic-json", type=Path, default=None, help="External catalytic-residue JSON path.")
+    parser.add_argument("--residue-groups-json", type=Path, default=None, help="Optional external residue-group JSON path.")
     parser.add_argument("--dataset-name", default="external dataset", help="Name for external dataset metadata.")
     parser.add_argument("--variant-column", default="mutant", help="Variant column for external CSV.")
     parser.add_argument("--fitness-column", default="DMS_score", help="Fitness column for external CSV.")
@@ -77,6 +78,7 @@ def main(argv: list[str] | None = None) -> int:
             dms_csv=args.dms_csv,
             wild_type_fasta=args.wild_type_fasta,
             catalytic_json=args.catalytic_json,
+            residue_groups_json=args.residue_groups_json,
             dataset_name=args.dataset_name,
             scorer=scorer,
             variant_column=args.variant_column,

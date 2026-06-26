@@ -9,9 +9,33 @@
   "input_files": {
     "catalytic_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_catalytic_residues.json",
     "dms_csv": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_Firnberg_2014.csv",
+    "residue_groups_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_residue_groups.json",
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX.fasta"
   },
   "metrics": {
+    "bootstrap_ci": {
+      "spearman_catalytic": {
+        "ci_high": 0.5739225479285206,
+        "ci_low": 0.1939007381963372,
+        "estimate": 0.3921856320035172,
+        "iterations": 1000,
+        "n": 81
+      },
+      "spearman_non_catalytic": {
+        "ci_high": 0.06544572521250236,
+        "ci_low": 0.010482420409837614,
+        "estimate": 0.03615559035989312,
+        "iterations": 1000,
+        "n": 4702
+      },
+      "spearman_overall": {
+        "ci_high": 0.07199154359457227,
+        "ci_low": 0.015329071216040777,
+        "estimate": 0.04295984731220715,
+        "iterations": 1000,
+        "n": 4783
+      }
+    },
     "mutation_class_breakdown": {
       "charge_preserving": {
         "mean_fitness": 0.677101083032491,
@@ -41,6 +65,34 @@
     "n_catalytic": 81,
     "n_non_catalytic": 4702,
     "n_variants": 4783,
+    "residue_group_bootstrap_ci": {
+      "active_site_neighborhood": {
+        "in_group": {
+          "ci_high": 0.38643485614924533,
+          "ci_low": 0.22417872901460154,
+          "estimate": 0.3075885070368828,
+          "iterations": 1000,
+          "n": 480
+        },
+        "outside_group": {
+          "ci_high": 0.053459806359713084,
+          "ci_low": -0.0028613653473427386,
+          "estimate": 0.024905108025695268,
+          "iterations": 1000,
+          "n": 4303
+        }
+      }
+    },
+    "residue_group_breakdown": {
+      "active_site_neighborhood": {
+        "mean_fitness": 0.24452645833333334,
+        "mean_model_score": 0.6962708333333333,
+        "n": 480,
+        "outside_n": 4303,
+        "outside_spearman": 0.024905108025695268,
+        "spearman": 0.3075885070368828
+      }
+    },
     "spearman_catalytic": 0.3921856320035172,
     "spearman_non_catalytic": 0.03615559035989312,
     "spearman_overall": 0.04295984731220715,

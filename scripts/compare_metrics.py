@@ -13,6 +13,7 @@ KEY_METRICS = [
     "spearman_catalytic",
     "spearman_non_catalytic",
     "top_5_enrichment_fitness_ge_0_7",
+    "residue_group_breakdown",
 ]
 
 

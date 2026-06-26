@@ -85,6 +85,13 @@ First real result:
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
 
+Active-site-neighborhood slice:
+
+| Scorer | Active-site-neighborhood Spearman | Outside-neighborhood Spearman | Neighborhood Variants |
+| --- | ---: | ---: | ---: |
+| Placeholder | 0.3076 | 0.0249 | 480 |
+| ESM-2 8M | 0.5949 | 0.3785 | 480 |
+
 ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 | Group | Spearman | 95% Bootstrap CI |
@@ -92,6 +99,8 @@ ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 | Overall | 0.4113 | 0.3846 to 0.4342 |
 | Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
 | Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+| Active-site neighborhood | 0.5949 | 0.5302 to 0.6564 |
+| Outside active-site neighborhood | 0.3785 | 0.3510 to 0.4054 |
 
 ## Current Scope
 
@@ -100,7 +109,7 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 ## Next Scientific Steps
 
 1. Validate catalytic residue labels from UniProt and structure annotations.
-2. Add binding-pocket residue labels from structure or ligand-contact analysis.
+2. Replace the first-pass active-site-neighborhood labels with structure-derived ligand-contact labels.
 3. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
 4. Run the SLURM templates in `hpc/` on LBNL compute.
 5. Expand from TEM-1 to a small enzyme panel.

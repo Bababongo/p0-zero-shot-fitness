@@ -33,6 +33,7 @@ class VariantRecord:
     fitness: float
     is_catalytic: bool
     model_score: float
+    residue_groups: frozenset[str] = frozenset()
 
     def to_row(self) -> dict[str, str]:
         return {
@@ -42,6 +43,7 @@ class VariantRecord:
             "mutant": self.mutation.mutant,
             "fitness": f"{self.fitness:.6g}",
             "is_catalytic": str(self.is_catalytic).lower(),
+            "residue_groups": ";".join(sorted(self.residue_groups)),
             "mutation_class": self.mutation.mutation_class,
             "model_score": f"{self.model_score:.6g}",
         }

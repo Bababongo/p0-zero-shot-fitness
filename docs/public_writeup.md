@@ -2,7 +2,7 @@
 
 ## Short Answer
 
-In this first TEM-1 beta-lactamase benchmark, ESM-2 8M performs better than a simple placeholder baseline overall, and it also performs better on mutations at catalytic/active-site positions than on the rest of the protein.
+In this first TEM-1 beta-lactamase benchmark, ESM-2 8M performs better than a simple placeholder baseline overall. It also performs better on mutations at catalytic positions and within a first-pass active-site motif neighborhood than on the rest of the protein.
 
 That result is interesting, but not final. The catalytic subset is small, the labels are first-pass motif mappings, and this run uses the smallest ESM-2 model. The main contribution is the evaluation shape: separating aggregate protein language model performance from performance on chemically important residue subsets.
 
@@ -59,12 +59,21 @@ This creates 81 catalytic-position variants and 4,702 non-catalytic variants in 
 
 This label set should be treated as first-pass. The next version should validate the positions against UniProt feature annotations and a structure-derived active site or ligand-contact map.
 
+I also added an `active_site_neighborhood` group around these motif windows. This group contains 480 single-mutant assay rows. It is not a structure-derived binding pocket yet; it is a transparent motif-neighborhood slice that can later be replaced or compared against ligand-contact labels.
+
 ## Result
 
 | Scorer | Overall Spearman | Catalytic Spearman | Non-catalytic Spearman | Top-5 Enrichment |
 | --- | ---: | ---: | ---: | ---: |
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
+
+Active-site-neighborhood slice:
+
+| Scorer | Active-site-neighborhood Spearman | Outside-neighborhood Spearman | Neighborhood Variants |
+| --- | ---: | ---: | ---: |
+| Placeholder | 0.3076 | 0.0249 | 480 |
+| ESM-2 8M | 0.5949 | 0.3785 | 480 |
 
 For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 
@@ -73,6 +82,8 @@ For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 | Overall | 0.4113 | 0.3846 to 0.4342 |
 | Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
 | Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+| Active-site neighborhood | 0.5949 | 0.5302 to 0.6564 |
+| Outside active-site neighborhood | 0.3785 | 0.3510 to 0.4054 |
 
 ## Interpretation
 
@@ -89,7 +100,7 @@ overall:        0.4113
 This does not prove catalytic residues are generally easier for protein language models. A few caveats matter:
 
 - The catalytic-position subset has only 81 variants.
-- The catalytic labels are motif-derived and need external validation.
+- The catalytic and active-site-neighborhood labels are motif-derived and need external validation.
 - TEM-1 beta-lactamase is one enzyme, not a general enzyme benchmark.
 - ESM-2 8M is a small model; scaling behavior may differ.
 - DMS fitness reflects the assay context, not pure catalytic mechanism.
@@ -103,6 +114,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - loads ProteinGym DMS data,
 - validates mutation strings against the wild-type sequence,
 - labels catalytic-position variants,
+- labels first-pass active-site-neighborhood variants,
 - runs a swappable scorer interface,
 - supports ESM-2 masked-marginal scoring,
 - computes overall and subgroup Spearman correlations,
@@ -113,7 +125,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 ## Next Experiments
 
 1. Validate catalytic labels against UniProt and structure annotations.
-2. Add binding-pocket labels from structure-derived ligand contacts.
+2. Replace or compare the motif-neighborhood group with structure-derived ligand-contact labels.
 3. Run larger ESM-2 models on LBNL compute.
 4. Run the existing SLURM templates on LBNL compute for larger ESM-2 models.
 5. Repeat the benchmark across multiple enzyme DMS assays.

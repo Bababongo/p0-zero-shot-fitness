@@ -11,7 +11,7 @@ from p0_zero_shot_fitness.io import (
     write_json,
     write_scored_variants,
 )
-from p0_zero_shot_fitness.labeling import is_catalytic_mutation
+from p0_zero_shot_fitness.labeling import is_catalytic_mutation, residue_groups_for_mutation
 from p0_zero_shot_fitness.metrics import summarize_records
 from p0_zero_shot_fitness.models import JsonDict, VariantRecord
 from p0_zero_shot_fitness.mutations import parse_mutation
@@ -24,10 +24,12 @@ def build_variant_records(
     wild_type_sequence: str,
     catalytic_residues: set[int],
     scorer: VariantScorer,
+    residue_groups: dict[str, set[int]] | None = None,
     variant_column: str = "variant",
     fitness_column: str = "fitness",
     single_only: bool = True,
 ) -> list[VariantRecord]:
+    residue_groups = residue_groups or {}
     records = []
     for row in dms_rows:
         variant = row[variant_column]
@@ -40,6 +42,7 @@ def build_variant_records(
                 fitness=float(row[fitness_column]),
                 is_catalytic=is_catalytic_mutation(mutation, catalytic_residues),
                 model_score=scorer.score(mutation, wild_type_sequence),
+                residue_groups=residue_groups_for_mutation(mutation, residue_groups),
             )
         )
     return records
@@ -84,6 +87,7 @@ def run_external_benchmark(
     catalytic_json: Path,
     dataset_name: str,
     scorer: VariantScorer | None = None,
+    residue_groups_json: Path | None = None,
     variant_column: str = "mutant",
     fitness_column: str = "DMS_score",
     single_only: bool = True,
@@ -94,6 +98,7 @@ def run_external_benchmark(
     wild_type_sequence = read_fasta_sequence(wild_type_fasta.read_text(encoding="utf-8"))
     catalytic_payload = load_external_json(catalytic_json)
     catalytic_residues = set(catalytic_payload["catalytic_residues"])
+    residue_groups = load_residue_groups(residue_groups_json)
     dms_rows = load_dms_csv_path(dms_csv)
 
     records = build_variant_records(
@@ -101,6 +106,7 @@ def run_external_benchmark(
         wild_type_sequence=wild_type_sequence,
         catalytic_residues=catalytic_residues,
         scorer=scorer,
+        residue_groups=residue_groups,
         variant_column=variant_column,
         fitness_column=fitness_column,
         single_only=single_only,
@@ -120,6 +126,7 @@ def run_external_benchmark(
             "dms_csv": str(dms_csv),
             "wild_type_fasta": str(wild_type_fasta),
             "catalytic_json": str(catalytic_json),
+            "residue_groups_json": str(residue_groups_json) if residue_groups_json else None,
         },
         "metrics": metrics,
         "artifacts": {
@@ -140,6 +147,16 @@ def load_external_json(path: Path) -> JsonDict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_residue_groups(path: Path | None) -> dict[str, set[int]]:
+    if path is None:
+        return {}
+    payload = load_external_json(path)
+    return {
+        group_name: set(positions)
+        for group_name, positions in payload.get("residue_groups", {}).items()
+    }
+
+
 def run_proteingym_blat_benchmark(
     output_dir: Path,
     scorer: VariantScorer | None = None,
@@ -153,6 +170,7 @@ def run_proteingym_blat_benchmark(
         dms_csv=data_dir / "BLAT_ECOLX_Firnberg_2014.csv",
         wild_type_fasta=data_dir / "BLAT_ECOLX.fasta",
         catalytic_json=data_dir / "BLAT_ECOLX_catalytic_residues.json",
+        residue_groups_json=data_dir / "BLAT_ECOLX_residue_groups.json",
         dataset_name="ProteinGym BLAT_ECOLX_Firnberg_2014",
         scorer=scorer,
         variant_column="mutant",

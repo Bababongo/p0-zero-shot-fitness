@@ -24,6 +24,7 @@ def test_proteingym_blat_pipeline_runs_real_dataset(tmp_path) -> None:
     assert payload["dataset"] == "ProteinGym BLAT_ECOLX_Firnberg_2014"
     assert payload["metrics"]["n_variants"] == 4783
     assert payload["metrics"]["n_catalytic"] == 81
+    assert payload["metrics"]["residue_group_breakdown"]["active_site_neighborhood"]["n"] == 480
     assert (tmp_path / "scored_variants.csv").exists()
 
 

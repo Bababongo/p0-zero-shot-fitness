@@ -9,6 +9,7 @@
   "input_files": {
     "catalytic_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_catalytic_residues.json",
     "dms_csv": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX_Firnberg_2014.csv",
+    "residue_groups_json": "data/proteingym/BLAT_ECOLX_residue_groups.json",
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX.fasta"
   },
   "metrics": {
@@ -21,16 +22,16 @@
         "n": 81
       },
       "spearman_non_catalytic": {
-        "ci_high": 0.413319939050516,
-        "ci_low": 0.3643189379384114,
-        "estimate": 0.3888845454218595,
+        "ci_high": 0.41332093626305594,
+        "ci_low": 0.36431931128259254,
+        "estimate": 0.3888848635691467,
         "iterations": 1000,
         "n": 4702
       },
       "spearman_overall": {
-        "ci_high": 0.4342427511145522,
-        "ci_low": 0.38463349934838686,
-        "estimate": 0.4113188161753802,
+        "ci_high": 0.4342430001867459,
+        "ci_low": 0.38463339454990864,
+        "estimate": 0.4113191200304927,
         "iterations": 1000,
         "n": 4783
       }
@@ -38,25 +39,25 @@
     "mutation_class_breakdown": {
       "charge_preserving": {
         "mean_fitness": 0.677101083032491,
-        "mean_model_score": -0.8353770736752865,
+        "mean_model_score": -0.8353770463537906,
         "n": 277,
         "spearman": 0.23028067851504788
       },
       "class_changing": {
         "mean_fitness": 0.5065416721311475,
-        "mean_model_score": -1.9045297643786572,
+        "mean_model_score": -1.9045297300760327,
         "n": 3050,
-        "spearman": 0.4258023445286923
+        "spearman": 0.42580259532338544
       },
       "hydrophobic_or_special_preserving": {
         "mean_fitness": 0.4541283290924512,
-        "mean_model_score": -1.7787300026750443,
+        "mean_model_score": -1.7787299281849027,
         "n": 1179,
-        "spearman": 0.3927729626623419
+        "spearman": 0.3927721458267573
       },
       "polar_preserving": {
         "mean_fitness": 0.612727797833935,
-        "mean_model_score": -1.5513730376205719,
+        "mean_model_score": -1.551373255703971,
         "n": 277,
         "spearman": 0.3710814762183618
       }
@@ -64,9 +65,37 @@
     "n_catalytic": 81,
     "n_non_catalytic": 4702,
     "n_variants": 4783,
+    "residue_group_bootstrap_ci": {
+      "active_site_neighborhood": {
+        "in_group": {
+          "ci_high": 0.6564236395241818,
+          "ci_low": 0.5302247286404197,
+          "estimate": 0.5948628787192081,
+          "iterations": 1000,
+          "n": 480
+        },
+        "outside_group": {
+          "ci_high": 0.4053980721364798,
+          "ci_low": 0.3510405179433931,
+          "estimate": 0.37847102477292605,
+          "iterations": 1000,
+          "n": 4303
+        }
+      }
+    },
+    "residue_group_breakdown": {
+      "active_site_neighborhood": {
+        "mean_fitness": 0.24452645833333334,
+        "mean_model_score": -3.0379697165,
+        "n": 480,
+        "outside_n": 4303,
+        "outside_spearman": 0.37847102477292605,
+        "spearman": 0.5948628787192081
+      }
+    },
     "spearman_catalytic": 0.6230337482909463,
-    "spearman_non_catalytic": 0.3888845454218595,
-    "spearman_overall": 0.4113188161753802,
+    "spearman_non_catalytic": 0.3888848635691467,
+    "spearman_overall": 0.4113191200304927,
     "top_5_enrichment_fitness_ge_0_7": 2.623697202413604
   },
   "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",

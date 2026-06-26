@@ -132,6 +132,48 @@ def bootstrap_group_cis(
     }
 
 
+def bootstrap_residue_group_cis(
+    records: list[VariantRecord],
+    iterations: int = 1000,
+    seed: int = 101,
+) -> dict[str, dict[str, dict[str, float | int | None]]]:
+    group_names = sorted({group_name for record in records for group_name in record.residue_groups})
+    intervals: dict[str, dict[str, dict[str, float | int | None]]] = {}
+    for offset, group_name in enumerate(group_names):
+        in_group = [record for record in records if group_name in record.residue_groups]
+        outside_group = [record for record in records if group_name not in record.residue_groups]
+        intervals[group_name] = {
+            "in_group": bootstrap_spearman_ci(
+                in_group,
+                iterations=iterations,
+                seed=seed + offset * 2,
+            ),
+            "outside_group": bootstrap_spearman_ci(
+                outside_group,
+                iterations=iterations,
+                seed=seed + offset * 2 + 1,
+            ),
+        }
+    return intervals
+
+
+def residue_group_breakdown(records: list[VariantRecord]) -> dict[str, dict[str, float | int | None]]:
+    group_names = sorted({group_name for record in records for group_name in record.residue_groups})
+    breakdown: dict[str, dict[str, float | int | None]] = {}
+    for group_name in group_names:
+        in_group = [record for record in records if group_name in record.residue_groups]
+        outside_group = [record for record in records if group_name not in record.residue_groups]
+        breakdown[group_name] = {
+            "n": len(in_group),
+            "spearman": spearman_for_records(in_group),
+            "mean_fitness": sum(record.fitness for record in in_group) / len(in_group) if in_group else None,
+            "mean_model_score": sum(record.model_score for record in in_group) / len(in_group) if in_group else None,
+            "outside_n": len(outside_group),
+            "outside_spearman": spearman_for_records(outside_group),
+        }
+    return breakdown
+
+
 def summarize_records(
     records: list[VariantRecord],
     bootstrap_iterations: int = 0,
@@ -148,11 +190,17 @@ def summarize_records(
         "spearman_non_catalytic": spearman_for_records(non_catalytic),
         "top_5_enrichment_fitness_ge_0_7": top_k_enrichment(records, k=5, fitness_threshold=0.7),
         "mutation_class_breakdown": mutation_class_breakdown(records),
+        "residue_group_breakdown": residue_group_breakdown(records),
     }
     if bootstrap_iterations > 0:
         summary["bootstrap_ci"] = bootstrap_group_cis(
             records,
             iterations=bootstrap_iterations,
             seed=bootstrap_seed,
+        )
+        summary["residue_group_bootstrap_ci"] = bootstrap_residue_group_cis(
+            records,
+            iterations=bootstrap_iterations,
+            seed=bootstrap_seed + 1000,
         )
     return summary

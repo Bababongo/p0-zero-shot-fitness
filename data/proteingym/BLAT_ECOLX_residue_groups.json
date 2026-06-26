@@ -1,0 +1,38 @@
+{
+  "protein_id": "BLAT_ECOLX",
+  "assay_id": "BLAT_ECOLX_Firnberg_2014",
+  "residue_numbering": "1-indexed positions in the 286-aa ProteinGym target sequence",
+  "residue_groups": {
+    "active_site_neighborhood": [
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      164,
+      165,
+      166,
+      167,
+      168,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236
+    ]
+  },
+  "source": "Manual active-site motif-neighborhood labels around the curated TEM-family motif positions in BLAT_ECOLX_catalytic_residues.json.",
+  "evidence": "Use as a transparent first-pass active-site-neighborhood slice. Before publication, replace or compare with structure-derived ligand-contact or pocket labels."
+}

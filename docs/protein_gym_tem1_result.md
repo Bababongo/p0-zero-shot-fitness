@@ -26,6 +26,8 @@ Catalytic/active-site labels were mapped onto the 286-aa ProteinGym target seque
 
 The current catalytic set is `[68, 71, 128, 166, 232]`. This is a credible first-pass mapping, but it should be validated against UniProt features and a structure before publication.
 
+I also added a first-pass `active_site_neighborhood` group around those motif windows. This group contains 480 single-mutant assay rows. It is not yet a structure-derived binding pocket; it is a transparent motif-neighborhood slice to test whether the model behaves differently near active-site chemistry.
+
 ## Models Compared
 
 - Placeholder conservation scorer: deterministic pipeline sanity check
@@ -39,6 +41,13 @@ The current catalytic set is `[68, 71, 128, 166, 232]`. This is a credible first
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
 
+Active-site-neighborhood result:
+
+| Scorer | Active-site-neighborhood Spearman | Outside-neighborhood Spearman | Neighborhood Variants |
+| --- | ---: | ---: | ---: |
+| Placeholder | 0.3076 | 0.0249 | 480 |
+| ESM-2 8M | 0.5949 | 0.3785 | 480 |
+
 ESM-2 8M bootstrap intervals from 1,000 resamples:
 
 | Group | Spearman | 95% Bootstrap CI |
@@ -46,13 +55,15 @@ ESM-2 8M bootstrap intervals from 1,000 resamples:
 | Overall | 0.4113 | 0.3846 to 0.4342 |
 | Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
 | Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+| Active-site neighborhood | 0.5949 | 0.5302 to 0.6564 |
+| Outside active-site neighborhood | 0.3785 | 0.3510 to 0.4054 |
 
 ## Interpretation
 
-ESM-2 8M is substantially better than the placeholder scorer on the real TEM-1 DMS assay. In this first pass, ESM-2 performs better on catalytic-position variants than on non-catalytic variants by Spearman correlation. That does not yet prove catalytic residues are easier in general; the catalytic subset is small and the labels need structural validation.
+ESM-2 8M is substantially better than the placeholder scorer on the real TEM-1 DMS assay. In this first pass, ESM-2 performs better on catalytic-position variants than on non-catalytic variants by Spearman correlation. It also performs better inside the active-site motif neighborhood than outside it. That does not yet prove catalytic residues are easier in general; the catalytic subset is small and the labels need structural validation.
 
 The useful portfolio signal is the evaluation shape: the benchmark can separate global performance from mechanism-relevant residue subsets and can expose whether a model's aggregate score hides a different failure mode near catalytic chemistry.
 
 ## Next Upgrade
 
-Run the same benchmark with a larger ESM-2 model, validate catalytic residue numbering from external annotations, and add a binding-pocket residue group from structure-derived ligand contacts. SLURM templates for larger ESM-2 runs are in `hpc/`.
+Run the same benchmark with a larger ESM-2 model, validate catalytic residue numbering from external annotations, and replace or compare the motif-neighborhood group with structure-derived ligand-contact labels. SLURM templates for larger ESM-2 runs are in `hpc/`.
