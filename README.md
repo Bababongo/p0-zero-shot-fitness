@@ -85,6 +85,14 @@ First real result:
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
 
+ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
+
+| Group | Spearman | 95% Bootstrap CI |
+| --- | ---: | ---: |
+| Overall | 0.4113 | 0.3846 to 0.4342 |
+| Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
+| Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+
 ## Current Scope
 
 The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2.
@@ -94,7 +102,7 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 1. Validate catalytic residue labels from UniProt and structure annotations.
 2. Add binding-pocket residue labels from structure or ligand-contact analysis.
 3. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
-4. Add confidence intervals by bootstrapping residue groups.
+4. Run the SLURM templates in `hpc/` on LBNL compute.
 5. Expand from TEM-1 to a small enzyme panel.
 
 ## Portfolio Signal

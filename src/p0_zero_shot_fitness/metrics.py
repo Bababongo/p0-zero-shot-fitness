@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import random
 
 from p0_zero_shot_fitness.models import VariantRecord
 
@@ -73,10 +74,72 @@ def mutation_class_breakdown(records: list[VariantRecord]) -> dict[str, dict[str
     return breakdown
 
 
-def summarize_records(records: list[VariantRecord]) -> dict[str, object]:
+def percentile(values: list[float], q: float) -> float | None:
+    if not values:
+        return None
+    sorted_values = sorted(values)
+    position = (len(sorted_values) - 1) * q
+    lower = int(position)
+    upper = min(lower + 1, len(sorted_values) - 1)
+    weight = position - lower
+    return sorted_values[lower] * (1 - weight) + sorted_values[upper] * weight
+
+
+def bootstrap_spearman_ci(
+    records: list[VariantRecord],
+    iterations: int = 1000,
+    seed: int = 13,
+    confidence: float = 0.95,
+) -> dict[str, float | int | None]:
+    if len(records) < 3 or iterations <= 0:
+        return {
+            "n": len(records),
+            "iterations": iterations,
+            "estimate": spearman_for_records(records),
+            "ci_low": None,
+            "ci_high": None,
+        }
+
+    rng = random.Random(seed)
+    estimates: list[float] = []
+    for _ in range(iterations):
+        sample = [records[rng.randrange(len(records))] for _ in records]
+        estimate = spearman_for_records(sample)
+        if estimate is not None:
+            estimates.append(estimate)
+
+    alpha = 1 - confidence
+    return {
+        "n": len(records),
+        "iterations": iterations,
+        "estimate": spearman_for_records(records),
+        "ci_low": percentile(estimates, alpha / 2),
+        "ci_high": percentile(estimates, 1 - alpha / 2),
+    }
+
+
+def bootstrap_group_cis(
+    records: list[VariantRecord],
+    iterations: int = 1000,
+    seed: int = 13,
+) -> dict[str, dict[str, float | int | None]]:
     catalytic = [record for record in records if record.is_catalytic]
     non_catalytic = [record for record in records if not record.is_catalytic]
     return {
+        "spearman_overall": bootstrap_spearman_ci(records, iterations=iterations, seed=seed),
+        "spearman_catalytic": bootstrap_spearman_ci(catalytic, iterations=iterations, seed=seed + 1),
+        "spearman_non_catalytic": bootstrap_spearman_ci(non_catalytic, iterations=iterations, seed=seed + 2),
+    }
+
+
+def summarize_records(
+    records: list[VariantRecord],
+    bootstrap_iterations: int = 0,
+    bootstrap_seed: int = 13,
+) -> dict[str, object]:
+    catalytic = [record for record in records if record.is_catalytic]
+    non_catalytic = [record for record in records if not record.is_catalytic]
+    summary: dict[str, object] = {
         "n_variants": len(records),
         "n_catalytic": len(catalytic),
         "n_non_catalytic": len(non_catalytic),
@@ -86,3 +149,10 @@ def summarize_records(records: list[VariantRecord]) -> dict[str, object]:
         "top_5_enrichment_fitness_ge_0_7": top_k_enrichment(records, k=5, fitness_threshold=0.7),
         "mutation_class_breakdown": mutation_class_breakdown(records),
     }
+    if bootstrap_iterations > 0:
+        summary["bootstrap_ci"] = bootstrap_group_cis(
+            records,
+            iterations=bootstrap_iterations,
+            seed=bootstrap_seed,
+        )
+    return summary

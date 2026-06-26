@@ -87,6 +87,8 @@ def run_external_benchmark(
     variant_column: str = "mutant",
     fitness_column: str = "DMS_score",
     single_only: bool = True,
+    bootstrap_iterations: int = 0,
+    bootstrap_seed: int = 13,
 ) -> JsonDict:
     scorer = scorer or PlaceholderConservationScorer()
     wild_type_sequence = read_fasta_sequence(wild_type_fasta.read_text(encoding="utf-8"))
@@ -103,7 +105,11 @@ def run_external_benchmark(
         fitness_column=fitness_column,
         single_only=single_only,
     )
-    metrics = summarize_records(records)
+    metrics = summarize_records(
+        records,
+        bootstrap_iterations=bootstrap_iterations,
+        bootstrap_seed=bootstrap_seed,
+    )
     payload = {
         "benchmark": "P0 - Zero-Shot Fitness",
         "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
@@ -134,7 +140,12 @@ def load_external_json(path: Path) -> JsonDict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def run_proteingym_blat_benchmark(output_dir: Path, scorer: VariantScorer | None = None) -> JsonDict:
+def run_proteingym_blat_benchmark(
+    output_dir: Path,
+    scorer: VariantScorer | None = None,
+    bootstrap_iterations: int = 0,
+    bootstrap_seed: int = 13,
+) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
     return run_external_benchmark(
@@ -147,4 +158,6 @@ def run_proteingym_blat_benchmark(output_dir: Path, scorer: VariantScorer | None
         variant_column="mutant",
         fitness_column="DMS_score",
         single_only=True,
+        bootstrap_iterations=bootstrap_iterations,
+        bootstrap_seed=bootstrap_seed,
     )

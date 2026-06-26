@@ -25,3 +25,10 @@ def test_proteingym_blat_pipeline_runs_real_dataset(tmp_path) -> None:
     assert payload["metrics"]["n_variants"] == 4783
     assert payload["metrics"]["n_catalytic"] == 81
     assert (tmp_path / "scored_variants.csv").exists()
+
+
+def test_proteingym_blat_pipeline_can_add_bootstrap_intervals(tmp_path) -> None:
+    payload = run_proteingym_blat_benchmark(tmp_path, bootstrap_iterations=10)
+
+    assert "bootstrap_ci" in payload["metrics"]
+    assert payload["metrics"]["bootstrap_ci"]["spearman_overall"]["iterations"] == 10

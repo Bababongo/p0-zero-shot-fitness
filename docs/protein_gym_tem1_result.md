@@ -39,6 +39,14 @@ The current catalytic set is `[68, 71, 128, 166, 232]`. This is a credible first
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
 
+ESM-2 8M bootstrap intervals from 1,000 resamples:
+
+| Group | Spearman | 95% Bootstrap CI |
+| --- | ---: | ---: |
+| Overall | 0.4113 | 0.3846 to 0.4342 |
+| Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
+| Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+
 ## Interpretation
 
 ESM-2 8M is substantially better than the placeholder scorer on the real TEM-1 DMS assay. In this first pass, ESM-2 performs better on catalytic-position variants than on non-catalytic variants by Spearman correlation. That does not yet prove catalytic residues are easier in general; the catalytic subset is small and the labels need structural validation.
@@ -47,4 +55,4 @@ The useful portfolio signal is the evaluation shape: the benchmark can separate 
 
 ## Next Upgrade
 
-Run the same benchmark with a larger ESM-2 model, validate catalytic residue numbering from external annotations, and add a binding-pocket residue group from structure-derived ligand contacts.
+Run the same benchmark with a larger ESM-2 model, validate catalytic residue numbering from external annotations, and add a binding-pocket residue group from structure-derived ligand contacts. SLURM templates for larger ESM-2 runs are in `hpc/`.

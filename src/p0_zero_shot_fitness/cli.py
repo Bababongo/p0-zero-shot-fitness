@@ -39,6 +39,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--esm-model", default="esm2_t6_8M_UR50D", help="fair-esm pretrained model function name.")
     parser.add_argument("--device", default="cpu", help="Torch device for ESM scoring.")
+    parser.add_argument(
+        "--bootstrap-iterations",
+        type=int,
+        default=0,
+        help="Add bootstrap confidence intervals for Spearman metrics.",
+    )
+    parser.add_argument("--bootstrap-seed", type=int, default=13, help="Random seed for bootstrap intervals.")
     return parser
 
 
@@ -55,7 +62,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.preset == "fixture":
         payload = run_fixture_benchmark(args.output_dir, scorer=scorer)
     elif args.preset == "proteingym-blat":
-        payload = run_proteingym_blat_benchmark(args.output_dir, scorer=scorer)
+        payload = run_proteingym_blat_benchmark(
+            args.output_dir,
+            scorer=scorer,
+            bootstrap_iterations=args.bootstrap_iterations,
+            bootstrap_seed=args.bootstrap_seed,
+        )
     else:
         required = [args.dms_csv, args.wild_type_fasta, args.catalytic_json]
         if any(path is None for path in required):
@@ -70,6 +82,8 @@ def main(argv: list[str] | None = None) -> int:
             variant_column=args.variant_column,
             fitness_column=args.fitness_column,
             single_only=not args.include_multiple_mutants,
+            bootstrap_iterations=args.bootstrap_iterations,
+            bootstrap_seed=args.bootstrap_seed,
         )
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0

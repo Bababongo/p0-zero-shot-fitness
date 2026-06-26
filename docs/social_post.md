@@ -22,6 +22,14 @@ Non-catalytic Spearman:  0.3889
 Top-5 enrichment:        2.6237
 ```
 
+With 1,000 bootstrap resamples:
+
+```text
+Overall 95% CI:        0.3846 to 0.4342
+Catalytic 95% CI:      0.4219 to 0.7643
+Non-catalytic 95% CI:  0.3643 to 0.4133
+```
+
 This is not a final biological claim yet. The catalytic labels need structure/UniProt validation, and this is only one enzyme with the smallest ESM-2 model.
 
 But the evaluation shape is the point: aggregate protein language model performance can hide behavior on mechanism-critical residue subsets.
@@ -33,5 +41,4 @@ Next:
 - validate catalytic labels,
 - add binding-pocket labels,
 - run larger ESM-2 models on LBNL compute,
-- add bootstrap confidence intervals,
 - expand to more enzyme DMS assays.

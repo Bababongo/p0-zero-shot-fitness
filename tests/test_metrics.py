@@ -1,6 +1,6 @@
 import pytest
 
-from p0_zero_shot_fitness.metrics import spearman, top_k_enrichment
+from p0_zero_shot_fitness.metrics import bootstrap_spearman_ci, spearman, top_k_enrichment
 from p0_zero_shot_fitness.models import Mutation, VariantRecord
 
 
@@ -18,3 +18,20 @@ def test_top_k_enrichment_returns_ratio_over_background() -> None:
     ]
 
     assert top_k_enrichment(records, k=2, fitness_threshold=0.7) == 2.0
+
+
+def test_bootstrap_spearman_ci_is_reproducible() -> None:
+    records = [
+        VariantRecord(Mutation("A1V", "A", 1, "V"), 0.9, False, 0.9),
+        VariantRecord(Mutation("C2S", "C", 2, "S"), 0.8, False, 0.8),
+        VariantRecord(Mutation("D3E", "D", 3, "E"), 0.1, False, 0.7),
+        VariantRecord(Mutation("F4Y", "F", 4, "Y"), 0.2, False, 0.6),
+    ]
+
+    first = bootstrap_spearman_ci(records, iterations=25, seed=7)
+    second = bootstrap_spearman_ci(records, iterations=25, seed=7)
+
+    assert first == second
+    assert first["iterations"] == 25
+    assert first["ci_low"] is not None
+    assert first["ci_high"] is not None

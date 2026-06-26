@@ -66,6 +66,14 @@ This label set should be treated as first-pass. The next version should validate
 | Placeholder | 0.0430 | 0.3922 | 0.0362 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.6230 | 0.3889 | 2.6237 |
 
+For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
+
+| Group | Spearman | 95% Bootstrap CI |
+| --- | ---: | ---: |
+| Overall | 0.4113 | 0.3846 to 0.4342 |
+| Catalytic positions | 0.6230 | 0.4219 to 0.7643 |
+| Non-catalytic positions | 0.3889 | 0.3643 to 0.4133 |
+
 ## Interpretation
 
 ESM-2 8M gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay.
@@ -98,6 +106,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - runs a swappable scorer interface,
 - supports ESM-2 masked-marginal scoring,
 - computes overall and subgroup Spearman correlations,
+- reports bootstrap confidence intervals,
 - writes scored variants, metrics, and SVG plots,
 - includes tests and GitHub Actions CI.
 
@@ -106,7 +115,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 1. Validate catalytic labels against UniProt and structure annotations.
 2. Add binding-pocket labels from structure-derived ligand contacts.
 3. Run larger ESM-2 models on LBNL compute.
-4. Add bootstrap confidence intervals for subgroup metrics.
+4. Run the existing SLURM templates on LBNL compute for larger ESM-2 models.
 5. Repeat the benchmark across multiple enzyme DMS assays.
 
 ## Why This Matters For AI Biology
