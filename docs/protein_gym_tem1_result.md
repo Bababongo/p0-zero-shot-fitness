@@ -35,6 +35,7 @@ Source records are included in `data/proteingym/source_records/`, and the downlo
 
 - Placeholder conservation scorer: deterministic pipeline sanity check
 - ESM-2 8M masked-marginal scorer: real protein language model zero-shot baseline
+- ESM-2 35M masked-marginal scorer: first Savio scaling check
 - ESM implementation: <https://github.com/facebookresearch/esm>
 
 ## Result
@@ -43,6 +44,7 @@ Source records are included in `data/proteingym/source_records/`, and the downlo
 | --- | ---: | ---: | ---: | ---: |
 | Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
+| ESM-2 35M | 0.5548 | 0.4596 | 0.5428 | 2.0990 |
 
 Mechanism-relevant residue slices:
 
@@ -56,6 +58,10 @@ Mechanism-relevant residue slices:
 | ESM-2 8M | UniProt substrate-binding site | 0.4383 | 0.3992 | 55 |
 | ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
 | ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
+| ESM-2 35M | UniProt active site | 0.4596 | 0.5428 | 57 |
+| ESM-2 35M | UniProt substrate-binding site | 0.4965 | 0.5453 | 55 |
+| ESM-2 35M | PDB 1M40 ligand contact, 5 A | 0.7127 | 0.5344 | 277 |
+| ESM-2 35M | Active-site neighborhood | 0.7027 | 0.5188 | 461 |
 
 ESM-2 8M bootstrap intervals from 1,000 resamples:
 
@@ -72,14 +78,14 @@ ESM-2 8M bootstrap intervals from 1,000 resamples:
 
 ## Interpretation
 
-ESM-2 8M is substantially better than the placeholder scorer overall on the real TEM-1 DMS assay.
+ESM-2 8M is substantially better than the placeholder scorer overall on the real TEM-1 DMS assay. ESM-2 35M improves over 8M across overall, active-site, non-active-site, ligand-contact, and active-site-neighborhood metrics.
 
 The corrected UniProt active-site-only subset is very small: 57 variants across four positions. ESM-2 is positive there, but lower than its non-active-site correlation, and the confidence interval is wide. That is an important correction to the earlier motif-only readout.
 
 The stronger signal appears in chemistry-adjacent regions with more variants. ESM-2 performs much better in the PDB 1M40 ligand-contact group and in the active-site neighborhood than outside those groups. That suggests the model captures constraints around the active-site environment better than a tiny catalytic-residue-only slice would imply.
 
-The useful portfolio signal is the evaluation shape: the benchmark separates global performance from UniProt features, substrate-binding features, and structure-derived ligand-contact residue groups.
+The useful portfolio signal is the evaluation shape: the benchmark separates global performance from UniProt features, substrate-binding features, and structure-derived ligand-contact residue groups, then asks how those slices change with model scale.
 
 ## Next Upgrade
 
-Run larger ESM-2 or ESM-1v models on LBNL compute and repeat this same validated residue-slice analysis. SLURM templates for larger ESM-2 runs are in `hpc/`.
+Copy the ESM-2 35M Savio artifacts back into the local repo, then run ESM-2 150M or ESM-1v and repeat this same validated residue-slice analysis. SLURM templates for larger ESM-2 runs are in `hpc/`.

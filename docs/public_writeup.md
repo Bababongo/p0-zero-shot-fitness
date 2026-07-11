@@ -2,9 +2,9 @@
 
 ## Short Answer
 
-In this first TEM-1 beta-lactamase benchmark, ESM-2 8M performs better than a simple placeholder baseline overall. After validating residue labels against UniProt and PDB 1M40, the active-site-only subset is small and noisy, while broader ligand-contact and active-site-neighborhood slices show a stronger ESM-2 signal.
+In this first TEM-1 beta-lactamase benchmark, ESM-2 performs better than a simple placeholder baseline overall. After validating residue labels against UniProt and PDB 1M40, the active-site-only subset is small and noisy, while broader ligand-contact and active-site-neighborhood slices show a stronger ESM-2 signal.
 
-That result is interesting, but not final. This run uses the smallest ESM-2 model and only one enzyme. The main contribution is the evaluation shape: separating aggregate protein language model performance from performance on chemically important residue subsets.
+The first local run used ESM-2 8M. I then ran ESM-2 35M on Savio as the first scaling check. The 35M model improved overall and residue-slice performance, but the UniProt active-site-only subset still remained lower than the non-active-site background.
 
 ## Why I Built This
 
@@ -30,9 +30,10 @@ ProteinGym source: <https://github.com/OATML-Markslab/ProteinGym>
 
 ## Model
 
-The first real protein language model baseline is:
+The first real protein language model baselines are:
 
 - ESM-2 8M: `esm2_t6_8M_UR50D`
+- ESM-2 35M: `esm2_t12_35M_UR50D`, run on Savio job `35588401`
 - Scoring method: masked-marginal log-likelihood ratio
 - Comparison baseline: deterministic placeholder conservation scorer
 
@@ -66,6 +67,7 @@ I also added two larger mechanism-relevant groups:
 | --- | ---: | ---: | ---: | ---: |
 | Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
 | ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
+| ESM-2 35M | 0.5548 | 0.4596 | 0.5428 | 2.0990 |
 
 Mechanism-relevant residue slices:
 
@@ -77,6 +79,9 @@ Mechanism-relevant residue slices:
 | ESM-2 8M | UniProt active site | 0.3023 | 0.4042 | 57 |
 | ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
 | ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
+| ESM-2 35M | UniProt active site | 0.4596 | 0.5428 | 57 |
+| ESM-2 35M | PDB 1M40 ligand contact, 5 A | 0.7127 | 0.5344 | 277 |
+| ESM-2 35M | Active-site neighborhood | 0.7027 | 0.5188 | 461 |
 
 For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 
@@ -92,23 +97,24 @@ For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 
 ## Interpretation
 
-ESM-2 8M gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay.
+ESM-2 gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay, and the 35M model improves over the 8M model.
 
-The most interesting observation changed after label validation. ESM-2 is not better on the tiny UniProt active-site-only subset than on the rest of the protein:
+The most interesting observation changed after label validation. ESM-2 is not better on the tiny UniProt active-site-only subset than on the rest of the protein, even after scaling from 8M to 35M:
 
 ```text
-UniProt active site:       0.3023
-non-active-site:           0.4042
-overall:                   0.4113
+ESM-2 8M active site:      0.3023
+ESM-2 8M non-active-site:  0.4042
+ESM-2 35M active site:     0.4596
+ESM-2 35M non-active-site: 0.5428
 ```
 
-But ESM-2 is much stronger on broader chemistry-adjacent slices:
+But ESM-2 is much stronger on broader chemistry-adjacent slices, especially with the 35M model:
 
 ```text
-PDB 1M40 ligand contact:   0.6076
-outside ligand contact:    0.3997
-active-site neighborhood:  0.6453
-outside neighborhood:      0.3752
+ESM-2 35M ligand contact:          0.7127
+ESM-2 35M outside ligand contact:  0.5344
+ESM-2 35M active-site neighborhood: 0.7027
+ESM-2 35M outside neighborhood:     0.5188
 ```
 
 This does not prove catalytic residues are generally easier for protein language models. A few caveats matter:
@@ -116,7 +122,7 @@ This does not prove catalytic residues are generally easier for protein language
 - The UniProt active-site subset has only 57 variants.
 - The ligand-contact group comes from one inhibitor-bound structure.
 - TEM-1 beta-lactamase is one enzyme, not a general enzyme benchmark.
-- ESM-2 8M is a small model; scaling behavior may differ.
+- This is only the first scaling step, from ESM-2 8M to ESM-2 35M.
 - DMS fitness reflects the assay context, not pure catalytic mechanism.
 
 Still, this is the kind of eval slice I want more life-science AI systems to expose. Aggregate performance can hide the behavior that matters for mechanistic biology.
@@ -139,10 +145,11 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Run larger ESM-2 models on LBNL compute.
-2. Add ESM-1v or an MSA-based baseline.
-3. Repeat the benchmark across multiple enzyme DMS assays.
-4. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
+1. Copy the 35M Savio artifacts back into the local repo.
+2. Run ESM-2 150M as the next scaling step.
+3. Add ESM-1v or an MSA-based baseline.
+4. Repeat the benchmark across multiple enzyme DMS assays.
+5. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
 
 ## Why This Matters For AI Biology
 
