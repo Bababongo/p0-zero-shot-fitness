@@ -6,6 +6,12 @@ They intentionally avoid hard-coding account names, partitions, or module names.
 
 ## Recommended Run Order
 
+On Savio, start with:
+
+1. `savio_esm2_35m.slurm`
+
+Generic templates for other SLURM-style clusters:
+
 1. `esm2_35m.slurm`
 2. `esm2_150m.slurm`
 3. `esm2_650m.slurm`
@@ -19,6 +25,8 @@ Each job runs the same ProteinGym TEM-1 benchmark and writes outputs under `resu
 - `--gres` or GPU resource request syntax
 - module/conda setup
 - repo path
+
+For the concrete Savio workflow, see `SAVIO.md`.
 
 ## After Jobs Finish
 
