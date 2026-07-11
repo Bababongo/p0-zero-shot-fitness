@@ -6,6 +6,8 @@ This repo is a fixture-first benchmark scaffold for comparing zero-shot protein 
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
+Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_project_report.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters

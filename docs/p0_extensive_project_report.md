@@ -1,0 +1,670 @@
+# P0 Extensive Project Report: Zero-Shot Fitness
+
+Report date: 2026-07-11
+
+Project repository: `p0-zero-shot-fitness`
+
+Core question:
+
+> Do protein language models fail differently on catalytic residues than on the rest of the protein?
+
+## 1. Executive Summary
+
+P0 is a completed v1 benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of an enzyme. The project uses a real deep mutational scanning dataset for TEM-1 beta-lactamase from ProteinGym, scores single amino-acid variants with ESM-2, and compares model scores against experimental fitness.
+
+The scientific motivation is simple: a protein language model can look good overall while still failing on the residues that matter most for enzyme engineering. Enzyme function is not only about broad evolutionary conservation or stability. It can depend on active-site chemistry, substrate positioning, cofactors, binding-pocket geometry, and transition-state stabilization. P0 turns that concern into a measurable benchmark.
+
+The project is not just a notebook. It is a small production-style Python repo with a command-line interface, typed data models, mutation parsing, residue annotation, model scoring, statistical metrics, plots, tests, GitHub Actions, and Savio HPC run scripts.
+
+The main result is that ESM-2 clearly improves with scale from 8M to 35M parameters. However, the tiny UniProt active-site-only subset remains lower than the non-active-site background. Broader mechanism-adjacent groups, especially PDB ligand-contact residues and active-site-neighborhood residues, show stronger ESM-2 signal.
+
+The short interpretation:
+
+- ESM-2 captures meaningful zero-shot signal on TEM-1 beta-lactamase DMS data.
+- Scaling from ESM-2 8M to ESM-2 35M improves performance across most slices.
+- UniProt catalytic-site-only performance is positive but lower than the non-active-site background.
+- Broader active-site and ligand-contact regions show strong model signal.
+- The project demonstrates how to evaluate not only whether a model works, but where it works.
+
+P0 v1 is complete as a portfolio artifact. Future work can extend it to ESM-2 150M, ESM-1v, MSA-based models, and a larger enzyme panel.
+
+## 2. The 30-Second Explanation
+
+P0 asks whether protein language models fail differently near catalytic residues. I used a public TEM-1 beta-lactamase deep mutational scanning dataset from ProteinGym, scored mutations with ESM-2, and compared model scores to experimental fitness. Instead of only reporting one overall correlation, I split the assay into biologically meaningful residue groups: UniProt active-site residues, substrate-binding residues, PDB ligand-contact residues, active-site neighborhoods, and the rest of the protein.
+
+The result: ESM-2 performs much better than a placeholder baseline, and the 35M model improves over the 8M model. But the tiny active-site-only slice remains noisier and lower than the non-active-site background. Broader ligand-contact and active-site-neighborhood regions show stronger signal. That matters because aggregate model performance can hide biologically important failure modes.
+
+## 3. Why This Project Exists
+
+Protein language models are often evaluated using broad benchmarks: one dataset, one model score, one correlation. That is useful, but it can miss the way biology is structured.
+
+For enzymes, not all residues carry the same meaning:
+
+- Some residues mainly affect folding or stability.
+- Some residues affect evolutionary conservation.
+- Some residues shape the active-site environment.
+- Some residues contact substrate or ligand.
+- Some residues directly participate in catalysis.
+
+A model can be good at recognizing broad sequence constraints while still being weaker at residues where chemistry matters most. For protein engineering, this distinction is not academic. If a model fails near catalytic chemistry, then a scientist needs to know that before trusting the model to prioritize variants.
+
+P0 was built to make that failure mode measurable.
+
+The guiding hypothesis was:
+
+> Sequence-only protein language models should capture broad evolutionary and stability constraints, but may struggle when experimental fitness depends on active-site chemistry, substrate binding, or catalytic mechanism.
+
+## 4. Scientific Question
+
+The elegant question:
+
+> Do protein language models fail differently on catalytic residues than on the rest of the protein?
+
+This question is useful because it is narrow enough to test, but broad enough to matter. It connects:
+
+- protein language models,
+- zero-shot variant-effect prediction,
+- deep mutational scanning,
+- enzyme mechanism,
+- residue annotation,
+- statistical evaluation,
+- and model failure analysis.
+
+The project is therefore not merely "run ESM on a dataset." It is a model behavior audit framed around biological mechanism.
+
+## 5. Biological System
+
+The first real benchmark uses TEM-1 beta-lactamase.
+
+Dataset:
+
+- ProteinGym dataset: `BLAT_ECOLX_Firnberg_2014`
+- Protein: TEM-1 beta-lactamase
+- Source organism annotation: `BLAT_ECOLX`
+- DMS assay context: growth under ampicillin selection
+- Fitness target: ProteinGym `DMS_score`
+- Variants analyzed: 4,783 single amino-acid substitutions
+
+TEM-1 beta-lactamase is useful for this project because it is an enzyme with known active-site biology and a public deep mutational scanning assay. That lets the benchmark compare model predictions against experimental effects, while also asking whether model behavior differs across catalytic and non-catalytic regions.
+
+## 6. Residue Annotation Strategy
+
+The project does not rely only on raw sequence positions. It annotates variants by biologically meaningful residue groups.
+
+### 6.1 UniProt Active-Site Residues
+
+The catalytic labels were validated against UniProt P62593 for `BLAT_ECOLX`.
+
+The active-site residues used in this benchmark are:
+
+```text
+68, 71, 128, 164
+```
+
+These correspond to commonly discussed class-A beta-lactamase catalytic positions:
+
+| ProteinGym/UniProt numbering | Common Ambler numbering |
+| ---: | --- |
+| 68 | Ser70 |
+| 71 | Lys73 |
+| 128 | Ser130 |
+| 164 | Glu166 |
+
+The UniProt active-site group contains 57 variants in the DMS dataset.
+
+### 6.2 UniProt Substrate-Binding Residues
+
+The substrate-binding group uses UniProt positions:
+
+```text
+232-234
+```
+
+This group contains 55 variants in the DMS dataset.
+
+### 6.3 PDB 1M40 Ligand-Contact Residues
+
+The project also adds a structure-derived group from PDB 1M40. It identifies residues in chain A with any heavy atom within 5.0 Angstrom of the `CB4` inhibitor.
+
+This creates the group:
+
+```text
+structure_ligand_contact_5a
+```
+
+This group contains 277 variants.
+
+The purpose of this group is to move beyond a tiny active-site-only label and ask whether ESM-2 behaves differently around a broader binding or ligand-contact environment.
+
+### 6.4 Active-Site Neighborhood
+
+The project also defines:
+
+```text
+active_site_neighborhood
+```
+
+This is a broader mechanism-adjacent group around validated active-site and substrate-binding positions. It contains 461 variants.
+
+This group is useful because the exact active-site residues are too few to support a confident general conclusion by themselves. A neighborhood group gives a larger chemistry-adjacent slice while staying biologically interpretable.
+
+## 7. Model and Scoring Method
+
+The project compares three scorers:
+
+| Scorer | Purpose |
+| --- | --- |
+| Placeholder conservation scorer | Deterministic sanity check for the pipeline |
+| ESM-2 8M | First local protein language model baseline |
+| ESM-2 35M | First larger-model Savio HPC scaling run |
+
+### 7.1 Placeholder Scorer
+
+The placeholder scorer is intentionally simple. It is not intended to be biologically competitive. It exists so the full analysis pipeline can be tested before running real ESM models.
+
+This is important engineering practice. Before spending compute, the repo proves that it can:
+
+- load data,
+- parse mutations,
+- label residues,
+- score variants,
+- compute metrics,
+- write output files,
+- and generate plots.
+
+### 7.2 ESM-2 Masked-Marginal Scoring
+
+The real model scorer is `ESM2MaskedMarginalScorer`.
+
+For each mutation, the scorer:
+
+1. Takes the wild-type sequence.
+2. Masks the mutated position.
+3. Uses ESM-2 to estimate log probabilities for amino acids at that position.
+4. Computes a log-likelihood ratio:
+
+```text
+score = log P(mutant amino acid | masked wild-type context)
+        - log P(wild-type amino acid | masked wild-type context)
+```
+
+Higher scores should indicate variants that ESM-2 finds more plausible relative to the wild type.
+
+This is a zero-shot method. The model is not trained on this DMS assay. It uses pretrained sequence knowledge to rank mutations.
+
+## 8. Evaluation Metrics
+
+The project reports several metrics.
+
+### 8.1 Spearman Correlation
+
+Spearman correlation measures whether model-ranked variants agree with experimentally ranked variants. It is rank-based, so it does not require the model score to be calibrated in the same units as experimental fitness.
+
+The project reports:
+
+- overall Spearman,
+- UniProt active-site Spearman,
+- non-active-site Spearman,
+- substrate-binding Spearman,
+- ligand-contact Spearman,
+- active-site-neighborhood Spearman,
+- and outside-group Spearman for comparison.
+
+### 8.2 Top-k Enrichment
+
+Top-k enrichment asks whether the highest-scoring model variants are enriched for experimentally high-fitness variants.
+
+The current metric is:
+
+```text
+top_5_enrichment_fitness_ge_0_7
+```
+
+This asks whether the top 5 model-ranked variants are enriched for variants with fitness at least 0.7 relative to the background rate.
+
+### 8.3 Mutation-Class Breakdown
+
+The project also groups mutations by broad amino-acid class changes:
+
+- charge_preserving,
+- class_changing,
+- hydrophobic_or_special_preserving,
+- polar_preserving.
+
+This helps test whether model performance differs by mutation type, not only by residue location.
+
+### 8.4 Bootstrap Confidence Intervals
+
+The project computes bootstrap confidence intervals for Spearman metrics. This matters because some residue slices are small. The active-site group, for example, contains only 57 variants.
+
+The bootstrap intervals are not decorative. They tell the reader how uncertain the subgroup estimates are.
+
+## 9. Main Results
+
+### 9.1 Overall Model Comparison
+
+| Scorer | Overall Spearman | UniProt active-site Spearman | Non-active-site Spearman | Top-5 Enrichment |
+| --- | ---: | ---: | ---: | ---: |
+| Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
+| ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
+| ESM-2 35M | 0.5548 | 0.4596 | 0.5428 | 2.0990 |
+
+Interpretation:
+
+- The placeholder scorer is close to uninformative overall.
+- ESM-2 8M shows meaningful zero-shot signal.
+- ESM-2 35M improves over ESM-2 8M overall.
+- Active-site-only performance improves with model size but remains below non-active-site performance.
+
+### 9.2 Mechanism-Relevant Slices
+
+| Scorer | Group | Spearman | Outside-group Spearman | Variants |
+| --- | --- | ---: | ---: | ---: |
+| Placeholder | UniProt active site | 0.1231 | 0.0342 | 57 |
+| Placeholder | UniProt substrate-binding site | -0.0350 | 0.0368 | 55 |
+| Placeholder | PDB 1M40 ligand contact, 5 A | 0.1777 | 0.0361 | 277 |
+| Placeholder | Active-site neighborhood | 0.2916 | 0.0278 | 461 |
+| ESM-2 8M | UniProt active site | 0.3023 | 0.4042 | 57 |
+| ESM-2 8M | UniProt substrate-binding site | 0.4383 | 0.3992 | 55 |
+| ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
+| ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
+| ESM-2 35M | UniProt active site | 0.4596 | 0.5428 | 57 |
+| ESM-2 35M | UniProt substrate-binding site | 0.4965 | 0.5453 | 55 |
+| ESM-2 35M | PDB 1M40 ligand contact, 5 A | 0.7127 | 0.5344 | 277 |
+| ESM-2 35M | Active-site neighborhood | 0.7027 | 0.5188 | 461 |
+
+Interpretation:
+
+- Ligand-contact and active-site-neighborhood groups show strong ESM-2 signal.
+- The UniProt active-site-only group is small and uncertain.
+- ESM-2 appears stronger around broader active-site environments than on the exact catalytic positions alone.
+- This supports a nuanced claim: ESM-2 captures constraints near functional regions, but catalytic residues themselves remain a difficult and noisy slice.
+
+### 9.3 Bootstrap Intervals for ESM-2 35M
+
+| Group | Spearman | 95% Bootstrap CI | n |
+| --- | ---: | ---: | ---: |
+| Overall | 0.5548 | 0.5340 to 0.5757 | 4,783 |
+| UniProt active site | 0.4596 | 0.2268 to 0.6418 | 57 |
+| Non-active-site | 0.5428 | 0.5195 to 0.5641 | 4,726 |
+| UniProt substrate-binding site | 0.4965 | 0.2318 to 0.7061 | 55 |
+| Outside substrate-binding site | 0.5453 | 0.5226 to 0.5654 | 4,728 |
+| PDB 1M40 ligand contact, 5 A | 0.7127 | 0.6464 to 0.7695 | 277 |
+| Outside ligand-contact group | 0.5344 | 0.5125 to 0.5558 | 4,506 |
+| Active-site neighborhood | 0.7027 | 0.6508 to 0.7503 | 461 |
+| Outside active-site neighborhood | 0.5188 | 0.4944 to 0.5424 | 4,322 |
+
+The confidence intervals show why the active-site-only result should be interpreted carefully. The interval is wide because the group is small. By contrast, the ligand-contact and active-site-neighborhood groups have more variants and narrower intervals.
+
+### 9.4 Mutation-Class Breakdown for ESM-2 35M
+
+| Mutation class | n | Mean fitness | Mean model score | Spearman |
+| --- | ---: | ---: | ---: | ---: |
+| charge_preserving | 277 | 0.6771 | -1.7223 | 0.5343 |
+| class_changing | 3,050 | 0.5065 | -3.0481 | 0.5730 |
+| hydrophobic_or_special_preserving | 1,179 | 0.4541 | -2.7983 | 0.4702 |
+| polar_preserving | 277 | 0.6127 | -2.8855 | 0.6319 |
+
+This tells a second story beyond residue location. Model agreement with experimental fitness also varies by mutation class.
+
+## 10. Scientific Interpretation
+
+The key scientific interpretation is not "ESM-2 fails at catalytic residues." That would be too strong.
+
+A better interpretation is:
+
+> ESM-2 captures meaningful zero-shot signal in TEM-1 beta-lactamase. Scaling from 8M to 35M improves performance. However, the exact UniProt active-site-only subset remains small, uncertain, and lower than the non-active-site background. Broader mechanism-adjacent groups, especially ligand-contact and active-site-neighborhood residues, show strong signal.
+
+This matters because it shows the value of residue-slice evaluation. If we only reported the overall Spearman correlation, we would miss the biological structure of the model's behavior.
+
+The broader lesson:
+
+> A model's average performance is not enough. For scientific AI, we need to ask where the model is reliable, where it is uncertain, and where biology makes the task qualitatively different.
+
+## 11. What P0 Proves
+
+P0 proves that I can:
+
+- frame a biologically meaningful model-evaluation question,
+- turn that question into a reproducible benchmark,
+- use public DMS data responsibly,
+- validate residue labels against external biological annotation,
+- derive a structure-informed residue group from PDB data,
+- run zero-shot ESM-2 scoring,
+- compare local and HPC model runs,
+- compute subgroup statistics and confidence intervals,
+- write production-style Python around scientific analysis,
+- and communicate the result as a scientific argument.
+
+P0 does not prove:
+
+- that ESM-2 generally fails at all catalytic residues,
+- that TEM-1 represents all enzymes,
+- that ligand-contact performance generalizes across all structures,
+- that the benchmark is a full enzyme-design platform,
+- or that zero-shot scoring replaces experimental validation.
+
+This distinction is important. Good scientific communication includes what the project does not claim.
+
+## 12. Code Architecture
+
+The repo is organized as a small Python package rather than a loose notebook.
+
+Main package:
+
+```text
+src/p0_zero_shot_fitness/
+```
+
+Important modules:
+
+| File | Role |
+| --- | --- |
+| `cli.py` | Command-line entry point. Parses user options and dispatches to the correct benchmark pipeline. |
+| `pipeline.py` | Main analysis flow. Loads data, builds variant records, scores variants, computes metrics, and writes outputs. |
+| `io.py` | Data loading and output writing helpers. |
+| `mutations.py` | Mutation string parsing and validation against the wild-type sequence. |
+| `labeling.py` | Catalytic and residue-group labeling. |
+| `scorers.py` | Swappable scoring interface, placeholder scorer, and ESM-2 scorer. |
+| `metrics.py` | Spearman correlation, enrichment, subgroup breakdowns, and bootstrap intervals. |
+| `models.py` | Typed dataclasses for mutations and scored variant records. |
+| `plotting/svg.py` | Lightweight SVG scatter plot generation. |
+
+Supporting folders:
+
+| Folder | Role |
+| --- | --- |
+| `data/proteingym/` | TEM-1 DMS data, FASTA, residue annotations, source records, and structure-derived labels. |
+| `results/` | Metrics, scored variants, comparison JSON, and plots. |
+| `scripts/` | Utility scripts for comparing metrics and deriving structure contacts. |
+| `hpc/` | SLURM scripts and Savio runbook. |
+| `tests/` | Pytest suite for mutation parsing, metrics, CLI, and pipeline behavior. |
+| `docs/` | Public writeups, data documentation, code walkthroughs, and portfolio artifacts. |
+
+## 13. Pipeline Flow
+
+Conceptual flow:
+
+```text
+User command
+  -> cli.py parses arguments
+  -> build_scorer selects placeholder or ESM-2
+  -> pipeline loads DMS data, FASTA, catalytic labels, and residue groups
+  -> mutations.py validates each mutation against the wild-type sequence
+  -> labeling.py assigns catalytic and mechanism-relevant residue labels
+  -> scorer assigns a model score to each mutation
+  -> metrics.py compares model scores to experimental fitness
+  -> outputs are written as JSON, CSV, and SVG
+```
+
+Beginner analogy:
+
+- `cli.py` is the front desk. It receives the user's command and fills out the intake form.
+- `build_parser()` designs the intake form.
+- `parse_args()` fills the form with the user's choices.
+- `build_scorer()` checks out the scoring machine.
+- The placeholder scorer is a practice machine.
+- The ESM-2 scorer is the real microscope.
+- `pipeline.py` is the lab assembly line.
+- `metrics.py` is the data analysis bench.
+- `results/` is the lab notebook drawer.
+
+This structure matters because each part has a clear job. That is what makes the project explainable, testable, and extensible.
+
+## 14. Command-Line Interface
+
+The CLI supports three presets:
+
+```text
+fixture
+proteingym-blat
+external
+```
+
+The most important run commands are:
+
+Placeholder baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-blat \
+  --output-dir results/proteingym_blat_placeholder
+```
+
+ESM-2 8M local run:
+
+```bash
+p0-fitness \
+  --preset proteingym-blat \
+  --scorer esm2 \
+  --esm-model esm2_t6_8M_UR50D \
+  --output-dir results/proteingym_blat_esm2_t6_8M
+```
+
+ESM-2 35M Savio run:
+
+```bash
+p0-fitness \
+  --preset proteingym-blat \
+  --scorer esm2 \
+  --esm-model esm2_t12_35M_UR50D \
+  --bootstrap-iterations 1000 \
+  --output-dir results/proteingym_blat_esm2_t12_35M
+```
+
+The external preset is important because it means the pipeline is not hard-coded only to TEM-1. It can be reused with another DMS CSV, FASTA file, catalytic-residue JSON, and optional residue-group JSON.
+
+## 15. HPC and Savio Work
+
+The project includes a concrete Savio runbook and SLURM scripts.
+
+The successful larger-model run:
+
+- Platform: Savio
+- Job ID: `35588401`
+- Model: `esm2_t12_35M_UR50D`
+- Output folder: `results/proteingym_blat_esm2_t12_35M`
+- Result status: completed successfully
+
+This is useful portfolio evidence because it shows more than local scripting. It shows the ability to:
+
+- clone the repo on HPC,
+- create an environment,
+- install the package,
+- submit a GPU job,
+- retrieve outputs,
+- compare metrics,
+- and fold the results back into the local repo and public writeup.
+
+## 16. Outputs and Artifacts
+
+Important result artifacts:
+
+| Artifact | Meaning |
+| --- | --- |
+| `results/proteingym_blat_placeholder/metrics.json` | Placeholder baseline metrics |
+| `results/proteingym_blat_esm2_t6_8M/metrics.json` | Local ESM-2 8M metrics |
+| `results/proteingym_blat_esm2_t12_35M/metrics.json` | Savio ESM-2 35M metrics |
+| `results/proteingym_blat_esm2_t12_35M/scored_variants.csv` | Per-variant model scores and labels |
+| `results/proteingym_blat_esm2_t12_35M/fitness_scatter.svg` | Scatter plot of model score vs experimental fitness |
+| `results/proteingym_blat_esm2_8m_vs_35m.json` | Comparison artifact for ESM-2 scaling |
+| `docs/public_writeup.md` | Public-facing result explanation |
+| `docs/code_walkthrough_for_beginners.md` | Beginner-oriented code walkthrough |
+| `hpc/SAVIO.md` | Savio runbook |
+
+## 17. Testing and Engineering Quality
+
+The repo uses pytest and includes tests for:
+
+- mutation parsing,
+- metrics,
+- pipeline behavior,
+- and CLI behavior.
+
+The project also includes GitHub Actions CI.
+
+This matters because a scientific benchmark is only useful if the reader can trust that the basic machinery works. In this project, tests protect the parts most likely to silently break:
+
+- parsing mutation strings,
+- validating mutations against wild-type sequence,
+- calculating Spearman correlations,
+- filtering records,
+- and running the CLI.
+
+The most recent verification state was:
+
+```text
+10 tests passed
+```
+
+## 18. Interview Explanation
+
+### 18.1 Two-Minute Version
+
+I built P0 to test whether protein language models fail differently near catalytic residues. The motivation is that a model can rank mutations well overall but still be weaker around enzyme chemistry, which is exactly where a protein engineer might care most.
+
+I used the ProteinGym TEM-1 beta-lactamase DMS dataset with 4,783 single mutants. I validated catalytic residues against UniProt, added substrate-binding labels, and derived a PDB ligand-contact group from the 1M40 inhibitor-bound structure. Then I scored all single mutants with ESM-2 using masked-marginal log-likelihood ratios.
+
+I compared model scores to experimental fitness using Spearman correlation overall and within biologically meaningful residue groups. ESM-2 8M had an overall Spearman around 0.41, and ESM-2 35M improved to about 0.55. The active-site-only group improved with scale but remained lower than the non-active-site background. Broader ligand-contact and active-site-neighborhood groups had stronger correlations, around 0.71 and 0.70 for the 35M model.
+
+The conclusion is not that ESM fails at catalytic residues generally. The more careful conclusion is that aggregate performance hides important residue-slice behavior. ESM-2 captures strong constraints around active-site environments, but exact catalytic residues are a small and uncertain slice. The project demonstrates a way to evaluate model behavior in terms a biologist would care about.
+
+### 18.2 What To Emphasize For A Life-Science AI Role
+
+Emphasize:
+
+- you framed a biologically meaningful evaluation question,
+- you did not just run a model,
+- you validated annotations,
+- you separated model performance by mechanism-relevant slices,
+- you ran a larger model on HPC,
+- you reported uncertainty,
+- and you built the benchmark as a reusable Python package.
+
+### 18.3 What To Emphasize For A Protein Engineering Role
+
+Emphasize:
+
+- active-site chemistry matters,
+- DMS fitness is assay-context dependent,
+- catalytic residues, binding pockets, and ligand contacts are different biological objects,
+- model rankings need to be interpreted through mechanism,
+- and computational ranking should guide experiments, not replace them.
+
+### 18.4 What To Emphasize For A Software or Eval Role
+
+Emphasize:
+
+- modular CLI,
+- swappable scorer interface,
+- typed data records,
+- tests,
+- reproducible outputs,
+- JSON/CSV/SVG artifacts,
+- benchmark extensibility,
+- and clear separation between data loading, scoring, labeling, and metrics.
+
+## 19. Likely Interview Questions and Strong Answers
+
+### Question: Why did you use Spearman correlation?
+
+Because the model score and experimental fitness are not in the same units. Spearman asks whether the model ranks variants in a similar order to the experiment. For zero-shot variant-effect prediction, ranking is often more meaningful than absolute score calibration.
+
+### Question: Why is the active-site result uncertain?
+
+Because the active-site-only group contains only 57 variants across four positions. That makes the estimate noisy. That is why I added bootstrap confidence intervals and broader mechanism-relevant groups like ligand contacts and active-site neighborhoods.
+
+### Question: Why did ligand-contact residues perform better than exact catalytic residues?
+
+One explanation is sample size: the ligand-contact group has 277 variants, which gives a more stable estimate. Another is biology: ESM-2 may capture structural and evolutionary constraints around the active-site environment better than the exact chemistry of catalytic residues. The result suggests ESM-2 has useful signal near functional regions, but it does not prove the model understands catalytic mechanism.
+
+### Question: What does masked-marginal scoring mean?
+
+For each mutation, I mask the wild-type position and ask ESM-2 how likely the mutant amino acid is compared with the wild-type amino acid in that sequence context. The score is the mutant log probability minus the wild-type log probability.
+
+### Question: Why include a placeholder scorer?
+
+The placeholder scorer is an engineering sanity check. It lets me prove the pipeline works before depending on PyTorch, ESM, model downloads, or GPU compute. It is like testing the plumbing before turning on the expensive instrument.
+
+### Question: What would you do next?
+
+I would run ESM-2 150M and ESM-1v, then repeat the same residue-slice analysis across multiple enzyme DMS datasets. I would also test whether structure-derived labels are robust across multiple ligand-bound TEM-1 structures.
+
+## 20. Limitations
+
+The project has clear limitations:
+
+1. It currently uses one enzyme.
+2. The active-site-only group is small.
+3. The ligand-contact group comes from one inhibitor-bound structure.
+4. DMS fitness reflects an assay context, not pure catalytic chemistry.
+5. ESM-2 is sequence-only and does not explicitly model ligand chemistry or transition states.
+6. The benchmark does not yet include ESM-1v, MSA Transformer, or structure-aware baselines.
+7. The project is retrospective, not a prospective design campaign.
+
+These limitations do not weaken the project. They make the claims precise.
+
+## 21. Next Scientific Steps
+
+High-priority next steps:
+
+1. Run ESM-2 150M using the existing Savio workflow.
+2. Add ESM-1v as a variant-effect baseline.
+3. Add an MSA-based baseline if compute and data setup allow.
+4. Expand from TEM-1 to a small enzyme panel.
+5. Add more ligand-bound TEM-1 structures to test contact-label robustness.
+6. Compare residue-slice behavior across different enzyme classes.
+7. Turn the main result into a clean portfolio figure and methods card.
+
+## 22. Portfolio Value
+
+P0 is strong portfolio evidence because it demonstrates five things at once.
+
+### Biology Depth
+
+The project uses enzyme DMS data, catalytic residues, substrate-binding residues, PDB ligand contacts, and active-site-neighborhood annotations.
+
+### ML and Evaluation Depth
+
+The project uses zero-shot ESM-2 scoring, rank correlation, subgroup evaluation, bootstrap confidence intervals, and model-size comparison.
+
+### Production Python
+
+The repo has a package structure, CLI, typed records, modular boundaries, tests, scripts, data documentation, and CI.
+
+### HPC and Compute Readiness
+
+The project includes Savio setup, SLURM scripts, GPU execution, and artifact transfer.
+
+### Scientific Communication
+
+The project includes a public writeup, social post draft, beginner code walkthrough, portfolio case study, and now this extensive report.
+
+## 23. Current Status
+
+P0 v1 is complete.
+
+Complete means:
+
+- real dataset selected,
+- ESM-2 8M run locally,
+- ESM-2 35M run on Savio,
+- outputs copied back,
+- metrics compared,
+- GitHub updated,
+- Obsidian updated,
+- tests passing,
+- and the result has a coherent scientific interpretation.
+
+It does not mean the research direction is exhausted. It means the first credible project artifact is finished.
+
+## 24. Final Takeaway
+
+P0 is a benchmark for asking whether protein language model performance changes near catalytic and mechanism-relevant regions of an enzyme.
+
+The most important lesson is:
+
+> Overall model performance is not enough. In AI biology, the interesting question is where the model works, where it fails, and whether those failure modes line up with the biology a scientist actually cares about.
+
+This project turns that lesson into code, metrics, plots, and a reproducible public artifact.
+
