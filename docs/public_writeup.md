@@ -95,6 +95,18 @@ For the ESM-2 8M run, I also added 1,000 bootstrap resamples:
 | Active-site neighborhood | 0.6453 | 0.5825 to 0.6994 |
 | Outside active-site neighborhood | 0.3752 | 0.3497 to 0.4006 |
 
+For the ESM-2 35M Savio run, I also computed 1,000 bootstrap resamples:
+
+| Group | Spearman | 95% Bootstrap CI |
+| --- | ---: | ---: |
+| Overall | 0.5548 | 0.5340 to 0.5757 |
+| UniProt active-site positions | 0.4596 | 0.2268 to 0.6418 |
+| Non-active-site positions | 0.5428 | 0.5195 to 0.5641 |
+| PDB 1M40 ligand-contact positions | 0.7127 | 0.6464 to 0.7695 |
+| Outside ligand-contact positions | 0.5344 | 0.5125 to 0.5558 |
+| Active-site neighborhood | 0.7027 | 0.6508 to 0.7503 |
+| Outside active-site neighborhood | 0.5188 | 0.4944 to 0.5424 |
+
 ## Interpretation
 
 ESM-2 gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay, and the 35M model improves over the 8M model.
@@ -145,11 +157,11 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Copy the 35M Savio artifacts back into the local repo.
-2. Run ESM-2 150M as the next scaling step.
-3. Add ESM-1v or an MSA-based baseline.
-4. Repeat the benchmark across multiple enzyme DMS assays.
-5. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
+1. Run ESM-2 150M as the next scaling step.
+2. Add ESM-1v or an MSA-based baseline.
+3. Repeat the benchmark across multiple enzyme DMS assays.
+4. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
+5. Turn the result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 

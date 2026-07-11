@@ -76,6 +76,19 @@ ESM-2 8M bootstrap intervals from 1,000 resamples:
 | Active-site neighborhood | 0.6453 | 0.5825 to 0.6994 |
 | Outside active-site neighborhood | 0.3752 | 0.3497 to 0.4006 |
 
+ESM-2 35M bootstrap intervals from 1,000 resamples:
+
+| Group | Spearman | 95% Bootstrap CI |
+| --- | ---: | ---: |
+| Overall | 0.5548 | 0.5340 to 0.5757 |
+| UniProt active-site positions | 0.4596 | 0.2268 to 0.6418 |
+| Non-active-site positions | 0.5428 | 0.5195 to 0.5641 |
+| UniProt substrate-binding site | 0.4965 | 0.2318 to 0.7061 |
+| PDB 1M40 ligand-contact positions | 0.7127 | 0.6464 to 0.7695 |
+| Outside ligand-contact positions | 0.5344 | 0.5125 to 0.5558 |
+| Active-site neighborhood | 0.7027 | 0.6508 to 0.7503 |
+| Outside active-site neighborhood | 0.5188 | 0.4944 to 0.5424 |
+
 ## Interpretation
 
 ESM-2 8M is substantially better than the placeholder scorer overall on the real TEM-1 DMS assay. ESM-2 35M improves over 8M across overall, active-site, non-active-site, ligand-contact, and active-site-neighborhood metrics.
@@ -88,4 +101,4 @@ The useful portfolio signal is the evaluation shape: the benchmark separates glo
 
 ## Next Upgrade
 
-Copy the ESM-2 35M Savio artifacts back into the local repo, then run ESM-2 150M or ESM-1v and repeat this same validated residue-slice analysis. SLURM templates for larger ESM-2 runs are in `hpc/`.
+Run ESM-2 150M or ESM-1v and repeat this same validated residue-slice analysis. SLURM templates for larger ESM-2 runs are in `hpc/`.
