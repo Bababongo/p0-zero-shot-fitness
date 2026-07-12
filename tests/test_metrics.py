@@ -1,6 +1,12 @@
 import pytest
 
-from p0_zero_shot_fitness.metrics import bootstrap_spearman_ci, residue_group_breakdown, spearman, top_k_enrichment
+from p0_zero_shot_fitness.metrics import (
+    bootstrap_spearman_ci,
+    position_matched_null_control,
+    residue_group_breakdown,
+    spearman,
+    top_k_enrichment,
+)
 from p0_zero_shot_fitness.models import Mutation, VariantRecord
 
 
@@ -50,3 +56,27 @@ def test_residue_group_breakdown_reports_in_group_and_outside_group() -> None:
     assert breakdown["pocket"]["n"] == 2
     assert breakdown["pocket"]["outside_n"] == 2
     assert breakdown["pocket"]["spearman"] == pytest.approx(1.0)
+
+
+def test_position_matched_null_control_is_reproducible() -> None:
+    records = [
+        VariantRecord(Mutation("A1V", "A", 1, "V"), 0.1, True, 0.1),
+        VariantRecord(Mutation("A1S", "A", 1, "S"), 0.2, True, 0.2),
+        VariantRecord(Mutation("A2V", "A", 2, "V"), 0.7, False, 0.6),
+        VariantRecord(Mutation("A2S", "A", 2, "S"), 0.6, False, 0.7),
+        VariantRecord(Mutation("A3V", "A", 3, "V"), 0.3, False, 0.8),
+        VariantRecord(Mutation("A3S", "A", 3, "S"), 0.4, False, 0.9),
+        VariantRecord(Mutation("A4V", "A", 4, "V"), 0.8, False, 0.3),
+        VariantRecord(Mutation("A4S", "A", 4, "S"), 0.9, False, 0.4),
+    ]
+
+    first = position_matched_null_control(records, {1}, iterations=20, seed=11)
+    second = position_matched_null_control(records, {1}, iterations=20, seed=11)
+
+    assert first == second
+    assert first["n_positions"] == 1
+    assert first["n_variants"] == 2
+    assert first["iterations"] == 20
+    assert first["observed_spearman"] == pytest.approx(1.0)
+    assert first["null_mean"] is not None
+    assert first["two_sided_empirical_p"] is not None

@@ -48,7 +48,12 @@ def build_variant_records(
     return records
 
 
-def run_fixture_benchmark(output_dir: Path, scorer: VariantScorer | None = None) -> JsonDict:
+def run_fixture_benchmark(
+    output_dir: Path,
+    scorer: VariantScorer | None = None,
+    null_iterations: int = 0,
+    null_seed: int = 2026,
+) -> JsonDict:
     scorer = scorer or PlaceholderConservationScorer()
     wild_type_sequence = read_fasta_sequence(load_fixture_text("wild_type.fasta"))
     catalytic_payload = load_fixture_json("catalytic_residues.json")
@@ -61,7 +66,7 @@ def run_fixture_benchmark(output_dir: Path, scorer: VariantScorer | None = None)
         catalytic_residues=catalytic_residues,
         scorer=scorer,
     )
-    metrics = summarize_records(records)
+    metrics = summarize_records(records, null_iterations=null_iterations, null_seed=null_seed)
     payload = {
         "benchmark": "P0 - Zero-Shot Fitness",
         "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
@@ -93,6 +98,8 @@ def run_external_benchmark(
     single_only: bool = True,
     bootstrap_iterations: int = 0,
     bootstrap_seed: int = 13,
+    null_iterations: int = 0,
+    null_seed: int = 2026,
 ) -> JsonDict:
     scorer = scorer or PlaceholderConservationScorer()
     wild_type_sequence = read_fasta_sequence(wild_type_fasta.read_text(encoding="utf-8"))
@@ -115,6 +122,8 @@ def run_external_benchmark(
         records,
         bootstrap_iterations=bootstrap_iterations,
         bootstrap_seed=bootstrap_seed,
+        null_iterations=null_iterations,
+        null_seed=null_seed,
     )
     payload = {
         "benchmark": "P0 - Zero-Shot Fitness",
@@ -162,6 +171,8 @@ def run_proteingym_blat_benchmark(
     scorer: VariantScorer | None = None,
     bootstrap_iterations: int = 0,
     bootstrap_seed: int = 13,
+    null_iterations: int = 0,
+    null_seed: int = 2026,
 ) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
@@ -178,4 +189,6 @@ def run_proteingym_blat_benchmark(
         single_only=True,
         bootstrap_iterations=bootstrap_iterations,
         bootstrap_seed=bootstrap_seed,
+        null_iterations=null_iterations,
+        null_seed=null_seed,
     )

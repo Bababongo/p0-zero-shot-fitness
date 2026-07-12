@@ -35,3 +35,12 @@ def test_proteingym_blat_pipeline_can_add_bootstrap_intervals(tmp_path) -> None:
 
     assert "bootstrap_ci" in payload["metrics"]
     assert payload["metrics"]["bootstrap_ci"]["spearman_overall"]["iterations"] == 10
+
+
+def test_proteingym_blat_pipeline_can_add_matched_position_null_controls(tmp_path) -> None:
+    payload = run_proteingym_blat_benchmark(tmp_path, null_iterations=10)
+
+    null_controls = payload["metrics"]["matched_position_null"]
+    assert null_controls["catalytic"]["iterations"] == 10
+    assert null_controls["catalytic"]["n_positions"] == 4
+    assert null_controls["residue_groups"]["uniprot_active_site"]["n_positions"] == 4

@@ -77,6 +77,8 @@ def main() -> int:
     parser.add_argument("--rewrite-scored-variants", action="store_true")
     parser.add_argument("--bootstrap-iterations", type=int, default=0)
     parser.add_argument("--bootstrap-seed", type=int, default=13)
+    parser.add_argument("--null-iterations", type=int, default=0)
+    parser.add_argument("--null-seed", type=int, default=2026)
     args = parser.parse_args()
 
     payload = json.loads(args.metrics_json.read_text(encoding="utf-8"))
@@ -87,6 +89,8 @@ def main() -> int:
         records,
         bootstrap_iterations=args.bootstrap_iterations,
         bootstrap_seed=args.bootstrap_seed,
+        null_iterations=args.null_iterations,
+        null_seed=args.null_seed,
     )
     payload.setdefault("input_files", {})["residue_groups_json"] = (
         str(args.residue_groups_json) if args.residue_groups_json else None

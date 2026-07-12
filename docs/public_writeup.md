@@ -6,6 +6,8 @@ In this first TEM-1 beta-lactamase benchmark, ESM-2 performs better than a simpl
 
 The first local run used ESM-2 8M. I then ran ESM-2 35M on Savio as the first scaling check. The 35M model improved overall and residue-slice performance, but the UniProt active-site-only subset still remained lower than the non-active-site background.
 
+I later added a matched residue-position null control. That changed the most careful interpretation: the exact UniProt active-site-only slice is not unusual compared with same-size random position groups, but the broader active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
+
 ## Why I Built This
 
 Protein language models are often evaluated with broad variant-effect prediction metrics. That is useful, but enzymes are not just sequence objects. Enzyme fitness can depend on active-site chemistry, catalytic residues, cofactors, substrate positioning, and transition-state stabilization.
@@ -107,6 +109,17 @@ For the ESM-2 35M Savio run, I also computed 1,000 bootstrap resamples:
 | Active-site neighborhood | 0.7027 | 0.6508 to 0.7503 |
 | Outside active-site neighborhood | 0.5188 | 0.4944 to 0.5424 |
 
+I also added 1,000 matched residue-position null samples for each mechanism-relevant slice:
+
+| Model | Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| ESM-2 8M | UniProt active site | 0.3023 | 0.3912 | -0.1961 to 0.7948 | 0.680 | inside null |
+| ESM-2 8M | PDB ligand contact, 5 A | 0.6076 | 0.3912 | 0.0964 to 0.6385 | 0.082 | inside null |
+| ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3726 | 0.1614 to 0.5519 | 0.002 | higher than null |
+| ESM-2 35M | UniProt active site | 0.4596 | 0.5245 | 0.0273 to 0.8356 | 0.668 | inside null |
+| ESM-2 35M | PDB ligand contact, 5 A | 0.7127 | 0.5303 | 0.2820 to 0.7227 | 0.070 | inside null |
+| ESM-2 35M | Active-site neighborhood | 0.7027 | 0.5148 | 0.3188 to 0.6781 | 0.012 | higher than null |
+
 ## Interpretation
 
 ESM-2 gives a much stronger zero-shot signal than the placeholder baseline on the TEM-1 assay, and the 35M model improves over the 8M model.
@@ -129,6 +142,8 @@ ESM-2 35M active-site neighborhood: 0.7027
 ESM-2 35M outside neighborhood:     0.5188
 ```
 
+The matched null control makes the interpretation more honest. The exact active-site result should not be overclaimed; it is too small to distinguish clearly from same-size random position groups. The more interesting positive result is that the active-site-neighborhood slice is unusually strong relative to matched random controls.
+
 This does not prove catalytic residues are generally easier for protein language models. A few caveats matter:
 
 - The UniProt active-site subset has only 57 variants.
@@ -148,6 +163,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - labels UniProt active-site and substrate-binding variants,
 - labels structure-derived ligand-contact variants from PDB 1M40,
 - labels active-site-neighborhood variants,
+- adds matched residue-position null controls for mechanism-relevant slices,
 - runs a swappable scorer interface,
 - supports ESM-2 masked-marginal scoring,
 - computes overall and subgroup Spearman correlations,

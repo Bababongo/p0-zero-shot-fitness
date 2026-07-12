@@ -24,9 +24,28 @@ The short interpretation:
 - Scaling from ESM-2 8M to ESM-2 35M improves performance across most slices.
 - UniProt catalytic-site-only performance is positive but lower than the non-active-site background.
 - Broader active-site and ligand-contact regions show strong model signal.
+- A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
 P0 v1 is complete as a portfolio artifact. Future work can extend it to ESM-2 150M, ESM-1v, MSA-based models, and a larger enzyme panel.
+
+## 1.1 v2 Addendum: Matched Residue-Position Null Controls
+
+After the initial report, P0 was upgraded with matched residue-position null controls. This directly addresses a key statistical concern: exact catalytic residues are a very small slice. In TEM-1 beta-lactamase, the UniProt active-site label covers 4 residue positions and 57 variants.
+
+For each mechanism-relevant residue slice, the upgraded analysis samples random residue-position groups of the same size and recomputes Spearman correlation. The observed slice is then compared against that matched null distribution.
+
+The upgraded result is more nuanced:
+
+- Exact UniProt active-site-only slices are not unusually low or high relative to same-size random position controls.
+- Active-site-neighborhood slices are higher than matched random position controls for both ESM-2 8M and ESM-2 35M.
+- PDB ligand-contact slices trend high, but remain inside the matched null interval in this first TEM-1-only analysis.
+
+This changes the strongest scientific claim from "ESM-2 fails at catalytic residues" to:
+
+> Sequence-only protein language models may capture functional-neighborhood constraints better than exact catalytic chemistry, and residue-zone claims should be tested against matched random position controls.
+
+The full v2 note is in `docs/p0_v2_novelty_upgrade.md`.
 
 ## 2. The 30-Second Explanation
 
@@ -667,4 +686,3 @@ The most important lesson is:
 > Overall model performance is not enough. In AI biology, the interesting question is where the model works, where it fails, and whether those failure modes line up with the biology a scientist actually cares about.
 
 This project turns that lesson into code, metrics, plots, and a reproducible public artifact.
-

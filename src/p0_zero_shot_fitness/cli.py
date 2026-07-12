@@ -47,6 +47,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Add bootstrap confidence intervals for Spearman metrics.",
     )
     parser.add_argument("--bootstrap-seed", type=int, default=13, help="Random seed for bootstrap intervals.")
+    parser.add_argument(
+        "--null-iterations",
+        type=int,
+        default=0,
+        help="Add residue-position-matched null controls for catalytic and residue-group slices.",
+    )
+    parser.add_argument("--null-seed", type=int, default=2026, help="Random seed for matched-position null controls.")
     return parser
 
 
@@ -61,13 +68,20 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     scorer = build_scorer(args)
     if args.preset == "fixture":
-        payload = run_fixture_benchmark(args.output_dir, scorer=scorer)
+        payload = run_fixture_benchmark(
+            args.output_dir,
+            scorer=scorer,
+            null_iterations=args.null_iterations,
+            null_seed=args.null_seed,
+        )
     elif args.preset == "proteingym-blat":
         payload = run_proteingym_blat_benchmark(
             args.output_dir,
             scorer=scorer,
             bootstrap_iterations=args.bootstrap_iterations,
             bootstrap_seed=args.bootstrap_seed,
+            null_iterations=args.null_iterations,
+            null_seed=args.null_seed,
         )
     else:
         required = [args.dms_csv, args.wild_type_fasta, args.catalytic_json]
@@ -86,6 +100,8 @@ def main(argv: list[str] | None = None) -> int:
             single_only=not args.include_multiple_mutants,
             bootstrap_iterations=args.bootstrap_iterations,
             bootstrap_seed=args.bootstrap_seed,
+            null_iterations=args.null_iterations,
+            null_seed=args.null_seed,
         )
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0

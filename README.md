@@ -8,6 +8,8 @@ Read the public-facing result writeup: [Do Protein Language Models Fail Differen
 
 Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_project_report.md)
 
+Read the v2 novelty upgrade: [Matched Residue-Position Null Controls](docs/p0_v2_novelty_upgrade.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters
@@ -23,6 +25,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
 - mutation-class breakdown,
+- matched residue-position null controls for mechanism-relevant residue slices,
 - reproducible CLI output and a simple SVG plot.
 
 ## Install
@@ -72,6 +75,12 @@ ESM-2 8M masked-marginal scorer:
 ```bash
 python -m pip install -e ".[esm]"
 p0-fitness --preset proteingym-blat --scorer esm2 --esm-model esm2_t6_8M_UR50D --output-dir results/proteingym_blat_esm2_t6_8M
+```
+
+Add matched residue-position null controls:
+
+```bash
+p0-fitness --preset proteingym-blat --null-iterations 1000 --output-dir results/proteingym_blat_placeholder_null
 ```
 
 Compare runs:

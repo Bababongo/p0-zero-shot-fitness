@@ -13,6 +13,93 @@
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/BLAT_ECOLX.fasta"
   },
   "metrics": {
+    "bootstrap_ci": {
+      "spearman_catalytic": {
+        "ci_high": 0.5334831678185347,
+        "ci_low": 0.050842970752904205,
+        "estimate": 0.3022910420214368,
+        "iterations": 1000,
+        "n": 57
+      },
+      "spearman_non_catalytic": {
+        "ci_high": 0.4292463849509247,
+        "ci_low": 0.37847563168781273,
+        "estimate": 0.4042061337564988,
+        "iterations": 1000,
+        "n": 4726
+      },
+      "spearman_overall": {
+        "ci_high": 0.4342430001867459,
+        "ci_low": 0.38463339454990864,
+        "estimate": 0.4113191200304927,
+        "iterations": 1000,
+        "n": 4783
+      }
+    },
+    "matched_position_null": {
+      "catalytic": {
+        "direction": "inside_position_matched_null_interval",
+        "iterations": 1000,
+        "n_positions": 4,
+        "n_variants": 57,
+        "null_ci_high": 0.7942677644087828,
+        "null_ci_low": -0.1848232258237955,
+        "null_mean": 0.3901891818731315,
+        "observed_spearman": 0.3022910420214368,
+        "percentile_rank": 0.332,
+        "two_sided_empirical_p": 0.664
+      },
+      "residue_groups": {
+        "active_site_neighborhood": {
+          "direction": "higher_than_position_matched_null",
+          "iterations": 1000,
+          "n_positions": 26,
+          "n_variants": 461,
+          "null_ci_high": 0.5519219155414959,
+          "null_ci_low": 0.16137197607514608,
+          "null_mean": 0.37258956538619775,
+          "observed_spearman": 0.6452980728256481,
+          "percentile_rank": 0.999,
+          "two_sided_empirical_p": 0.002
+        },
+        "structure_ligand_contact_5a": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 16,
+          "n_variants": 277,
+          "null_ci_high": 0.6385044571319575,
+          "null_ci_low": 0.09637866843371856,
+          "null_mean": 0.39117961822372066,
+          "observed_spearman": 0.6076010303391136,
+          "percentile_rank": 0.959,
+          "two_sided_empirical_p": 0.082
+        },
+        "uniprot_active_site": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 4,
+          "n_variants": 57,
+          "null_ci_high": 0.7948147696925616,
+          "null_ci_low": -0.1960810824077837,
+          "null_mean": 0.3911525409557277,
+          "observed_spearman": 0.3022910420214368,
+          "percentile_rank": 0.34,
+          "two_sided_empirical_p": 0.68
+        },
+        "uniprot_substrate_binding_site": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 3,
+          "n_variants": 55,
+          "null_ci_high": 0.8355284780739124,
+          "null_ci_low": -0.24206679530057856,
+          "null_mean": 0.3970913694231473,
+          "observed_spearman": 0.4382802761547867,
+          "percentile_rank": 0.495,
+          "two_sided_empirical_p": 0.99
+        }
+      }
+    },
     "mutation_class_breakdown": {
       "charge_preserving": {
         "mean_fitness": 0.677101083032491,
@@ -42,6 +129,72 @@
     "n_catalytic": 57,
     "n_non_catalytic": 4726,
     "n_variants": 4783,
+    "residue_group_bootstrap_ci": {
+      "active_site_neighborhood": {
+        "in_group": {
+          "ci_high": 0.6993761955138169,
+          "ci_low": 0.5825153872212062,
+          "estimate": 0.6452980728256481,
+          "iterations": 1000,
+          "n": 461
+        },
+        "outside_group": {
+          "ci_high": 0.4005932834728486,
+          "ci_low": 0.34969777589751483,
+          "estimate": 0.37522190050848253,
+          "iterations": 1000,
+          "n": 4322
+        }
+      },
+      "structure_ligand_contact_5a": {
+        "in_group": {
+          "ci_high": 0.6779056433697955,
+          "ci_low": 0.5273681685416151,
+          "estimate": 0.6076010303391136,
+          "iterations": 1000,
+          "n": 277
+        },
+        "outside_group": {
+          "ci_high": 0.4223777374484149,
+          "ci_low": 0.3754543346398644,
+          "estimate": 0.3996521607091182,
+          "iterations": 1000,
+          "n": 4506
+        }
+      },
+      "uniprot_active_site": {
+        "in_group": {
+          "ci_high": 0.5341418715561863,
+          "ci_low": 0.0477626031310121,
+          "estimate": 0.3022910420214368,
+          "iterations": 1000,
+          "n": 57
+        },
+        "outside_group": {
+          "ci_high": 0.42782544990084426,
+          "ci_low": 0.3782905028770195,
+          "estimate": 0.4042061337564988,
+          "iterations": 1000,
+          "n": 4726
+        }
+      },
+      "uniprot_substrate_binding_site": {
+        "in_group": {
+          "ci_high": 0.6698693250906116,
+          "ci_low": 0.1569251066091742,
+          "estimate": 0.4382802761547867,
+          "iterations": 1000,
+          "n": 55
+        },
+        "outside_group": {
+          "ci_high": 0.42322028062062467,
+          "ci_low": 0.37321085366295675,
+          "estimate": 0.39915196344522225,
+          "iterations": 1000,
+          "n": 4728
+        }
+      }
+    },
     "residue_group_breakdown": {
       "active_site_neighborhood": {
         "mean_fitness": 0.26227310195227765,

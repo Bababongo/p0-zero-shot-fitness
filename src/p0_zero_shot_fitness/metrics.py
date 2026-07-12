@@ -157,6 +157,119 @@ def bootstrap_residue_group_cis(
     return intervals
 
 
+def records_at_positions(records: list[VariantRecord], positions: set[int]) -> list[VariantRecord]:
+    return [record for record in records if record.mutation.position in positions]
+
+
+def position_matched_null_control(
+    records: list[VariantRecord],
+    target_positions: set[int],
+    iterations: int = 1000,
+    seed: int = 2026,
+) -> dict[str, float | int | str | None]:
+    """Compare a residue slice to random residue-position slices of the same size."""
+    target_records = records_at_positions(records, target_positions)
+    observed = spearman_for_records(target_records)
+    all_positions = sorted({record.mutation.position for record in records})
+    candidate_positions = [position for position in all_positions if position not in target_positions]
+
+    if not target_positions or len(target_records) < 2 or iterations <= 0:
+        return {
+            "n_positions": len(target_positions),
+            "n_variants": len(target_records),
+            "iterations": iterations,
+            "observed_spearman": observed,
+            "null_mean": None,
+            "null_ci_low": None,
+            "null_ci_high": None,
+            "percentile_rank": None,
+            "two_sided_empirical_p": None,
+            "direction": None,
+        }
+
+    sample_size = len(target_positions)
+    if len(candidate_positions) < sample_size:
+        candidate_positions = all_positions
+
+    rng = random.Random(seed)
+    estimates: list[float] = []
+    for _ in range(iterations):
+        sampled_positions = set(rng.sample(candidate_positions, sample_size))
+        estimate = spearman_for_records(records_at_positions(records, sampled_positions))
+        if estimate is not None:
+            estimates.append(estimate)
+
+    if observed is None or not estimates:
+        return {
+            "n_positions": len(target_positions),
+            "n_variants": len(target_records),
+            "iterations": iterations,
+            "observed_spearman": observed,
+            "null_mean": None,
+            "null_ci_low": None,
+            "null_ci_high": None,
+            "percentile_rank": None,
+            "two_sided_empirical_p": None,
+            "direction": None,
+        }
+
+    null_ci_low = percentile(estimates, 0.025)
+    null_ci_high = percentile(estimates, 0.975)
+    less_equal = sum(estimate <= observed for estimate in estimates) / len(estimates)
+    greater_equal = sum(estimate >= observed for estimate in estimates) / len(estimates)
+    two_sided_p = min(1.0, 2 * min(less_equal, greater_equal))
+    if null_ci_high is not None and observed > null_ci_high:
+        direction = "higher_than_position_matched_null"
+    elif null_ci_low is not None and observed < null_ci_low:
+        direction = "lower_than_position_matched_null"
+    else:
+        direction = "inside_position_matched_null_interval"
+
+    return {
+        "n_positions": len(target_positions),
+        "n_variants": len(target_records),
+        "iterations": iterations,
+        "observed_spearman": observed,
+        "null_mean": sum(estimates) / len(estimates),
+        "null_ci_low": null_ci_low,
+        "null_ci_high": null_ci_high,
+        "percentile_rank": less_equal,
+        "two_sided_empirical_p": two_sided_p,
+        "direction": direction,
+    }
+
+
+def matched_position_null_controls(
+    records: list[VariantRecord],
+    iterations: int = 1000,
+    seed: int = 2026,
+) -> dict[str, object]:
+    catalytic_positions = {record.mutation.position for record in records if record.is_catalytic}
+    group_names = sorted({group_name for record in records for group_name in record.residue_groups})
+    residue_groups = {}
+    for offset, group_name in enumerate(group_names):
+        group_positions = {
+            record.mutation.position
+            for record in records
+            if group_name in record.residue_groups
+        }
+        residue_groups[group_name] = position_matched_null_control(
+            records,
+            group_positions,
+            iterations=iterations,
+            seed=seed + offset + 1,
+        )
+    return {
+        "catalytic": position_matched_null_control(
+            records,
+            catalytic_positions,
+            iterations=iterations,
+            seed=seed,
+        ),
+        "residue_groups": residue_groups,
+    }
+
+
 def residue_group_breakdown(records: list[VariantRecord]) -> dict[str, dict[str, float | int | None]]:
     group_names = sorted({group_name for record in records for group_name in record.residue_groups})
     breakdown: dict[str, dict[str, float | int | None]] = {}
@@ -178,6 +291,8 @@ def summarize_records(
     records: list[VariantRecord],
     bootstrap_iterations: int = 0,
     bootstrap_seed: int = 13,
+    null_iterations: int = 0,
+    null_seed: int = 2026,
 ) -> dict[str, object]:
     catalytic = [record for record in records if record.is_catalytic]
     non_catalytic = [record for record in records if not record.is_catalytic]
@@ -202,5 +317,11 @@ def summarize_records(
             records,
             iterations=bootstrap_iterations,
             seed=bootstrap_seed + 1000,
+        )
+    if null_iterations > 0:
+        summary["matched_position_null"] = matched_position_null_controls(
+            records,
+            iterations=null_iterations,
+            seed=null_seed,
         )
     return summary
