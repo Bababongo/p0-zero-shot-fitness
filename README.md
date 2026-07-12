@@ -10,6 +10,8 @@ Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_pr
 
 Read the v2 novelty upgrade: [Matched Residue-Position Null Controls](docs/p0_v2_novelty_upgrade.md)
 
+Read the v3 enzyme-panel plan: [P0 Enzyme Panel Plan](docs/enzyme_panel_plan.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters
@@ -128,10 +130,11 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 
 ## Next Scientific Steps
 
-1. Compare larger ESM-2 models, ESM-1v, and an MSA-based baseline.
-2. Run the SLURM templates in `hpc/` on LBNL compute.
-3. Expand from TEM-1 to a small enzyme panel.
-4. Add more structures or ligands to test contact-label robustness.
+1. Validate the enzyme-panel registry in `data/panels/p0_enzyme_panel_candidates.csv`.
+2. Add VIM-2 beta-lactamase, SARS-CoV-2 Mpro, and aliphatic amidase as the first panel expansion.
+3. Add conservation-matched and solvent-accessibility-matched null controls.
+4. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
+5. Add more structures or ligands to test contact-label robustness.
 
 ## Portfolio Signal
 
