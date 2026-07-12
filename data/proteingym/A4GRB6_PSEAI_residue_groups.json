@@ -1,0 +1,44 @@
+{
+  "protein_id": "A4GRB6_PSEAI",
+  "assay_id": "A4GRB6_PSEAI_Chen_2020",
+  "residue_numbering": "1-indexed positions in the 266-aa ProteinGym target sequence",
+  "annotation_status": "curated_motif_annotation_not_uniprot_backed",
+  "residue_groups": {
+    "active_site_neighborhood": [
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      177,
+      178,
+      179,
+      180,
+      181,
+      196,
+      197,
+      198,
+      199,
+      200,
+      238,
+      239,
+      240,
+      241,
+      242
+    ],
+    "curated_metal_binding_site": [
+      114,
+      116,
+      118,
+      179,
+      198,
+      240
+    ]
+  },
+  "source": "Conserved B1 metallo-beta-lactamase active-site and zinc-binding motif mapping plus transparent +/-2 residue windows.",
+  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the curated VIM-2 metal-binding/catalytic-site residues. The curated_metal_binding_site group is the exact motif-derived site. No structure-derived ligand-contact group is included yet; that should be added after a VIM-2 structure and ligand/contact rule are selected."
+}

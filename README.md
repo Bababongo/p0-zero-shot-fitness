@@ -12,6 +12,8 @@ Read the v2 novelty upgrade: [Matched Residue-Position Null Controls](docs/p0_v2
 
 Read the v3 enzyme-panel plan: [P0 Enzyme Panel Plan](docs/enzyme_panel_plan.md)
 
+Read the first VIM-2 expansion note: [ProteinGym VIM-2 Result](docs/protein_gym_vim2_result.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters
@@ -95,6 +97,38 @@ python scripts/compare_metrics.py \
   --output results/proteingym_blat_comparison.json
 ```
 
+## Run The VIM-2 ProteinGym Benchmark
+
+This repo now includes the ProteinGym `A4GRB6_PSEAI_Chen_2020` processed assay file and metadata for VIM-2 metallo-beta-lactamase.
+
+Materialize a ProteinGym dataset from the public substitutions archive:
+
+```bash
+python scripts/materialize_proteingym_dataset.py \
+  --dms-id A4GRB6_PSEAI_Chen_2020 \
+  --archive-path /tmp/DMS_ProteinGym_substitutions.zip
+```
+
+Run the VIM-2 placeholder baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-vim2 \
+  --output-dir results/proteingym_vim2_placeholder \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+VIM-2 placeholder result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.0194 | - | 5,004 |
+| Curated metal-binding site | 0.1214 | 0.0045 | 113 |
+| Active-site neighborhood | 0.2003 | -0.0006 | 448 |
+
+The placeholder scorer is not the scientific model result. Its job is to prove the second-enzyme data path, labels, metrics, bootstrap intervals, and matched-position null controls before spending ESM compute.
+
 ## Validate The Enzyme Panel Registry
 
 The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
@@ -113,14 +147,14 @@ Current validation summary:
 | --- | ---: |
 | Candidate enzyme datasets | 18 |
 | ProteinGym metadata matches | 18 |
-| Ready for current P0 pipeline | 1 |
-| Need local data and annotations | 17 |
+| Ready for current P0 pipeline | 2 |
+| Need local data and annotations | 16 |
 
 Recommended first panel expansion:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase.
-2. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
-3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+1. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
+2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+3. Add structure-derived VIM-2 ligand/contact labels.
 
 First real result:
 
@@ -154,15 +188,15 @@ ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The enzyme-panel validator does not run ESM; it is an intake-check step before spending compute on new enzymes.
+The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run currently has local data, curated motif annotations, and a placeholder baseline; ESM scoring is the next compute step.
 
 ## Next Scientific Steps
 
-1. Add VIM-2 beta-lactamase as the first second-enzyme case.
-2. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
-3. Add conservation-matched and solvent-accessibility-matched null controls.
-4. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
-5. Add more structures or ligands to test contact-label robustness.
+1. Run ESM-2 8M or 35M on VIM-2.
+2. Add structure-derived VIM-2 ligand/contact labels.
+3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
+4. Add conservation-matched and solvent-accessibility-matched null controls.
+5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
 
 ## Portfolio Signal
 

@@ -171,22 +171,45 @@ Current validator result:
 | --- | ---: |
 | Candidate enzyme datasets | 18 |
 | ProteinGym metadata matches | 18 |
-| Ready for current P0 pipeline | 1 |
-| Need local data and annotations | 17 |
+| Ready for current P0 pipeline | 2 |
+| Need local data and annotations | 16 |
 
-The ready dataset is the completed seed case:
+The ready datasets are:
 
 - `BLAT_ECOLX_Firnberg_2014` - TEM-1 beta-lactamase.
+- `A4GRB6_PSEAI_Chen_2020` - VIM-2 metallo-beta-lactamase.
 
-The other 17 have matching ProteinGym metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
+The other 16 have matching ProteinGym metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
+
+## First Second-Enzyme Case
+
+Status: VIM-2 placeholder baseline completed.
+
+Dataset:
+
+- `A4GRB6_PSEAI_Chen_2020`
+- Protein: VIM-2 metallo-beta-lactamase
+- Variants: 5,004 single mutants
+- Exact curated metal-binding/catalytic-site variants: 113
+- Active-site-neighborhood variants: 448
+
+Current VIM-2 placeholder result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.0194 | - | 5,004 |
+| Curated metal-binding site | 0.1214 | 0.0045 | 113 |
+| Active-site neighborhood | 0.2003 | -0.0006 | 448 |
+
+The placeholder result is not the final scientific model comparison. It proves the second-enzyme pipeline, data files, curated motif labels, bootstrap intervals, and matched-position null controls work before running ESM.
 
 ## First Three Datasets To Add
 
 Start with:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase.
-2. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
-3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+1. Run ESM-2 on `A4GRB6_PSEAI_Chen_2020`.
+2. Add `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
+3. Add `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
 
 Why these three:
 

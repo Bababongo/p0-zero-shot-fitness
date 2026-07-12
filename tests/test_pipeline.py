@@ -1,6 +1,10 @@
 import json
 
-from p0_zero_shot_fitness.pipeline import run_fixture_benchmark, run_proteingym_blat_benchmark
+from p0_zero_shot_fitness.pipeline import (
+    run_fixture_benchmark,
+    run_proteingym_blat_benchmark,
+    run_proteingym_vim2_benchmark,
+)
 
 
 def test_fixture_pipeline_writes_expected_artifacts(tmp_path) -> None:
@@ -44,3 +48,14 @@ def test_proteingym_blat_pipeline_can_add_matched_position_null_controls(tmp_pat
     assert null_controls["catalytic"]["iterations"] == 10
     assert null_controls["catalytic"]["n_positions"] == 4
     assert null_controls["residue_groups"]["uniprot_active_site"]["n_positions"] == 4
+
+
+def test_proteingym_vim2_pipeline_runs_second_enzyme_dataset(tmp_path) -> None:
+    payload = run_proteingym_vim2_benchmark(tmp_path)
+
+    assert payload["dataset"] == "ProteinGym A4GRB6_PSEAI_Chen_2020"
+    assert payload["metrics"]["n_variants"] == 5004
+    assert payload["metrics"]["n_catalytic"] == 113
+    assert payload["metrics"]["residue_group_breakdown"]["curated_metal_binding_site"]["n"] == 113
+    assert payload["metrics"]["residue_group_breakdown"]["active_site_neighborhood"]["n"] == 448
+    assert (tmp_path / "scored_variants.csv").exists()

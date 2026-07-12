@@ -1,0 +1,14 @@
+{
+  "DMS_filename": "A4GRB6_PSEAI_Chen_2020.csv",
+  "DMS_id": "A4GRB6_PSEAI_Chen_2020",
+  "DMS_number_single_mutants": "5004",
+  "UniProt_ID": "A4GRB6_PSEAI",
+  "includes_multiple_mutants": "FALSE",
+  "molecule_name": "Beta-lactamase VIM-2",
+  "pdb_file": "A4GRB6_PSEAI.pdb",
+  "raw_DMS_mutant_column": "mutant",
+  "raw_DMS_phenotype_name": "0.031ug_mL_MEM_37C",
+  "selection_assay": "drug resistance (128/16/2.0 ug/mL ampicillin, 4.0/0.5 ug/mL cefotaxime, 0.031 ug/mL meropenem @ 25C, 37C)",
+  "selection_type": "Antibiotics resistance",
+  "seq_len": "266"
+}

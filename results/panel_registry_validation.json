@@ -31,10 +31,10 @@
       "enzyme_class_or_family": "Metallo-beta-lactamase",
       "estimated_masked_marginal_score_units": 1331064,
       "local_status": {
-        "has_local_catalytic_json": false,
-        "has_local_dms_csv": false,
-        "has_local_fasta": false,
-        "has_local_residue_groups_json": false
+        "has_local_catalytic_json": true,
+        "has_local_dms_csv": true,
+        "has_local_fasta": true,
+        "has_local_residue_groups_json": true
       },
       "main_annotation_need": "Metal-coordinating catalytic residues and beta-lactam/inhibitor-contact labels",
       "metadata_found": true,
@@ -45,7 +45,7 @@
       "selection_type": "Antibiotics resistance",
       "sequence_length": 266,
       "single_mutants": 5004,
-      "status": "metadata_ready_needs_local_data_and_annotations",
+      "status": "ready_for_p0_pipeline",
       "structure_file": "A4GRB6_PSEAI.pdb",
       "tier": 1,
       "uniprot_id": "A4GRB6_PSEAI"
@@ -483,7 +483,7 @@
     }
   ],
   "status_counts": {
-    "metadata_ready_needs_local_data_and_annotations": 17,
-    "ready_for_p0_pipeline": 1
+    "metadata_ready_needs_local_data_and_annotations": 16,
+    "ready_for_p0_pipeline": 2
   }
 }

@@ -27,7 +27,7 @@ The short interpretation:
 - A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
-P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and identifies the first three datasets to add before running more ESM jobs.
+P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 has been added as the first second-enzyme case with a placeholder baseline.
 
 ## 1.1 v2 Addendum: Matched Residue-Position Null Controls
 
@@ -75,16 +75,49 @@ Current validation result:
 | --- | ---: |
 | Candidate enzyme datasets | 18 |
 | ProteinGym metadata matches | 18 |
-| Ready for current P0 pipeline | 1 |
-| Need local data and annotations | 17 |
+| Ready for current P0 pipeline | 2 |
+| Need local data and annotations | 16 |
 
-Recommended first expansion:
+Completed first expansion:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase.
-2. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
-3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase placeholder baseline.
+
+Recommended next expansion:
+
+1. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
+2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+3. VIM-2 structure-derived ligand/contact labels.
 
 This is scientifically important because it turns P0 from "one interesting TEM-1 result" into a controlled plan for asking whether residue-zone behavior generalizes across mechanisms.
+
+## 1.3 v3 Addendum: VIM-2 Second-Enzyme Case
+
+VIM-2 is the first second-enzyme case in P0.
+
+Dataset:
+
+- ProteinGym dataset: `A4GRB6_PSEAI_Chen_2020`
+- Protein: VIM-2 metallo-beta-lactamase
+- Variants: 5,004 single mutants
+- Current run: placeholder baseline with bootstrap intervals and matched-position null controls
+
+The exact curated metal-binding/catalytic-site positions are:
+
+```text
+[114, 116, 118, 179, 198, 240]
+```
+
+These are motif-curated B1 metallo-beta-lactamase positions in the 266-aa ProteinGym target sequence. UniProt accession A4GRB6 is inactive/deleted, so this is intentionally not presented as a UniProt-backed annotation.
+
+Placeholder baseline result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.0194 | - | 5,004 |
+| Curated metal-binding site | 0.1214 | 0.0045 | 113 |
+| Active-site neighborhood | 0.2003 | -0.0006 | 448 |
+
+This does not answer the ESM scientific question yet. It proves the second-enzyme data path, annotation path, metrics, bootstrap intervals, and matched-position null controls work.
 
 ## 2. The 30-Second Explanation
 
@@ -548,10 +581,12 @@ Important result artifacts:
 | `results/proteingym_blat_esm2_t12_35M/scored_variants.csv` | Per-variant model scores and labels |
 | `results/proteingym_blat_esm2_t12_35M/fitness_scatter.svg` | Scatter plot of model score vs experimental fitness |
 | `results/proteingym_blat_esm2_8m_vs_35m.json` | Comparison artifact for ESM-2 scaling |
+| `results/proteingym_vim2_placeholder/metrics.json` | VIM-2 placeholder baseline with bootstrap and matched-position null controls |
 | `results/panel_registry_validation.json` | Validated enzyme-panel status and recommended first expansion |
 | `docs/public_writeup.md` | Public-facing result explanation |
 | `docs/code_walkthrough_for_beginners.md` | Beginner-oriented code walkthrough |
 | `docs/enzyme_panel_plan.md` | P0 v3 scientific expansion plan |
+| `docs/protein_gym_vim2_result.md` | First second-enzyme result note |
 | `hpc/SAVIO.md` | Savio runbook |
 
 ## 17. Testing and Engineering Quality
@@ -562,6 +597,7 @@ The repo uses pytest and includes tests for:
 - metrics,
 - pipeline behavior,
 - CLI behavior,
+- ProteinGym dataset materialization,
 - and enzyme-panel registry validation.
 
 The project also includes GitHub Actions CI.
@@ -577,7 +613,7 @@ This matters because a scientific benchmark is only useful if the reader can tru
 The most recent verification state was:
 
 ```text
-16 tests passed
+18 tests passed
 ```
 
 ## 18. Interview Explanation
@@ -651,13 +687,13 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add VIM-2 beta-lactamase first, then SARS-CoV-2 Mpro and aliphatic amidase, using the same residue-zone analysis. After that I would run ESM-2 150M, ESM-1v, and MSA Transformer, then test conservation-matched and solvent-accessibility-matched controls.
+I would run ESM-2 on VIM-2 next, then add SARS-CoV-2 Mpro and aliphatic amidase using the same residue-zone analysis. After that I would run ESM-1v and MSA Transformer, then test conservation-matched and solvent-accessibility-matched controls.
 
 ## 20. Limitations
 
 The project has clear limitations:
 
-1. The completed ESM scoring results currently use one enzyme.
+1. The completed ESM scoring results currently use one enzyme; VIM-2 has data and placeholder validation but not ESM scoring yet.
 2. The active-site-only group is small.
 3. The ligand-contact group comes from one inhibitor-bound structure.
 4. DMS fitness reflects an assay context, not pure catalytic chemistry.
@@ -671,14 +707,15 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Add VIM-2 beta-lactamase as the first second-enzyme case.
-2. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
-3. Run ESM-2 150M using the existing Savio workflow.
-4. Add ESM-1v as a variant-effect baseline.
-5. Add an MSA-based baseline if compute and data setup allow.
-6. Add more ligand-bound TEM-1 structures to test contact-label robustness.
-7. Compare residue-slice behavior across different enzyme classes.
-8. Turn the main result into a clean portfolio figure and methods card.
+1. Run ESM-2 on VIM-2.
+2. Add structure-derived VIM-2 ligand/contact labels.
+3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
+4. Run ESM-2 150M using the existing Savio workflow.
+5. Add ESM-1v as a variant-effect baseline.
+6. Add an MSA-based baseline if compute and data setup allow.
+7. Add more ligand-bound TEM-1 structures to test contact-label robustness.
+8. Compare residue-slice behavior across different enzyme classes.
+9. Turn the main result into a clean portfolio figure and methods card.
 
 ## 22. Portfolio Value
 
@@ -706,7 +743,7 @@ The project includes a public writeup, social post draft, beginner code walkthro
 
 ## 23. Current Status
 
-P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete.
+P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete and its first second-enzyme placeholder baseline complete.
 
 Complete means:
 
@@ -716,6 +753,7 @@ Complete means:
 - outputs copied back,
 - metrics compared,
 - enzyme-panel registry validated,
+- VIM-2 data and placeholder baseline added,
 - GitHub updated,
 - Obsidian updated,
 - tests passing,

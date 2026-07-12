@@ -4,7 +4,12 @@ import argparse
 import json
 from pathlib import Path
 
-from p0_zero_shot_fitness.pipeline import run_external_benchmark, run_fixture_benchmark, run_proteingym_blat_benchmark
+from p0_zero_shot_fitness.pipeline import (
+    run_external_benchmark,
+    run_fixture_benchmark,
+    run_proteingym_blat_benchmark,
+    run_proteingym_vim2_benchmark,
+)
 from p0_zero_shot_fitness.scorers import ESM2MaskedMarginalScorer, PlaceholderConservationScorer, VariantScorer
 
 
@@ -20,7 +25,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--preset",
-        choices=["fixture", "proteingym-blat", "external"],
+        choices=["fixture", "proteingym-blat", "proteingym-vim2", "external"],
         default="fixture",
         help="Benchmark preset to run.",
     )
@@ -76,6 +81,15 @@ def main(argv: list[str] | None = None) -> int:
         )
     elif args.preset == "proteingym-blat":
         payload = run_proteingym_blat_benchmark(
+            args.output_dir,
+            scorer=scorer,
+            bootstrap_iterations=args.bootstrap_iterations,
+            bootstrap_seed=args.bootstrap_seed,
+            null_iterations=args.null_iterations,
+            null_seed=args.null_seed,
+        )
+    elif args.preset == "proteingym-vim2":
+        payload = run_proteingym_vim2_benchmark(
             args.output_dir,
             scorer=scorer,
             bootstrap_iterations=args.bootstrap_iterations,

@@ -1,0 +1,32 @@
+{
+  "protein_id": "A4GRB6_PSEAI",
+  "assay_id": "A4GRB6_PSEAI_Chen_2020",
+  "residue_numbering": "1-indexed positions in the 266-aa ProteinGym target sequence",
+  "annotation_status": "curated_motif_annotation_not_uniprot_backed",
+  "catalytic_residues": [114, 116, 118, 179, 198, 240],
+  "metal_binding_residues": [114, 116, 118, 179, 198, 240],
+  "mapped_from_b1_metallo_beta_lactamase_motifs": [
+    {
+      "motif": "HxHxD metal-site motif",
+      "target_positions": [114, 116, 118],
+      "target_sequence_window": "RAVSTHFHDDRVGGV"
+    },
+    {
+      "motif": "second-shell active-site histidine",
+      "target_positions": [179],
+      "target_sequence_window": "FYPGAAHSTDNLIVY"
+    },
+    {
+      "motif": "cysteine zinc-ligand region",
+      "target_positions": [198],
+      "target_sequence_window": "SASVLYGGCAIYELS"
+    },
+    {
+      "motif": "C-terminal histidine zinc-ligand region",
+      "target_positions": [240],
+      "target_sequence_window": "FVIPGHGLPGGLDLL"
+    }
+  ],
+  "source": "Conserved B1 metallo-beta-lactamase active-site and zinc-binding motif mapping onto the ProteinGym VIM-2 target sequence.",
+  "evidence": "UniProt accession A4GRB6 is inactive/deleted, so this first VIM-2 benchmark uses transparent motif-based curation rather than UniProt feature annotations. The residues mark the conserved metal-binding/catalytic-site environment used to define the exact active-site slice for the first VIM-2 run."
+}
