@@ -143,19 +143,42 @@ The intellectual question is:
 
 ## First v3 Implementation Step
 
-The next implementation target should be:
+Status: completed.
+
+The first implementation target was:
 
 > Build a dataset registry loader that reads `data/panels/p0_enzyme_panel_candidates.csv` and validates that each candidate has the required ProteinGym metadata fields.
 
-This should not run ESM yet.
+This does not run ESM yet. It is an intake-check step before spending compute.
 
-It should produce:
+It produces:
 
 - `results/panel_registry_validation.json`
 - a pass/fail status for each candidate,
 - missing annotation fields,
 - estimated compute cost based on number of single mutants and sequence length,
 - recommended first three datasets.
+
+Run it with:
+
+```bash
+python scripts/validate_panel_registry.py
+```
+
+Current validator result:
+
+| Check | Result |
+| --- | ---: |
+| Candidate enzyme datasets | 18 |
+| ProteinGym metadata matches | 18 |
+| Ready for current P0 pipeline | 1 |
+| Need local data and annotations | 17 |
+
+The ready dataset is the completed seed case:
+
+- `BLAT_ECOLX_Firnberg_2014` - TEM-1 beta-lactamase.
+
+The other 17 have matching ProteinGym metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
 
 ## First Three Datasets To Add
 
@@ -186,4 +209,3 @@ P0 v3 is successful when it can answer:
 ## Interview Version
 
 > P0 started as one TEM-1 case study. I upgraded it into the start of a mechanism-stratified enzyme benchmark. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The next phase expands from TEM-1 to a panel of enzymes and asks whether the active-site-neighborhood signal is systematic after controlling for slice size, conservation, solvent accessibility, and mutation class.
-

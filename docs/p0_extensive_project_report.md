@@ -10,7 +10,7 @@ Core question:
 
 ## 1. Executive Summary
 
-P0 is a completed v1 benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of an enzyme. The project uses a real deep mutational scanning dataset for TEM-1 beta-lactamase from ProteinGym, scores single amino-acid variants with ESM-2, and compares model scores against experimental fitness.
+P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of an enzyme. The project uses a real deep mutational scanning dataset for TEM-1 beta-lactamase from ProteinGym, scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and now includes a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 The scientific motivation is simple: a protein language model can look good overall while still failing on the residues that matter most for enzyme engineering. Enzyme function is not only about broad evolutionary conservation or stability. It can depend on active-site chemistry, substrate positioning, cofactors, binding-pocket geometry, and transition-state stabilization. P0 turns that concern into a measurable benchmark.
 
@@ -27,7 +27,7 @@ The short interpretation:
 - A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
-P0 v1 is complete as a portfolio artifact. Future work can extend it to ESM-2 150M, ESM-1v, MSA-based models, and a larger enzyme panel.
+P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and identifies the first three datasets to add before running more ESM jobs.
 
 ## 1.1 v2 Addendum: Matched Residue-Position Null Controls
 
@@ -46,6 +46,45 @@ This changes the strongest scientific claim from "ESM-2 fails at catalytic resid
 > Sequence-only protein language models may capture functional-neighborhood constraints better than exact catalytic chemistry, and residue-zone claims should be tested against matched random position controls.
 
 The full v2 note is in `docs/p0_v2_novelty_upgrade.md`.
+
+## 1.2 v3 Addendum: Enzyme Panel Registry
+
+After the v2 null-control upgrade, P0 was extended from a single-enzyme result into a multi-enzyme benchmark plan. The new registry is:
+
+```text
+data/panels/p0_enzyme_panel_candidates.csv
+```
+
+It contains 18 enzyme DMS candidates across beta-lactamases, proteases, hydrolases, kinases, oxidoreductases, phosphatases, and other mechanism classes. The point is to test whether the TEM-1 pattern is systematic or just a one-enzyme artifact.
+
+The validator is:
+
+```text
+scripts/validate_panel_registry.py
+```
+
+It checks each candidate against local ProteinGym metadata, estimates masked-marginal scoring cost, checks whether local DMS/FASTA/annotation files are present, and writes:
+
+```text
+results/panel_registry_validation.json
+```
+
+Current validation result:
+
+| Check | Result |
+| --- | ---: |
+| Candidate enzyme datasets | 18 |
+| ProteinGym metadata matches | 18 |
+| Ready for current P0 pipeline | 1 |
+| Need local data and annotations | 17 |
+
+Recommended first expansion:
+
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase.
+2. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
+3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+
+This is scientifically important because it turns P0 from "one interesting TEM-1 result" into a controlled plan for asking whether residue-zone behavior generalizes across mechanisms.
 
 ## 2. The 30-Second Explanation
 
@@ -386,6 +425,7 @@ Important modules:
 | `labeling.py` | Catalytic and residue-group labeling. |
 | `scorers.py` | Swappable scoring interface, placeholder scorer, and ESM-2 scorer. |
 | `metrics.py` | Spearman correlation, enrichment, subgroup breakdowns, and bootstrap intervals. |
+| `panel.py` | Enzyme-panel registry loading, ProteinGym metadata validation, cost estimation, and first-panel recommendation. |
 | `models.py` | Typed dataclasses for mutations and scored variant records. |
 | `plotting/svg.py` | Lightweight SVG scatter plot generation. |
 
@@ -394,6 +434,7 @@ Supporting folders:
 | Folder | Role |
 | --- | --- |
 | `data/proteingym/` | TEM-1 DMS data, FASTA, residue annotations, source records, and structure-derived labels. |
+| `data/panels/` | Candidate enzyme-panel registry for P0 v3 expansion. |
 | `results/` | Metrics, scored variants, comparison JSON, and plots. |
 | `scripts/` | Utility scripts for comparing metrics and deriving structure contacts. |
 | `hpc/` | SLURM scripts and Savio runbook. |
@@ -507,8 +548,10 @@ Important result artifacts:
 | `results/proteingym_blat_esm2_t12_35M/scored_variants.csv` | Per-variant model scores and labels |
 | `results/proteingym_blat_esm2_t12_35M/fitness_scatter.svg` | Scatter plot of model score vs experimental fitness |
 | `results/proteingym_blat_esm2_8m_vs_35m.json` | Comparison artifact for ESM-2 scaling |
+| `results/panel_registry_validation.json` | Validated enzyme-panel status and recommended first expansion |
 | `docs/public_writeup.md` | Public-facing result explanation |
 | `docs/code_walkthrough_for_beginners.md` | Beginner-oriented code walkthrough |
+| `docs/enzyme_panel_plan.md` | P0 v3 scientific expansion plan |
 | `hpc/SAVIO.md` | Savio runbook |
 
 ## 17. Testing and Engineering Quality
@@ -518,7 +561,8 @@ The repo uses pytest and includes tests for:
 - mutation parsing,
 - metrics,
 - pipeline behavior,
-- and CLI behavior.
+- CLI behavior,
+- and enzyme-panel registry validation.
 
 The project also includes GitHub Actions CI.
 
@@ -533,7 +577,7 @@ This matters because a scientific benchmark is only useful if the reader can tru
 The most recent verification state was:
 
 ```text
-10 tests passed
+16 tests passed
 ```
 
 ## 18. Interview Explanation
@@ -607,13 +651,13 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would run ESM-2 150M and ESM-1v, then repeat the same residue-slice analysis across multiple enzyme DMS datasets. I would also test whether structure-derived labels are robust across multiple ligand-bound TEM-1 structures.
+I would add VIM-2 beta-lactamase first, then SARS-CoV-2 Mpro and aliphatic amidase, using the same residue-zone analysis. After that I would run ESM-2 150M, ESM-1v, and MSA Transformer, then test conservation-matched and solvent-accessibility-matched controls.
 
 ## 20. Limitations
 
 The project has clear limitations:
 
-1. It currently uses one enzyme.
+1. The completed ESM scoring results currently use one enzyme.
 2. The active-site-only group is small.
 3. The ligand-contact group comes from one inhibitor-bound structure.
 4. DMS fitness reflects an assay context, not pure catalytic chemistry.
@@ -627,13 +671,14 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Run ESM-2 150M using the existing Savio workflow.
-2. Add ESM-1v as a variant-effect baseline.
-3. Add an MSA-based baseline if compute and data setup allow.
-4. Expand from TEM-1 to a small enzyme panel.
-5. Add more ligand-bound TEM-1 structures to test contact-label robustness.
-6. Compare residue-slice behavior across different enzyme classes.
-7. Turn the main result into a clean portfolio figure and methods card.
+1. Add VIM-2 beta-lactamase as the first second-enzyme case.
+2. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
+3. Run ESM-2 150M using the existing Savio workflow.
+4. Add ESM-1v as a variant-effect baseline.
+5. Add an MSA-based baseline if compute and data setup allow.
+6. Add more ligand-bound TEM-1 structures to test contact-label robustness.
+7. Compare residue-slice behavior across different enzyme classes.
+8. Turn the main result into a clean portfolio figure and methods card.
 
 ## 22. Portfolio Value
 
@@ -661,7 +706,7 @@ The project includes a public writeup, social post draft, beginner code walkthro
 
 ## 23. Current Status
 
-P0 v1 is complete.
+P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete.
 
 Complete means:
 
@@ -670,6 +715,7 @@ Complete means:
 - ESM-2 35M run on Savio,
 - outputs copied back,
 - metrics compared,
+- enzyme-panel registry validated,
 - GitHub updated,
 - Obsidian updated,
 - tests passing,

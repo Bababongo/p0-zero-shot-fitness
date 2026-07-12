@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. The first version uses a tiny synthetic enzyme DMS fixture and a deterministic placeholder scorer so the full analysis pipeline works before downloading or running ESM.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes a real TEM-1 ProteinGym benchmark, ESM-2 masked-marginal scoring, matched residue-position null controls, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -23,6 +23,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - mutation parsing and validation against a wild-type sequence,
 - UniProt-backed catalytic versus non-catalytic residue labeling,
 - structure-derived ligand-contact residue grouping from PDB 1M40,
+- a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
@@ -94,6 +95,33 @@ python scripts/compare_metrics.py \
   --output results/proteingym_blat_comparison.json
 ```
 
+## Validate The Enzyme Panel Registry
+
+The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
+
+```bash
+python scripts/validate_panel_registry.py
+```
+
+Output:
+
+- `results/panel_registry_validation.json`
+
+Current validation summary:
+
+| Check | Result |
+| --- | ---: |
+| Candidate enzyme datasets | 18 |
+| ProteinGym metadata matches | 18 |
+| Ready for current P0 pipeline | 1 |
+| Need local data and annotations | 17 |
+
+Recommended first panel expansion:
+
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase.
+2. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
+3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+
 First real result:
 
 | Scorer | Overall Spearman | Catalytic Spearman | Non-catalytic Spearman | Top-5 Enrichment |
@@ -126,12 +154,12 @@ ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2.
+The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The enzyme-panel validator does not run ESM; it is an intake-check step before spending compute on new enzymes.
 
 ## Next Scientific Steps
 
-1. Validate the enzyme-panel registry in `data/panels/p0_enzyme_panel_candidates.csv`.
-2. Add VIM-2 beta-lactamase, SARS-CoV-2 Mpro, and aliphatic amidase as the first panel expansion.
+1. Add VIM-2 beta-lactamase as the first second-enzyme case.
+2. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
 3. Add conservation-matched and solvent-accessibility-matched null controls.
 4. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
 5. Add more structures or ligands to test contact-label robustness.
