@@ -129,6 +129,28 @@ VIM-2 placeholder result:
 
 The placeholder scorer is not the scientific model result. Its job is to prove the second-enzyme data path, labels, metrics, bootstrap intervals, and matched-position null controls before spending ESM compute.
 
+Run the VIM-2 ESM-2 8M baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-vim2 \
+  --scorer esm2 \
+  --esm-model esm2_t6_8M_UR50D \
+  --output-dir results/proteingym_vim2_esm2_t6_8M \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+VIM-2 ESM-2 8M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4305 | - | 5,004 |
+| Curated metal-binding site | 0.3702 | 0.4123 | 113 |
+| Active-site neighborhood | 0.6128 | 0.3936 | 448 |
+
+The active-site-neighborhood slice is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.6128`, null 95% interval `0.1787 to 0.5736`, empirical p = `0.012`.
+
 ## Validate The Enzyme Panel Registry
 
 The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
@@ -188,12 +210,12 @@ ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run currently has local data, curated motif annotations, and a placeholder baseline; ESM scoring is the next compute step.
+The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run now has local data, curated motif annotations, a placeholder baseline, and an ESM-2 8M baseline.
 
 ## Next Scientific Steps
 
-1. Run ESM-2 8M or 35M on VIM-2.
-2. Add structure-derived VIM-2 ligand/contact labels.
+1. Add structure-derived VIM-2 ligand/contact labels.
+2. Run ESM-2 35M on VIM-2 for model-size comparison.
 3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
 4. Add conservation-matched and solvent-accessibility-matched null controls.
 5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.

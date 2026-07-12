@@ -27,7 +27,7 @@ The short interpretation:
 - A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
-P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 has been added as the first second-enzyme case with a placeholder baseline.
+P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 has been added as the first second-enzyme case with placeholder and ESM-2 8M baselines.
 
 ## 1.1 v2 Addendum: Matched Residue-Position Null Controls
 
@@ -80,7 +80,7 @@ Current validation result:
 
 Completed first expansion:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase placeholder baseline.
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase placeholder and ESM-2 8M baselines.
 
 Recommended next expansion:
 
@@ -99,7 +99,7 @@ Dataset:
 - ProteinGym dataset: `A4GRB6_PSEAI_Chen_2020`
 - Protein: VIM-2 metallo-beta-lactamase
 - Variants: 5,004 single mutants
-- Current run: placeholder baseline with bootstrap intervals and matched-position null controls
+- Current runs: placeholder and ESM-2 8M baselines with bootstrap intervals and matched-position null controls
 
 The exact curated metal-binding/catalytic-site positions are:
 
@@ -109,15 +109,15 @@ The exact curated metal-binding/catalytic-site positions are:
 
 These are motif-curated B1 metallo-beta-lactamase positions in the 266-aa ProteinGym target sequence. UniProt accession A4GRB6 is inactive/deleted, so this is intentionally not presented as a UniProt-backed annotation.
 
-Placeholder baseline result:
+ESM-2 8M result:
 
 | Slice | Spearman | Outside Spearman | Variants |
 | --- | ---: | ---: | ---: |
-| Overall | 0.0194 | - | 5,004 |
-| Curated metal-binding site | 0.1214 | 0.0045 | 113 |
-| Active-site neighborhood | 0.2003 | -0.0006 | 448 |
+| Overall | 0.4305 | - | 5,004 |
+| Curated metal-binding site | 0.3702 | 0.4123 | 113 |
+| Active-site neighborhood | 0.6128 | 0.3936 | 448 |
 
-This does not answer the ESM scientific question yet. It proves the second-enzyme data path, annotation path, metrics, bootstrap intervals, and matched-position null controls work.
+The exact curated metal-binding-site slice is positive but inside the matched-position null. The active-site-neighborhood slice is higher than same-size random residue-position controls, with empirical p = 0.012. This mirrors the TEM-1 pattern: exact catalytic or metal-site positions are small and hard to interpret alone, while broader functional neighborhoods show stronger model signal.
 
 ## 2. The 30-Second Explanation
 
@@ -582,6 +582,8 @@ Important result artifacts:
 | `results/proteingym_blat_esm2_t12_35M/fitness_scatter.svg` | Scatter plot of model score vs experimental fitness |
 | `results/proteingym_blat_esm2_8m_vs_35m.json` | Comparison artifact for ESM-2 scaling |
 | `results/proteingym_vim2_placeholder/metrics.json` | VIM-2 placeholder baseline with bootstrap and matched-position null controls |
+| `results/proteingym_vim2_esm2_t6_8M/metrics.json` | VIM-2 ESM-2 8M baseline with bootstrap and matched-position null controls |
+| `results/proteingym_vim2_placeholder_vs_esm2_t6_8M.json` | VIM-2 placeholder-vs-ESM-2 comparison artifact |
 | `results/panel_registry_validation.json` | Validated enzyme-panel status and recommended first expansion |
 | `docs/public_writeup.md` | Public-facing result explanation |
 | `docs/code_walkthrough_for_beginners.md` | Beginner-oriented code walkthrough |
@@ -687,13 +689,13 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would run ESM-2 on VIM-2 next, then add SARS-CoV-2 Mpro and aliphatic amidase using the same residue-zone analysis. After that I would run ESM-1v and MSA Transformer, then test conservation-matched and solvent-accessibility-matched controls.
+I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would add SARS-CoV-2 Mpro and aliphatic amidase using the same residue-zone analysis, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
 
 ## 20. Limitations
 
 The project has clear limitations:
 
-1. The completed ESM scoring results currently use one enzyme; VIM-2 has data and placeholder validation but not ESM scoring yet.
+1. The completed ESM scoring results currently use two beta-lactamases; the panel still needs more enzyme classes.
 2. The active-site-only group is small.
 3. The ligand-contact group comes from one inhibitor-bound structure.
 4. DMS fitness reflects an assay context, not pure catalytic chemistry.
@@ -707,8 +709,8 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Run ESM-2 on VIM-2.
-2. Add structure-derived VIM-2 ligand/contact labels.
+1. Add structure-derived VIM-2 ligand/contact labels.
+2. Run ESM-2 35M on VIM-2.
 3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
 4. Run ESM-2 150M using the existing Savio workflow.
 5. Add ESM-1v as a variant-effect baseline.
@@ -743,7 +745,7 @@ The project includes a public writeup, social post draft, beginner code walkthro
 
 ## 23. Current Status
 
-P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete and its first second-enzyme placeholder baseline complete.
+P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete and its first second-enzyme ESM-2 8M baseline complete.
 
 Complete means:
 
@@ -753,7 +755,7 @@ Complete means:
 - outputs copied back,
 - metrics compared,
 - enzyme-panel registry validated,
-- VIM-2 data and placeholder baseline added,
+- VIM-2 data, placeholder baseline, and ESM-2 8M baseline added,
 - GitHub updated,
 - Obsidian updated,
 - tests passing,
