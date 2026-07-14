@@ -172,15 +172,16 @@ Current validation summary:
 | Check | Result |
 | --- | ---: |
 | Candidate enzyme datasets | 18 |
-| ProteinGym metadata matches | 18 |
+| ProteinGym metadata matches | 17 |
 | Ready for current P0 pipeline | 2 |
-| Need local data and annotations | 16 |
+| Need local data and annotations | 15 |
+| External targets needing dataset and annotations | 1 |
 
-Recommended first panel expansion:
+Recommended next panel path:
 
-1. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
-2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
-3. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase, already active as the first second-enzyme case.
+2. `ANFDC1_EXTERNAL` - AnFdc1 ferulic acid decarboxylase, an external prospective enzyme-engineering target.
+3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, the next public ProteinGym hydrolase case.
 
 First real result:
 
@@ -220,9 +221,10 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 
 1. Run ESM-2 35M on VIM-2 for model-size comparison.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
-4. Add conservation-matched and solvent-accessibility-matched null controls.
-5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
+3. Assemble AnFdc1 FASTA, structure, prFMN/cofactor residues, substrate-pocket labels, and any tested variants.
+4. Add aliphatic amidase as the next public ProteinGym hydrolase case.
+5. Add conservation-matched and solvent-accessibility-matched null controls.
+6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
 
 ## Portfolio Signal
 

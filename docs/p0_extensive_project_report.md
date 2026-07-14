@@ -74,9 +74,10 @@ Current validation result:
 | Check | Result |
 | --- | ---: |
 | Candidate enzyme datasets | 18 |
-| ProteinGym metadata matches | 18 |
+| ProteinGym metadata matches | 17 |
 | Ready for current P0 pipeline | 2 |
-| Need local data and annotations | 16 |
+| Need local data and annotations | 15 |
+| External targets needing dataset and annotations | 1 |
 
 Completed first expansion:
 
@@ -84,9 +85,9 @@ Completed first expansion:
 
 Recommended next expansion:
 
-1. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
-2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
-3. VIM-2 structure-derived ligand/contact labels.
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase structure-derived residue-zone refinement.
+2. `ANFDC1_EXTERNAL` - AnFdc1 ferulic acid decarboxylase as the external Fdc1 engineering bridge.
+3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase as the next public ProteinGym hydrolase.
 
 This is scientifically important because it turns P0 from "one interesting TEM-1 result" into a controlled plan for asking whether residue-zone behavior generalizes across mechanisms.
 
@@ -689,7 +690,7 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would add SARS-CoV-2 Mpro and aliphatic amidase using the same residue-zone analysis, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
+I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would assemble AnFdc1 as an external enzyme-engineering target and add aliphatic amidase as the next public ProteinGym hydrolase, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
 
 ## 20. Limitations
 
@@ -711,13 +712,14 @@ High-priority next steps:
 
 1. Run ESM-2 35M on VIM-2.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
-3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
-4. Run ESM-2 150M using the existing Savio workflow.
-5. Add ESM-1v as a variant-effect baseline.
-6. Add an MSA-based baseline if compute and data setup allow.
-7. Add more ligand-bound TEM-1 structures to test contact-label robustness.
-8. Compare residue-slice behavior across different enzyme classes.
-9. Turn the main result into a clean portfolio figure and methods card.
+3. Assemble the AnFdc1 external target package: FASTA, structure, prFMN/cofactor residues, substrate-pocket labels, and tested variants.
+4. Add aliphatic amidase as the next public ProteinGym hydrolase panel member.
+5. Run ESM-2 150M using the existing Savio workflow.
+6. Add ESM-1v as a variant-effect baseline.
+7. Add an MSA-based baseline if compute and data setup allow.
+8. Add more ligand-bound TEM-1 structures to test contact-label robustness.
+9. Compare residue-slice behavior across different enzyme classes.
+10. Turn the main result into a clean portfolio figure and methods card.
 
 ## 22. Portfolio Value
 
