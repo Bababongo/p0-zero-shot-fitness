@@ -11,6 +11,7 @@ ProteinGym source:
 
 - Source repository: <https://github.com/OATML-Markslab/ProteinGym>
 - Data archive: <https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/DMS_ProteinGym_substitutions.zip>
+- AF2 structure archive: <https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/ProteinGym_AF2_structures.zip>
 
 Use `scripts/materialize_proteingym_dataset.py` to extract one dataset from the public ProteinGym substitutions archive and generate local FASTA/metadata files from `data/proteingym/DMS_substitutions.csv`.
 
@@ -75,6 +76,8 @@ Local support files:
 - `data/proteingym/A4GRB6_PSEAI_Chen_2020_metadata.json`
 - `data/proteingym/A4GRB6_PSEAI_catalytic_residues.json`
 - `data/proteingym/A4GRB6_PSEAI_residue_groups.json`
+- `data/proteingym/structures/A4GRB6_PSEAI.pdb`
+- `data/proteingym/source_records/A4GRB6_PSEAI_metal_site_shell_5A.json`
 
 ## VIM-2 Catalytic / Metal-Site Labels
 
@@ -92,8 +95,9 @@ The VIM-2 residue-group file defines:
 
 - `curated_metal_binding_site`: positions 114, 116, 118, 179, 198, and 240.
 - `active_site_neighborhood`: a +/-2 residue window around those curated motif positions.
+- `structure_metal_site_shell_5a`: residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom in the ProteinGym AF2 structure `A4GRB6_PSEAI.pdb`.
 
-No VIM-2 structure-derived ligand-contact group is included yet. That should be added after selecting a VIM-2 structure and a reproducible contact rule.
+The structure shell is not a ligand-bound experimental contact map. It is a structure-derived metal-site proximity slice from the ProteinGym AF2 model. A ligand-bound VIM-2 contact group should still be added later if a suitable experimental structure and reproducible ligand/contact rule are selected.
 
 ## Model Outputs
 

@@ -7,9 +7,9 @@
   "data_scope": "External DMS dataset",
   "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",
   "input_files": {
-    "catalytic_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/A4GRB6_PSEAI_catalytic_residues.json",
+    "catalytic_json": "data/proteingym/A4GRB6_PSEAI_catalytic_residues.json",
     "dms_csv": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/A4GRB6_PSEAI_Chen_2020.csv",
-    "residue_groups_json": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/A4GRB6_PSEAI_residue_groups.json",
+    "residue_groups_json": "data/proteingym/A4GRB6_PSEAI_residue_groups.json",
     "wild_type_fasta": "/Users/eze/Documents/Codex/2026-06-25/create-an-obsidian-vault-scaffold-for/p0-zero-shot-fitness/data/proteingym/A4GRB6_PSEAI.fasta"
   },
   "metrics": {
@@ -22,16 +22,16 @@
         "n": 113
       },
       "spearman_non_catalytic": {
-        "ci_high": 0.03171904006147865,
-        "ci_low": -0.024645802532967703,
-        "estimate": 0.004523629842935126,
+        "ci_high": 0.031719056641342835,
+        "ci_low": -0.024645919203284856,
+        "estimate": 0.004523353823228788,
         "iterations": 1000,
         "n": 4891
       },
       "spearman_overall": {
-        "ci_high": 0.04583888222638568,
-        "ci_low": -0.00826294542091888,
-        "estimate": 0.019419204192048563,
+        "ci_high": 0.04583895363319677,
+        "ci_low": -0.008262675909046254,
+        "estimate": 0.019419140595075473,
         "iterations": 1000,
         "n": 5004
       }
@@ -44,7 +44,7 @@
         "n_variants": 113,
         "null_ci_high": 0.3826726535832469,
         "null_ci_low": -0.353949297888235,
-        "null_mean": 0.020403063093351256,
+        "null_mean": 0.020402813248966412,
         "observed_spearman": 0.12141231129573832,
         "percentile_rank": 0.683,
         "two_sided_empirical_p": 0.634
@@ -57,8 +57,8 @@
           "n_variants": 448,
           "null_ci_high": 0.18832479870490806,
           "null_ci_low": -0.16377004683713048,
-          "null_mean": -0.0009118279222748579,
-          "observed_spearman": 0.20034058020137857,
+          "null_mean": -0.0009119238412993758,
+          "observed_spearman": 0.2003427362415792,
           "percentile_rank": 0.985,
           "two_sided_empirical_p": 0.03
         },
@@ -69,34 +69,46 @@
           "n_variants": 113,
           "null_ci_high": 0.40796648037734695,
           "null_ci_low": -0.3536450065390957,
-          "null_mean": 0.014140400777295658,
+          "null_mean": 0.014140248308268124,
           "observed_spearman": 0.12141231129573832,
           "percentile_rank": 0.697,
           "two_sided_empirical_p": 0.606
+        },
+        "structure_metal_site_shell_5a": {
+          "direction": "higher_than_position_matched_null",
+          "iterations": 1000,
+          "n_positions": 43,
+          "n_variants": 802,
+          "null_ci_high": 0.09780184004698049,
+          "null_ci_low": -0.14907801712656324,
+          "null_mean": -0.02604044416858584,
+          "observed_spearman": 0.17203743387124001,
+          "percentile_rank": 1.0,
+          "two_sided_empirical_p": 0.0
         }
       }
     },
     "mutation_class_breakdown": {
       "charge_preserving": {
-        "mean_fitness": -1.3357677294949422,
+        "mean_fitness": -1.335767661936937,
         "mean_model_score": 0.8385585585585585,
         "n": 222,
         "spearman": 0.12095157650143382
       },
       "class_changing": {
-        "mean_fitness": -1.9266748602171868,
+        "mean_fitness": -1.9266748535484712,
         "mean_model_score": 0.6100065061808718,
         "n": 3074,
-        "spearman": 0.04358837895893731
+        "spearman": 0.0435886400858766
       },
       "hydrophobic_or_special_preserving": {
-        "mean_fitness": -2.105748163848276,
+        "mean_fitness": -2.105748172265996,
         "mean_model_score": 0.8399137311286844,
         "n": 1391,
-        "spearman": 0.00656410615375573
+        "spearman": 0.006560952291063949
       },
       "polar_preserving": {
-        "mean_fitness": -1.5897994186196434,
+        "mean_fitness": -1.5897994853217665,
         "mean_model_score": 0.8419558359621451,
         "n": 317,
         "spearman": 0.13757851357899822
@@ -108,16 +120,16 @@
     "residue_group_bootstrap_ci": {
       "active_site_neighborhood": {
         "in_group": {
-          "ci_high": 0.2838058211108642,
+          "ci_high": 0.28381340488987894,
           "ci_low": 0.11303258318198085,
-          "estimate": 0.20034058020137857,
+          "estimate": 0.2003427362415792,
           "iterations": 1000,
           "n": 448
         },
         "outside_group": {
-          "ci_high": 0.02935305884347336,
-          "ci_low": -0.031003055435581864,
-          "estimate": -0.0006189616941008131,
+          "ci_high": 0.029353342491820474,
+          "ci_low": -0.031003340496176666,
+          "estimate": -0.000618984922275493,
           "iterations": 1000,
           "n": 4556
         }
@@ -131,35 +143,59 @@
           "n": 113
         },
         "outside_group": {
-          "ci_high": 0.031198086951554696,
-          "ci_low": -0.022575597008686853,
-          "estimate": 0.004523629842935126,
+          "ci_high": 0.031197698039506824,
+          "ci_low": -0.02257623848867557,
+          "estimate": 0.004523353823228788,
           "iterations": 1000,
           "n": 4891
+        }
+      },
+      "structure_metal_site_shell_5a": {
+        "in_group": {
+          "ci_high": 0.22969864976185025,
+          "ci_low": 0.10950641246690682,
+          "estimate": 0.17203743387124001,
+          "iterations": 1000,
+          "n": 802
+        },
+        "outside_group": {
+          "ci_high": 0.006405700275063304,
+          "ci_low": -0.05232714041844864,
+          "estimate": -0.023553643846794394,
+          "iterations": 1000,
+          "n": 4202
         }
       }
     },
     "residue_group_breakdown": {
       "active_site_neighborhood": {
-        "mean_fitness": -3.4450585024463556,
+        "mean_fitness": -3.445058462388393,
         "mean_model_score": 0.6899776785714286,
         "n": 448,
         "outside_n": 4556,
-        "outside_spearman": -0.0006189616941008131,
-        "spearman": 0.20034058020137857
+        "outside_spearman": -0.000618984922275493,
+        "spearman": 0.2003427362415792
       },
       "curated_metal_binding_site": {
-        "mean_fitness": -4.784893590810795,
+        "mean_fitness": -4.78489353982301,
         "mean_model_score": 0.6511504424778761,
         "n": 113,
         "outside_n": 4891,
-        "outside_spearman": 0.004523629842935126,
+        "outside_spearman": 0.004523353823228788,
         "spearman": 0.12141231129573832
+      },
+      "structure_metal_site_shell_5a": {
+        "mean_fitness": -3.265542302306733,
+        "mean_model_score": 0.6875436408977555,
+        "n": 802,
+        "outside_n": 4202,
+        "outside_spearman": -0.023553643846794394,
+        "spearman": 0.17203743387124001
       }
     },
     "spearman_catalytic": 0.12141231129573832,
-    "spearman_non_catalytic": 0.004523629842935126,
-    "spearman_overall": 0.019419204192048563,
+    "spearman_non_catalytic": 0.004523353823228788,
+    "spearman_overall": 0.019419140595075473,
     "top_5_enrichment_fitness_ge_0_7": 0.0
   },
   "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",

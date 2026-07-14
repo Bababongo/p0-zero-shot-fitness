@@ -709,8 +709,8 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Add structure-derived VIM-2 ligand/contact labels.
-2. Run ESM-2 35M on VIM-2.
+1. Run ESM-2 35M on VIM-2.
+2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
 3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
 4. Run ESM-2 150M using the existing Savio workflow.
 5. Add ESM-1v as a variant-effect baseline.

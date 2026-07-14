@@ -58,4 +58,5 @@ def test_proteingym_vim2_pipeline_runs_second_enzyme_dataset(tmp_path) -> None:
     assert payload["metrics"]["n_catalytic"] == 113
     assert payload["metrics"]["residue_group_breakdown"]["curated_metal_binding_site"]["n"] == 113
     assert payload["metrics"]["residue_group_breakdown"]["active_site_neighborhood"]["n"] == 448
+    assert payload["metrics"]["residue_group_breakdown"]["structure_metal_site_shell_5a"]["n"] == 802
     assert (tmp_path / "scored_variants.csv").exists()

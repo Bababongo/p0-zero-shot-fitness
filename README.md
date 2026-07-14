@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes a real TEM-1 ProteinGym benchmark, ESM-2 masked-marginal scoring, matched residue-position null controls, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1 and VIM-2 ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -25,6 +25,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - mutation parsing and validation against a wild-type sequence,
 - UniProt-backed catalytic versus non-catalytic residue labeling,
 - structure-derived ligand-contact residue grouping from PDB 1M40,
+- ProteinGym AF2-derived VIM-2 metal-site shell grouping,
 - a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
 - Spearman correlation overall and by residue group,
@@ -147,7 +148,10 @@ VIM-2 ESM-2 8M result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.4305 | - | 5,004 |
 | Curated metal-binding site | 0.3702 | 0.4123 | 113 |
+| AF2 structure metal-site shell, 5 A | 0.5734 | 0.3843 | 802 |
 | Active-site neighborhood | 0.6128 | 0.3936 | 448 |
+
+The AF2 structure metal-site shell is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.5734`, null 95% interval `0.2323 to 0.5188`, empirical p = `0.000`.
 
 The active-site-neighborhood slice is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.6128`, null 95% interval `0.1787 to 0.5736`, empirical p = `0.012`.
 
@@ -176,7 +180,7 @@ Recommended first panel expansion:
 
 1. `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
 2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
-3. Add structure-derived VIM-2 ligand/contact labels.
+3. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
 
 First real result:
 
@@ -210,12 +214,12 @@ ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run now has local data, curated motif annotations, a placeholder baseline, and an ESM-2 8M baseline.
+The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run now has local data, curated motif annotations, a ProteinGym AF2 structure-derived metal-site shell, a placeholder baseline, and an ESM-2 8M baseline.
 
 ## Next Scientific Steps
 
-1. Add structure-derived VIM-2 ligand/contact labels.
-2. Run ESM-2 35M on VIM-2 for model-size comparison.
+1. Run ESM-2 35M on VIM-2 for model-size comparison.
+2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
 3. Add SARS-CoV-2 Mpro and aliphatic amidase as the next panel members.
 4. Add conservation-matched and solvent-accessibility-matched null controls.
 5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.

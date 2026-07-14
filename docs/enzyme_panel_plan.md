@@ -183,7 +183,7 @@ The other 16 have matching ProteinGym metadata, but still need local DMS CSV, FA
 
 ## First Second-Enzyme Case
 
-Status: VIM-2 placeholder baseline and ESM-2 8M baseline completed.
+Status: VIM-2 placeholder baseline, ESM-2 8M baseline, and ProteinGym AF2 structure-derived metal-site shell completed.
 
 Dataset:
 
@@ -207,8 +207,8 @@ The active-site-neighborhood slice is higher than matched random residue-positio
 
 Start with:
 
-1. Add structure-derived VIM-2 ligand/contact labels.
-2. Run ESM-2 35M on `A4GRB6_PSEAI_Chen_2020`.
+1. Run ESM-2 35M on `A4GRB6_PSEAI_Chen_2020`.
+2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure and contact rule are selected.
 3. Add `R1AB_SARS2_Flynn_2022` - SARS-CoV-2 Mpro.
 
 Why these three:

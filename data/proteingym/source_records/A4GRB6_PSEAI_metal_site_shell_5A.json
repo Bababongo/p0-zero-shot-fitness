@@ -1,0 +1,365 @@
+{
+  "chain": "A",
+  "contacts": [
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 2.754,
+      "residue_name": "PRO",
+      "target_position": 68
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.763,
+      "residue_name": "SER",
+      "target_position": 69
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.776,
+      "residue_name": "ASN",
+      "target_position": 70
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 4.493,
+      "residue_name": "ASP",
+      "target_position": 84
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 3.352,
+      "residue_name": "THR",
+      "target_position": 85
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 4.88,
+      "residue_name": "ALA",
+      "target_position": 86
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 3.355,
+      "residue_name": "TRP",
+      "target_position": 87
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.521,
+      "residue_name": "SER",
+      "target_position": 112
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.333,
+      "residue_name": "THR",
+      "target_position": 113
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "HIS",
+      "target_position": 114
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.334,
+      "residue_name": "PHE",
+      "target_position": 115
+    },
+    {
+      "closest_site_position": 116,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "HIS",
+      "target_position": 116
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 1.327,
+      "residue_name": "ASP",
+      "target_position": 117
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "ASP",
+      "target_position": 118
+    },
+    {
+      "closest_site_position": 118,
+      "closest_site_residue_name": "ASP",
+      "min_distance_angstrom": 1.336,
+      "residue_name": "ARG",
+      "target_position": 119
+    },
+    {
+      "closest_site_position": 116,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.053,
+      "residue_name": "VAL",
+      "target_position": 120
+    },
+    {
+      "closest_site_position": 116,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 4.48,
+      "residue_name": "GLY",
+      "target_position": 121
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.482,
+      "residue_name": "THR",
+      "target_position": 139
+    },
+    {
+      "closest_site_position": 116,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.934,
+      "residue_name": "ASN",
+      "target_position": 148
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 4.655,
+      "residue_name": "ALA",
+      "target_position": 177
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.338,
+      "residue_name": "ALA",
+      "target_position": 178
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "HIS",
+      "target_position": 179
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.33,
+      "residue_name": "SER",
+      "target_position": 180
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 4.757,
+      "residue_name": "THR",
+      "target_position": 181
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.211,
+      "residue_name": "ASP",
+      "target_position": 182
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 2.992,
+      "residue_name": "ASN",
+      "target_position": 183
+    },
+    {
+      "closest_site_position": 114,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 4.971,
+      "residue_name": "LEU",
+      "target_position": 184
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 3.741,
+      "residue_name": "GLY",
+      "target_position": 196
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 1.331,
+      "residue_name": "GLY",
+      "target_position": 197
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "CYS",
+      "target_position": 198
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 1.339,
+      "residue_name": "ALA",
+      "target_position": 199
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 3.164,
+      "residue_name": "ILE",
+      "target_position": 200
+    },
+    {
+      "closest_site_position": 198,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 3.863,
+      "residue_name": "TYR",
+      "target_position": 201
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.66,
+      "residue_name": "GLU",
+      "target_position": 202
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.44,
+      "residue_name": "ASN",
+      "target_position": 210
+    },
+    {
+      "closest_site_position": 116,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 2.753,
+      "residue_name": "ASP",
+      "target_position": 213
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.281,
+      "residue_name": "ALA",
+      "target_position": 214
+    },
+    {
+      "closest_site_position": 179,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.533,
+      "residue_name": "TRP",
+      "target_position": 219
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 3.129,
+      "residue_name": "PRO",
+      "target_position": 238
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.338,
+      "residue_name": "GLY",
+      "target_position": 239
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "HIS",
+      "target_position": 240
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 1.334,
+      "residue_name": "GLY",
+      "target_position": 241
+    },
+    {
+      "closest_site_position": 240,
+      "closest_site_residue_name": "HIS",
+      "min_distance_angstrom": 4.221,
+      "residue_name": "LEU",
+      "target_position": 242
+    }
+  ],
+  "cutoff_angstrom": 5.0,
+  "group_name": "structure_metal_site_shell_5a",
+  "method": "Residues are included if any heavy atom is within the cutoff distance of any heavy atom from the requested site residues.",
+  "pdb": "A4GRB6_PSEAI.pdb",
+  "site_json": "data/proteingym/A4GRB6_PSEAI_catalytic_residues.json",
+  "site_key": "metal_binding_residues",
+  "site_positions": [
+    114,
+    116,
+    118,
+    179,
+    198,
+    240
+  ],
+  "target_positions": [
+    68,
+    69,
+    70,
+    84,
+    85,
+    86,
+    87,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    139,
+    148,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202,
+    210,
+    213,
+    214,
+    219,
+    238,
+    239,
+    240,
+    241,
+    242
+  ]
+}
