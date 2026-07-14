@@ -19,6 +19,8 @@ The new control asks:
 - Added covariate-matched null controls to `src/p0_zero_shot_fitness/metrics.py`.
 - Added `scripts/derive_position_covariates.py`.
 - Added `scripts/summarize_control_readouts.py`.
+- Added approximate solvent-accessibility/SASA covariates after this pre-report upgrade.
+- Added MSA conservation-baseline infrastructure and an MSA availability audit.
 - Refreshed all four ESM-2 35M metric JSON files with covariate-matched controls.
 - Added a placeholder-vs-ESM-2 comparison artifact as a simple non-ESM baseline check.
 
@@ -32,9 +34,10 @@ The new control asks:
 | `model_score_sensitivity` | ESM score mean and standard deviation | Whether a slice is explained by the model already assigning unusually broad/narrow score distributions there. |
 | `relative_position` | normalized sequence position | Whether sequence-location effects explain the slice. |
 | `structure_contact_density` | C-beta/C-alpha contact count within 10 A | Burial/exposure proxy; not full SASA. |
+| `structure_solvent_accessibility` | approximate residue SASA from PDB heavy atoms | Whether a slice is explained by similar solvent exposure. |
 | `combined_available` | all available covariates above | A stricter combined nearest-neighbor null. |
 
-Important limitation: this repo does not contain per-position MSA/conservation files. Therefore this upgrade does **not** claim to be a true evolutionary conservation-matched control. It adds local DMS-derived, model-derived, and structure-derived covariate controls. A true MSA conservation baseline remains an external-data extension.
+Important limitation: this repo does not contain the external ProteinGym MSA `.a2m` files. Therefore this upgrade does **not** claim to have run a true evolutionary conservation baseline yet. It now includes the code path and audit for that baseline, but the actual conservation result remains blocked on staging the MSA files.
 
 ## Main Read
 

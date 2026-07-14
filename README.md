@@ -6,6 +6,8 @@ This repo is a fixture-first benchmark scaffold for comparing zero-shot protein 
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
+Read the final report: [P0 Final Report - Mechanism-Sliced Zero-Shot Fitness](docs/p0_final_report.md)
+
 Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_project_report.md)
 
 Read the portfolio card: [Mechanism-Sliced Zero-Shot Fitness](docs/p0_portfolio_card.md)
@@ -51,6 +53,8 @@ Protein language models can capture evolutionary and stability constraints, but 
 - mutation-class breakdown,
 - matched residue-position null controls for mechanism-relevant residue slices,
 - covariate-matched null controls for mutation coverage, fitness variance, model-score sensitivity, relative position, and structure contact density,
+- approximate solvent-accessibility/SASA controls for structure-aware matched null tests,
+- an MSA conservation-baseline code path and local MSA availability audit,
 - a placeholder-vs-ESM-2 baseline comparison across the four-enzyme panel,
 - reproducible CLI output and a simple SVG plot.
 

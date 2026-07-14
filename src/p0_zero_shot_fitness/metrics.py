@@ -227,6 +227,7 @@ def available_covariate_sets(position_covariates: PositionCovariates) -> dict[st
         "model_score_sensitivity": ["model_score_mean", "model_score_sd"],
         "relative_position": ["relative_position"],
         "structure_contact_density": ["structure_contact_count_10a"],
+        "structure_solvent_accessibility": ["structure_relative_sasa_approx"],
         "combined_available": [
             "mutation_count",
             "fitness_sd",
@@ -235,6 +236,7 @@ def available_covariate_sets(position_covariates: PositionCovariates) -> dict[st
             "model_score_sd",
             "relative_position",
             "structure_contact_count_10a",
+            "structure_relative_sasa_approx",
         ],
     }
     return {

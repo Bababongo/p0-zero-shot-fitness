@@ -11,6 +11,7 @@ CONTROL_NAMES = [
     "fitness_distribution",
     "model_score_sensitivity",
     "structure_contact_density",
+    "structure_solvent_accessibility",
     "combined_available",
 ]
 

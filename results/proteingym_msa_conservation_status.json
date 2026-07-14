@@ -1,0 +1,48 @@
+{
+  "metadata_csv": "data/proteingym/DMS_substitutions.csv",
+  "msa_dir": "data/proteingym/msas",
+  "next_step": "Run scripts/derive_msa_conservation.py for each MSA, then scripts/score_msa_conservation_baseline.py against the matching scored_variants.csv.",
+  "required_files": [
+    {
+      "DMS_id": "A4GRB6_PSEAI_Chen_2020",
+      "MSA_N_eff": "32081.3",
+      "MSA_Neff_L_category": "High",
+      "MSA_filename": "A4GRB6_PSEAI_full_11-26-2021_b03.a2m",
+      "MSA_num_seqs": "108496",
+      "UniProt_ID": "A4GRB6_PSEAI",
+      "exists_locally": false,
+      "expected_local_path": "data/proteingym/msas/A4GRB6_PSEAI_full_11-26-2021_b03.a2m"
+    },
+    {
+      "DMS_id": "AMIE_PSEAE_Wrenbeck_2017",
+      "MSA_N_eff": "30827.3",
+      "MSA_Neff_L_category": "Medium",
+      "MSA_filename": "AMIE_PSEAE_full_11-26-2021_b02.a2m",
+      "MSA_num_seqs": "140703",
+      "UniProt_ID": "AMIE_PSEAE",
+      "exists_locally": false,
+      "expected_local_path": "data/proteingym/msas/AMIE_PSEAE_full_11-26-2021_b02.a2m"
+    },
+    {
+      "DMS_id": "BLAT_ECOLX_Firnberg_2014",
+      "MSA_N_eff": "50901.4",
+      "MSA_Neff_L_category": "High",
+      "MSA_filename": "BLAT_ECOLX_full_11-26-2021_b02.a2m",
+      "MSA_num_seqs": "209644",
+      "UniProt_ID": "BLAT_ECOLX",
+      "exists_locally": false,
+      "expected_local_path": "data/proteingym/msas/BLAT_ECOLX_full_11-26-2021_b02.a2m"
+    },
+    {
+      "DMS_id": "Q59976_STRSQ_Romero_2015",
+      "MSA_N_eff": "14012.4",
+      "MSA_Neff_L_category": "Medium",
+      "MSA_filename": "Q59976_STRSQ_full_11-26-2021_b03.a2m",
+      "MSA_num_seqs": "105913",
+      "UniProt_ID": "Q59976_STRSQ",
+      "exists_locally": false,
+      "expected_local_path": "data/proteingym/msas/Q59976_STRSQ_full_11-26-2021_b03.a2m"
+    }
+  ],
+  "status": "missing_msa_files"
+}
