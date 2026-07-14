@@ -228,7 +228,8 @@ Novelty comes from:
 - matched null controls,
 - explicit separation between exact catalytic residues, active-site neighborhoods, and structure-derived shells,
 - showing positive and negative cases,
-- running true MSA conservation baselines and SASA-matched controls.
+- running true MSA conservation baselines and SASA-matched controls,
+- adding conservation-plus-SASA matched controls to test whether mechanism slices remain unusual after matching both family conservation and structural exposure.
 
 The intellectual move is to treat zero-shot PLM scores as something to audit mechanistically, not just leaderboard-rank globally.
 
@@ -240,6 +241,7 @@ The intellectual move is to treat zero-shot PLM scores as something to audit mec
 - TEM-1 ligand contacts use one structure/contact rule and could be expanded to multiple ligand-bound structures.
 - Approximate SASA is useful for control matching but not a substitute for a dedicated structural-biology package.
 - Spearman on exact catalytic residues can be noisy because the number of catalytic positions is small.
+- The conservation-plus-SASA control is a matched-null analysis, not a prospective supervised model; it controls interpretation of mechanism slices rather than replacing ESM-2 as a global predictor.
 
 ## Reproducibility
 
@@ -256,7 +258,8 @@ python scripts/derive_position_covariates.py \
   --scored-variants-csv results/proteingym_blat_esm2_t12_35M/scored_variants.csv \
   --output-json results/proteingym_blat_esm2_t12_35M/position_covariates.json \
   --dataset-name "ProteinGym BLAT_ECOLX_Firnberg_2014" \
-  --pdb data/proteingym/structures/1M40.pdb
+  --pdb data/proteingym/structures/1M40.pdb \
+  --conservation-json results/proteingym_blat_msa_conservation/conservation.json
 ```
 
 Audit MSA availability:
@@ -290,4 +293,4 @@ If asked what P0 proves:
 
 If asked what you would improve next:
 
-> I would compare ESM-2 against ESM-1v and MSA Transformer, add a more formal conservation-plus-SASA model, and add ligand-bound or cofactor-aware structure labels where available. The MSA result already shows that classical family conservation can beat ESM-2 on some enzymes, so the next step is to ask where language-model pretraining adds value beyond that baseline.
+> I would compare ESM-2 against ESM-1v and MSA Transformer, add ligand-bound or cofactor-aware structure labels where available, and test the story prospectively on a new enzyme-design target. The MSA and conservation-plus-SASA controls already show that classical conservation and structural exposure explain part of the mechanism-slice signal, so the next step is to ask where language-model pretraining adds value beyond those baselines.

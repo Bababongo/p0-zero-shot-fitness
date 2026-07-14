@@ -228,6 +228,19 @@ def available_covariate_sets(position_covariates: PositionCovariates) -> dict[st
         "relative_position": ["relative_position"],
         "structure_contact_density": ["structure_contact_count_10a"],
         "structure_solvent_accessibility": ["structure_relative_sasa_approx"],
+        "msa_conservation": [
+            "msa_wild_type_frequency",
+            "msa_normalized_entropy",
+            "msa_conservation",
+            "msa_match_state_coverage",
+        ],
+        "conservation_plus_sasa": [
+            "msa_wild_type_frequency",
+            "msa_normalized_entropy",
+            "msa_conservation",
+            "msa_match_state_coverage",
+            "structure_relative_sasa_approx",
+        ],
         "combined_available": [
             "mutation_count",
             "fitness_sd",
@@ -237,6 +250,10 @@ def available_covariate_sets(position_covariates: PositionCovariates) -> dict[st
             "relative_position",
             "structure_contact_count_10a",
             "structure_relative_sasa_approx",
+            "msa_wild_type_frequency",
+            "msa_normalized_entropy",
+            "msa_conservation",
+            "msa_match_state_coverage",
         ],
     }
     return {

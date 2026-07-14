@@ -78,13 +78,29 @@ The true MSA conservation baseline asks whether ESM-2 is doing more than family-
 
 Interpretation: ESM-2 35M is clearly stronger than MSA conservation for TEM-1 overall and slightly stronger for VIM-2 overall. MSA conservation is stronger overall for AMIE and beta-glucosidase. This makes the project more interesting, not weaker: the benchmark can now distinguish broad pretrained sequence-model signal from family-specific evolutionary conservation.
 
+## Conservation-Plus-SASA Control
+
+The strongest control now matches mechanism slices against random residue slices with similar MSA conservation and approximate solvent exposure. This asks whether a mechanism-local ESM-2 signal is unusual after accounting for two powerful non-mechanistic explanations: evolutionary conservation and structural burial/exposure.
+
+| Dataset | Slice | Observed Spearman | Null 95% Interval | Empirical p | Direction |
+| --- | --- | ---: | ---: | ---: | --- |
+| TEM-1 | Active-site neighborhood | 0.7027 | 0.4481 to 0.7133 | 0.094 | Inside conservation+SASA null |
+| TEM-1 | Ligand contact, 5 A | 0.7127 | 0.3901 to 0.7625 | 0.212 | Inside conservation+SASA null |
+| VIM-2 | Active-site neighborhood | 0.6133 | 0.3234 to 0.6468 | 0.178 | Inside conservation+SASA null |
+| VIM-2 | Metal-site shell, 5 A | 0.5846 | 0.3734 to 0.6016 | 0.110 | Inside conservation+SASA null |
+| AMIE | Exact catalytic site | 0.0911 | 0.1799 to 0.6217 | 0.002 | Lower than conservation+SASA null |
+| AMIE | Catalytic shell, 5 A | 0.3071 | 0.3496 to 0.5602 | 0.004 | Lower than conservation+SASA null |
+| Beta-glucosidase | Catalytic shell, 5 A | 0.3808 | 0.3407 to 0.6218 | 0.166 | Inside conservation+SASA null |
+
+This does not make P0 weaker. It makes the benchmark more credible: the project can now say that global ESM-2 signal is real, but mechanism-slice claims must survive conservation and structural-exposure controls before being treated as evidence for catalytic understanding.
+
 ## Interpretation
 
 The four-enzyme 35M panel makes P0 more mature because it separates three claims that would otherwise get blurred together:
 
 1. ESM-2 scale improves global zero-shot DMS ranking.
 2. Exact catalytic-site slices are small and hard to interpret alone.
-3. Mechanism-adjacent regions can be strong, but only TEM-1 active-site neighborhood remains higher than matched-position null controls at 35M.
+3. Mechanism-adjacent regions can be strong, but the strongest 35M mechanism slices do not cleanly clear the stricter conservation-plus-SASA control.
 
 The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell looked unusually strong relative to matched random residue groups. At 35M, global performance improves dramatically, but the shell no longer clears the matched-position null. That means the project should not claim "catalytic shells always get better with scale." The better claim is:
 
@@ -104,9 +120,8 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 
 ## Next Scientific Step
 
-The pre-report control upgrade added local covariate controls, and the MSA upgrade added a true evolutionary-conservation baseline. The next scientific upgrades are now:
+The pre-report control upgrade added local covariate controls, the MSA upgrade added a true evolutionary-conservation baseline, and the conservation-plus-SASA control added the strictest mechanism-slice test so far. The next scientific upgrades are now:
 
 - model-family comparisons such as ESM-1v and MSA Transformer,
-- a formal conservation-plus-SASA baseline,
 - ligand-bound or cofactor-aware labels for VIM-2 where a clean rule is available,
 - and prospective validation on a new enzyme-design target.

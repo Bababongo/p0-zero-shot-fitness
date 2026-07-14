@@ -55,6 +55,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - covariate-matched null controls for mutation coverage, fitness variance, model-score sensitivity, relative position, and structure contact density,
 - approximate solvent-accessibility/SASA controls for structure-aware matched null tests,
 - a true MSA conservation baseline across the four-enzyme panel,
+- conservation-plus-SASA matched controls for mechanism-slice interpretation,
 - a placeholder-vs-ESM-2 baseline comparison across the four-enzyme panel,
 - reproducible CLI output and a simple SVG plot.
 
@@ -376,17 +377,27 @@ Four-enzyme MSA conservation baseline:
 
 The MSA baseline makes the result more intellectually honest: ESM-2 35M is stronger overall for TEM-1 and slightly stronger for VIM-2, but family-specific conservation is stronger overall for AMIE and beta-glucosidase.
 
+Four-enzyme conservation-plus-SASA matched control:
+
+| Dataset | Slice | Observed Spearman | Conservation+SASA Null 95% Interval | Empirical p | Read |
+| --- | --- | ---: | ---: | ---: | --- |
+| TEM-1 | Active-site neighborhood | 0.7027 | 0.4481 to 0.7133 | 0.094 | High, but inside strict conservation+SASA control |
+| VIM-2 | Metal-site shell, 5 A | 0.5846 | 0.3734 to 0.6016 | 0.110 | Suggestive, but inside strict conservation+SASA control |
+| AMIE | Catalytic shell, 5 A | 0.3071 | 0.3496 to 0.5602 | 0.004 | Lower than matched conservation+SASA control |
+| Beta-glucosidase | Catalytic shell, 5 A | 0.3808 | 0.3407 to 0.6218 | 0.166 | Inside strict conservation+SASA control |
+
+This is the strongest control so far. It says the raw mechanism-slice lifts are not enough by themselves: after matching on family conservation and structural exposure, no 35M mechanism slice cleanly clears the null interval. That narrows the final claim from "ESM-2 understands catalytic regions" to "ESM-2 global signal is real, while mechanism-local signal is enzyme-specific and often explainable by conservation/exposure."
+
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, and MSA conservation baselines. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, MSA conservation baselines, and conservation-plus-SASA matched controls. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
 
 ## Next Scientific Steps
 
 1. Add an explicit ESM-2-vs-MSA interpretation figure.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
 3. Compare ESM-2 against ESM-1v and MSA Transformer.
-4. Add a formal conservation-plus-SASA baseline.
-5. Turn the four-enzyme result into a clean portfolio figure and methods card.
+4. Turn the four-enzyme result into a clean portfolio figure and methods card.
 
 ## Portfolio Signal
 

@@ -12,6 +12,8 @@ CONTROL_NAMES = [
     "model_score_sensitivity",
     "structure_contact_density",
     "structure_solvent_accessibility",
+    "msa_conservation",
+    "conservation_plus_sasa",
     "combined_available",
 ]
 

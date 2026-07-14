@@ -3,6 +3,7 @@ import pytest
 from p0_zero_shot_fitness.position_covariates import (
     approximate_sasa_covariates,
     contact_count_covariates,
+    covariates_from_conservation_profile,
     covariates_from_scored_rows,
     parse_pdb_atoms,
     parse_pdb_representative_atoms,
@@ -22,6 +23,25 @@ def test_covariates_from_scored_rows_reports_position_level_spread() -> None:
     assert covariates[1]["fitness_mean"] == pytest.approx(0.2)
     assert covariates[1]["fitness_sd"] > 0
     assert covariates[2]["mutation_count"] == 1.0
+
+
+def test_covariates_from_conservation_profile_keeps_numeric_msa_features() -> None:
+    profile = {
+        "covariates": {
+            "1": {
+                "msa_wild_type_frequency": 0.8,
+                "msa_normalized_entropy": 0.2,
+                "msa_conservation": 0.8,
+                "msa_match_state_coverage": 1.0,
+                "note": "ignored",
+            }
+        }
+    }
+
+    covariates = covariates_from_conservation_profile(profile)
+
+    assert covariates[1]["msa_conservation"] == pytest.approx(0.8)
+    assert "note" not in covariates[1]
 
 
 def test_parse_pdb_representative_atoms_and_contact_counts() -> None:

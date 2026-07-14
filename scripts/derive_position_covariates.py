@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
@@ -10,6 +11,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from p0_zero_shot_fitness.position_covariates import (
     approximate_sasa_covariates,
     contact_count_covariates,
+    covariates_from_conservation_profile,
     covariates_from_scored_rows,
     load_scored_variant_rows,
     merge_covariates,
@@ -25,6 +27,7 @@ def main() -> int:
     parser.add_argument("--output-json", type=Path, required=True)
     parser.add_argument("--dataset-name", required=True)
     parser.add_argument("--pdb", type=Path, default=None)
+    parser.add_argument("--conservation-json", type=Path, default=None)
     parser.add_argument("--structure-contact-cutoff", type=float, default=10.0)
     parser.add_argument("--skip-sasa", action="store_true", help="Skip approximate SASA derivation from the PDB.")
     parser.add_argument("--sasa-probe-radius", type=float, default=1.4)
@@ -57,6 +60,13 @@ def main() -> int:
                 )
             )
             metadata["n_sasa_positions"] = len(residue_atoms)
+
+    if args.conservation_json:
+        conservation_profile = json.loads(args.conservation_json.read_text(encoding="utf-8"))
+        conservation_covariates = covariates_from_conservation_profile(conservation_profile)
+        covariate_maps.append(conservation_covariates)
+        metadata["source_conservation_json"] = str(args.conservation_json)
+        metadata["n_conservation_positions"] = len(conservation_covariates)
 
     covariates = merge_covariates(*covariate_maps)
     metadata["n_covariate_positions"] = len(covariates)

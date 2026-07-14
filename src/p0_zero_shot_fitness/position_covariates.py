@@ -67,6 +67,24 @@ def covariates_from_scored_rows(rows: list[dict[str, str]]) -> PositionCovariate
     return covariates
 
 
+def covariates_from_conservation_profile(profile: dict[str, object]) -> PositionCovariates:
+    raw_covariates = profile.get("covariates", {})
+    if not isinstance(raw_covariates, dict):
+        return {}
+    covariates: PositionCovariates = {}
+    for position, values in raw_covariates.items():
+        if not isinstance(values, dict):
+            continue
+        numeric_values = {
+            covariate_name: float(value)
+            for covariate_name, value in values.items()
+            if isinstance(value, int | float)
+        }
+        if numeric_values:
+            covariates[int(position)] = numeric_values
+    return covariates
+
+
 def parse_pdb_representative_atoms(pdb_text: str) -> dict[int, Coordinate]:
     residue_atoms: dict[int, dict[str, Coordinate]] = defaultdict(dict)
     residue_names: dict[int, str] = {}
@@ -240,6 +258,10 @@ def write_position_covariates(
             "structure_sasa_approx": "Approximate residue solvent-accessible surface area in A^2 from heavy atoms using a lightweight Shrake-Rupley-style calculation.",
             "structure_relative_sasa_approx": "Approximate residue SASA divided by the maximum residue SASA observed in the same structure.",
             "structure_burial_approx": "One minus structure_relative_sasa_approx; higher values are more buried by this structure proxy.",
+            "msa_wild_type_frequency": "MSA-derived frequency of the wild-type amino acid at this position.",
+            "msa_normalized_entropy": "MSA-derived amino-acid entropy normalized by log(20); higher values are less conserved.",
+            "msa_conservation": "One minus MSA normalized entropy; higher values are more conserved.",
+            "msa_match_state_coverage": "1.0 if this position is represented by an MSA match-state column; 0.0 if it is query-only/lowercase in the ProteinGym A2M.",
         },
         "covariates": {
             str(position): covariates[position]

@@ -38,6 +38,8 @@ The key result is that ESM-2 35M improves global zero-shot ranking across all fo
 
 The pre-report control upgrade narrows the claim further. TEM-1 active-site neighborhood remains the strongest positive mechanism-local signal after mutation-count, fitness-variance, fitness-distribution, and structure-contact controls, but it becomes borderline under the strict combined covariate control. AMIE and beta-glucosidase become useful counterexamples rather than inconvenient results.
 
+The MSA and conservation-plus-SASA upgrades narrow the claim again. ESM-2 35M beats MSA conservation overall on TEM-1 and slightly on VIM-2, but MSA conservation beats ESM-2 overall on AMIE and beta-glucosidase. After matching mechanism slices on both MSA conservation and approximate solvent exposure, no 35M mechanism slice cleanly clears the null interval.
+
 Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic shell cleared matched controls. At 35M, global performance improved sharply, but the shell no longer cleared matched controls.
 
 ## What This Proves
@@ -52,14 +54,14 @@ Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic 
 
 - It does not prove ESM-2 understands catalysis.
 - It does not prove active-site neighborhoods are always special.
-- It does not yet include a true MSA-derived evolutionary conservation baseline.
-- Structure contact density is a burial/exposure proxy, not full solvent-accessibility calculation.
+- It includes true MSA-derived evolutionary conservation controls, but those controls show that some apparent ESM-2 signal is explainable by family conservation.
+- Approximate SASA is a lightweight exposure proxy, not a full structural-biology-grade solvent-accessibility calculation.
 - It is retrospective, not a prospective enzyme-design campaign.
 
 ## Next Scientific Upgrade
 
-1. Add a true MSA-derived conservation baseline when per-position MSA features are available.
-2. Compare against ESM-1v or MSA Transformer.
+1. Compare against ESM-1v or MSA Transformer.
+2. Add ligand-bound or cofactor-aware structure labels where available.
 3. Add prospective validation on a new enzyme-design target.
 
 ## Website Blurb

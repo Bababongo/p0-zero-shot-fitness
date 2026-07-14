@@ -1,6 +1,7 @@
 import pytest
 
 from p0_zero_shot_fitness.metrics import (
+    available_covariate_sets,
     bootstrap_spearman_ci,
     covariate_matched_null_control,
     derived_position_covariates,
@@ -119,3 +120,31 @@ def test_covariate_matched_null_control_is_reproducible() -> None:
     assert first["n_positions_with_covariates"] == 1
     assert first["observed_spearman"] == pytest.approx(1.0)
     assert first["null_mean"] is not None
+
+
+def test_available_covariate_sets_includes_conservation_plus_sasa_when_possible() -> None:
+    covariates = {
+        1: {
+            "msa_wild_type_frequency": 0.8,
+            "msa_normalized_entropy": 0.2,
+            "msa_conservation": 0.8,
+            "msa_match_state_coverage": 1.0,
+            "structure_relative_sasa_approx": 0.3,
+        }
+    }
+
+    covariate_sets = available_covariate_sets(covariates)
+
+    assert covariate_sets["msa_conservation"] == [
+        "msa_wild_type_frequency",
+        "msa_normalized_entropy",
+        "msa_conservation",
+        "msa_match_state_coverage",
+    ]
+    assert covariate_sets["conservation_plus_sasa"] == [
+        "msa_wild_type_frequency",
+        "msa_normalized_entropy",
+        "msa_conservation",
+        "msa_match_state_coverage",
+        "structure_relative_sasa_approx",
+    ]
