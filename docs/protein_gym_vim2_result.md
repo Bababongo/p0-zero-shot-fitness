@@ -132,6 +132,43 @@ The AF2 structure metal-site shell and active-site-neighborhood slices are the s
 
 This mirrors the TEM-1 pattern: the exact catalytic or metal-site slice is small and hard to interpret alone, while the broader functional neighborhood shows a stronger and more reproducible signal.
 
+## ESM-2 35M Result
+
+Command:
+
+```bash
+p0-fitness \
+  --preset proteingym-vim2 \
+  --scorer esm2 \
+  --esm-model esm2_t12_35M_UR50D \
+  --output-dir results/proteingym_vim2_esm2_t12_35M \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+Metrics:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.5280 | - | 5,004 |
+| Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
+| Active-site neighborhood | 0.6133 | 0.4897 | 448 |
+
+Matched-position null result:
+
+| Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Curated metal-binding site | 0.3449 | 0.4739 | 0.0464 to 0.7853 | 0.476 | inside null |
+| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4735 | 0.3448 to 0.5985 | 0.084 | inside null, near high edge |
+| Active-site neighborhood | 0.6133 | 0.4809 | 0.2821 to 0.6508 | 0.142 | inside null |
+
+## 35M Interpretation
+
+The 35M model improves VIM-2 overall performance from 0.4305 to 0.5280. The active-site neighborhood and AF2 metal-site shell remain strong in raw Spearman, but they are no longer above matched-position null controls at the 35M scale.
+
+This weakens a simple "VIM-2 mechanism neighborhoods are always unusually high" claim, but it strengthens the project scientifically. The result now says that model scale improves global zero-shot fitness prediction while exact metal-binding chemistry remains difficult, and that mechanism-slice claims need matched controls rather than only outside-background comparisons.
+
 ## Next Step
 
-Run a larger ESM-2 model for VIM-2 model-size comparison. A ligand-bound experimental contact group remains a later upgrade if a suitable VIM-2 structure and ligand/contact rule are selected.
+Add conservation-matched and solvent-accessibility-matched controls, then add the next non-beta-lactamase enzyme-function case. A ligand-bound experimental contact group remains a later upgrade if a suitable VIM-2 structure and ligand/contact rule are selected.

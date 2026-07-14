@@ -18,14 +18,16 @@ Frontier AI systems for biology need evaluation tasks that reflect where scienti
 
 ## Current Evidence
 
-The current repo runs on three ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. It includes ESM-2 8M masked-marginal scoring, TEM-1 UniProt/PDB annotation validation, VIM-2 and AMIE structure-derived mechanism shells, and matched-position null controls.
+The current repo runs on three ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. It includes ESM-2 8M and 35M masked-marginal scoring, TEM-1 UniProt/PDB annotation validation, VIM-2 and AMIE structure-derived mechanism shells, and matched-position null controls.
 
-Key ESM-2 8M results:
+Key ESM-2 35M results:
 
-- TEM-1 overall Spearman: 0.4113; active-site-neighborhood Spearman: 0.6453
-- VIM-2 overall Spearman: 0.4305; active-site-neighborhood Spearman: 0.6128
-- AMIE overall Spearman: 0.3264; active-site-neighborhood Spearman: 0.4092
+- TEM-1 overall Spearman: 0.5548; active-site-neighborhood Spearman: 0.7027; ligand-contact Spearman: 0.7127
+- VIM-2 overall Spearman: 0.5280; active-site-neighborhood Spearman: 0.6133; metal-site shell Spearman: 0.5846
+- AMIE overall Spearman: 0.4082; active-site-neighborhood Spearman: 0.4335; exact catalytic-site Spearman: 0.0911
+
+The strongest current interpretation is that model scaling improves global zero-shot fitness prediction, while exact catalytic or metal-binding slices remain harder and noisier than broader mechanism-adjacent neighborhoods. Matched-position controls show that the active-site-neighborhood effect is enzyme-dependent rather than automatic.
 
 ## Next Evidence Upgrade
 
-The next version should run larger ESM-2 models or ESM-1v on LBNL compute, add conservation-matched controls, and extend the panel to beta-glucosidase.
+The next version should add beta-glucosidase, conservation-matched controls, solvent-accessibility-matched controls, and a compact portfolio figure that explains the three-enzyme 35M result.

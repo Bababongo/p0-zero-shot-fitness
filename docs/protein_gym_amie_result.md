@@ -119,7 +119,43 @@ That makes the current three-enzyme story more honest:
 - AMIE shows an active-site-neighborhood lift, but not a matched-null significant lift.
 - Exact catalytic-site slices remain small, noisy, and easy to overclaim.
 
+## ESM-2 35M Result
+
+Command:
+
+```bash
+p0-fitness \
+  --preset proteingym-amie \
+  --scorer esm2 \
+  --esm-model esm2_t12_35M_UR50D \
+  --output-dir results/proteingym_amie_esm2_t12_35M \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+Metrics:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4082 | - | 6,227 |
+| Curated catalytic site | 0.0911 | 0.3991 | 57 |
+| AF2 catalytic shell, 5 A | 0.3071 | 0.4069 | 621 |
+| Active-site neighborhood | 0.4335 | 0.3902 | 259 |
+
+Matched-position null result:
+
+| Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Curated catalytic site | 0.0911 | 0.3343 | -0.3468 to 0.7840 | 0.408 | inside null |
+| AF2 catalytic shell, 5 A | 0.3071 | 0.4041 | 0.2187 to 0.5722 | 0.312 | inside null |
+| Active-site neighborhood | 0.4335 | 0.3812 | 0.0841 to 0.6191 | 0.778 | inside null |
+
+## 35M Interpretation
+
+The 35M model improves AMIE overall performance from 0.3264 to 0.4082. The active-site neighborhood also increases slightly from 0.4092 to 0.4335.
+
+The exact catalytic-site slice remains weak, and every AMIE mechanism slice remains inside the matched-position null interval. This makes AMIE the clearest counterexample in the current panel: model scale helps globally, but it does not automatically make catalytic or mechanism-adjacent slices unusually strong.
+
 ## Next Step
 
-Upgrade AMIE label provenance, then run ESM-2 35M on AMIE to test whether model scale changes the residue-zone pattern.
-
+Upgrade AMIE label provenance, then add conservation-matched and solvent-accessibility-matched controls. AMIE should stay in the panel because it prevents the project from overclaiming a pattern that only holds cleanly in TEM-1.

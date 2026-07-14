@@ -33,6 +33,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - ProteinGym AF2-derived AMIE catalytic-shell grouping,
 - a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
+- ESM-2 8M and 35M masked-marginal scoring across three enzymes,
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
 - mutation-class breakdown,
@@ -160,6 +161,17 @@ The AF2 structure metal-site shell is higher than same-size random residue-posit
 
 The active-site-neighborhood slice is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.6128`, null 95% interval `0.1787 to 0.5736`, empirical p = `0.012`.
 
+VIM-2 ESM-2 35M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.5280 | - | 5,004 |
+| Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
+| Active-site neighborhood | 0.6133 | 0.4897 | 448 |
+
+The 35M model improves VIM-2 overall performance, but the metal-site shell and active-site-neighborhood slices fall inside matched-position null intervals at this scale. That makes the project more careful: raw mechanism-slice lifts need matched controls before they become biological claims.
+
 ## Run The AMIE ProteinGym Benchmark
 
 This repo now includes the ProteinGym `AMIE_PSEAE_Wrenbeck_2017` processed assay file and metadata for AMIE aliphatic amidase.
@@ -212,6 +224,17 @@ AMIE ESM-2 8M result:
 
 The AMIE active-site neighborhood is stronger than the outside background, but remains inside the same-size matched-position null interval for ESM-2 8M. This makes AMIE an important counterexample: the mechanism-neighborhood signal is not automatically significant in every enzyme.
 
+AMIE ESM-2 35M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4082 | - | 6,227 |
+| Curated catalytic site | 0.0911 | 0.3991 | 57 |
+| AF2 catalytic shell, 5 A | 0.3071 | 0.4069 | 621 |
+| Active-site neighborhood | 0.4335 | 0.3902 | 259 |
+
+The 35M model improves AMIE overall performance, but the exact catalytic site remains weak and all AMIE mechanism slices remain inside matched-position null intervals.
+
 ## Validate The Enzyme Panel Registry
 
 The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
@@ -239,26 +262,29 @@ Recommended next panel path:
 2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, active as the first non-beta-lactamase hydrolase case.
 3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase, a second non-beta-lactamase enzyme-function case.
 
-Three-enzyme ESM-2 8M comparison:
+Three-enzyme ESM-2 35M comparison:
 
 | Dataset | Enzyme | Overall | Exact Site | Background | Best Mechanism Slice |
 | --- | --- | ---: | ---: | ---: | --- |
-| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | 0.4042 | Active-site neighborhood, 0.6453 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | 0.4123 | Active-site neighborhood, 0.6128 |
-| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | 0.3157 | Active-site neighborhood, 0.4092 |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | 0.5428 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal shell, 0.5846 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
+
+35M scaling improves global zero-shot performance across all three enzymes. The careful residue-zone interpretation is narrower: TEM-1 active-site neighborhood remains higher than matched-position null controls; VIM-2 and AMIE mechanism slices are useful raw signals but inside matched null intervals at 35M.
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. TEM-1 has UniProt and PDB-backed labels. VIM-2 and AMIE use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase with ESM-2 8M and 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2 and AMIE use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
 
 ## Next Scientific Steps
 
-1. Run ESM-2 35M on VIM-2 and AMIE for model-size comparison.
-2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-3. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
-4. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
-5. Add conservation-matched and solvent-accessibility-matched null controls.
+1. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+2. Add conservation-matched and solvent-accessibility-matched null controls.
+3. Add mutation-count-matched and fitness-variance-matched controls.
+4. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
+5. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
 6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
+7. Turn the three-enzyme 35M result into a clean portfolio figure and methods card.
 
 ## Portfolio Signal
 

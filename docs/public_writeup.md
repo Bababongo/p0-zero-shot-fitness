@@ -8,6 +8,8 @@ The first local run used ESM-2 8M. I then ran ESM-2 35M on Savio as the first sc
 
 I later added a matched residue-position null control. That changed the most careful interpretation: the exact UniProt active-site-only slice is not unusual compared with same-size random position groups, but the broader active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 
+I then expanded the benchmark seed to VIM-2 metallo-beta-lactamase and AMIE aliphatic amidase, and ran ESM-2 35M on all three enzymes. Scaling improved global zero-shot performance across the panel, but the mechanism-slice story became more nuanced: TEM-1 retained a matched-null active-site-neighborhood signal, while VIM-2 and AMIE showed useful raw mechanism signals that remained inside matched-position null intervals.
+
 ## Why I Built This
 
 Protein language models are often evaluated with broad variant-effect prediction metrics. That is useful, but enzymes are not just sequence objects. Enzyme fitness can depend on active-site chemistry, catalytic residues, cofactors, substrate positioning, and transition-state stabilization.
@@ -156,23 +158,24 @@ Still, this is the kind of eval slice I want more life-science AI systems to exp
 
 ## Enzyme-Panel Expansion
 
-After the TEM-1 result, I upgraded P0 into a three-enzyme benchmark seed:
+After the TEM-1 result, I upgraded P0 into a three-enzyme benchmark seed. The current 35M panel result is:
 
-| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
+| Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
-| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | Active-site neighborhood, 0.6453 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | Active-site neighborhood, 0.6128 |
-| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | Active-site neighborhood, 0.4092 |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
 
 The matched-position null controls make the result more careful:
 
-- TEM-1 and VIM-2 active-site neighborhoods are higher than same-size random residue-position controls.
-- AMIE active-site neighborhood is higher than outside background, but remains inside same-size random residue-position controls.
+- TEM-1 active-site neighborhood is higher than same-size random residue-position controls at 35M.
+- VIM-2 active-site neighborhood and metal-site shell are strong in raw Spearman, but remain inside matched-position null intervals at 35M.
+- AMIE active-site neighborhood is higher than outside background, but remains inside same-size random residue-position controls at 35M.
 - Exact catalytic-site slices remain small, noisy, and easy to overclaim.
 
 The current strongest claim is therefore:
 
-> Exact catalytic-site slices are usually too sparse to interpret alone. Broader active-site neighborhoods often contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
+> Scaling improves global zero-shot performance, but exact catalytic chemistry remains harder than broader sequence and structure constraints. Broader active-site neighborhoods can contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
 
 ## What This Repo Demonstrates
 
@@ -194,11 +197,11 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Run ESM-2 150M as the next scaling step.
-2. Add ESM-1v or an MSA-based baseline.
-3. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
-4. Add conservation-matched and solvent-accessibility-matched null controls.
-5. Turn the three-enzyme result into a short portfolio figure and methods card.
+1. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+2. Add conservation-matched and solvent-accessibility-matched null controls.
+3. Add ESM-1v or an MSA-based baseline.
+4. Run ESM-2 150M as the next scaling step.
+5. Turn the three-enzyme 35M result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 

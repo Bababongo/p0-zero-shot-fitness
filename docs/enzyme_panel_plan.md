@@ -183,7 +183,7 @@ The other 14 ProteinGym candidates have matching metadata, but still need local 
 
 ## First Second-Enzyme Case
 
-Status: VIM-2 placeholder baseline, ESM-2 8M baseline, and ProteinGym AF2 structure-derived metal-site shell completed.
+Status: VIM-2 placeholder baseline, ESM-2 8M baseline, ESM-2 35M baseline, and ProteinGym AF2 structure-derived metal-site shell completed.
 
 Dataset:
 
@@ -193,22 +193,23 @@ Dataset:
 - Exact curated metal-binding/catalytic-site variants: 113
 - Active-site-neighborhood variants: 448
 
-Current VIM-2 ESM-2 8M result:
+Current VIM-2 ESM-2 35M result:
 
 | Slice | Spearman | Outside Spearman | Variants |
 | --- | ---: | ---: | ---: |
-| Overall | 0.4305 | - | 5,004 |
-| Curated metal-binding site | 0.3702 | 0.4123 | 113 |
-| Active-site neighborhood | 0.6128 | 0.3936 | 448 |
+| Overall | 0.5280 | - | 5,004 |
+| Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
+| Active-site neighborhood | 0.6133 | 0.4897 | 448 |
 
-The active-site-neighborhood slice is higher than matched random residue-position controls for ESM-2 8M, while the exact curated metal-binding-site slice remains inside the matched null.
+The 35M model improves VIM-2 overall performance, and the active-site-neighborhood plus metal-site shell remain strong in raw Spearman. However, both fall inside matched-position null intervals at 35M, while the exact curated metal-binding-site slice also remains inside the matched null.
 
 ## First Three Dataset Status
 
 Current status:
 
-1. `A4GRB6_PSEAI_Chen_2020` - added, placeholder and ESM-2 8M complete.
-2. `AMIE_PSEAE_Wrenbeck_2017` - added, placeholder and ESM-2 8M complete.
+1. `A4GRB6_PSEAI_Chen_2020` - added, placeholder, ESM-2 8M, and ESM-2 35M complete.
+2. `AMIE_PSEAE_Wrenbeck_2017` - added, placeholder, ESM-2 8M, and ESM-2 35M complete.
 3. `Q59976_STRSQ_Romero_2015` - next dataset to materialize and annotate.
 
 Why these three:
@@ -227,26 +228,26 @@ AMIE aliphatic amidase is now local and runnable:
 - Exact curated catalytic-site variants: 57
 - ProteinGym AF2 catalytic-shell variants: 621
 - Active-site-neighborhood variants: 259
-- Current scorers: placeholder baseline and ESM-2 8M
+- Current scorers: placeholder baseline, ESM-2 8M, and ESM-2 35M
 
-AMIE ESM-2 8M:
+AMIE ESM-2 35M:
 
 | Slice | Spearman | Outside Spearman | Variants |
 | --- | ---: | ---: | ---: |
-| Overall | 0.3264 | - | 6,227 |
-| Curated catalytic site | 0.2057 | 0.3157 | 57 |
-| AF2 catalytic shell, 5 A | 0.2630 | 0.3152 | 621 |
-| Active-site neighborhood | 0.4092 | 0.3017 | 259 |
+| Overall | 0.4082 | - | 6,227 |
+| Curated catalytic site | 0.0911 | 0.3991 | 57 |
+| AF2 catalytic shell, 5 A | 0.3071 | 0.4069 | 621 |
+| Active-site neighborhood | 0.4335 | 0.3902 | 259 |
 
-The active-site-neighborhood slice is stronger than the outside background, but remains inside same-size random residue-position controls for ESM-2 8M. This is a valuable counterexample to overclaiming the TEM-1 and VIM-2 pattern.
+The active-site-neighborhood slice is stronger than the outside background, but remains inside same-size random residue-position controls for ESM-2 35M. This is a valuable counterexample to overclaiming the TEM-1 pattern.
 
-## Three-Enzyme Comparison
+## Three-Enzyme 35M Comparison
 
-| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
+| Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
-| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | Active-site neighborhood, 0.6453 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | Active-site neighborhood, 0.6128 |
-| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | Active-site neighborhood, 0.4092 |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
 
 ## Success Criteria
 
@@ -260,4 +261,4 @@ P0 v3 is successful when it can answer:
 
 ## Interview Version
 
-> P0 started as one TEM-1 case study. I upgraded it into the start of a mechanism-stratified enzyme benchmark across TEM-1, VIM-2, and AMIE. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The current result suggests exact catalytic-site slices are small and noisy, while active-site neighborhoods can show stronger signal, but AMIE proves that the pattern is enzyme-dependent and needs matched controls.
+> P0 started as one TEM-1 case study. I upgraded it into a mechanism-stratified enzyme benchmark seed across TEM-1, VIM-2, and AMIE, with ESM-2 8M and 35M runs. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The current result says scale improves global zero-shot performance, exact catalytic-site slices remain small and noisy, and active-site neighborhoods can show stronger signal, but matched controls prove the pattern is enzyme-dependent.
