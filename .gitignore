@@ -10,4 +10,5 @@ dist/
 *.egg-info/
 .DS_Store
 *.zip
+data/proteingym/msas/
 logs/

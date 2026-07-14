@@ -75,43 +75,86 @@ def derive_conservation_profile(
     wild_type_sequence: str,
     pseudocount: float = 0.5,
 ) -> dict[str, object]:
-    sequences = normalized_alignment_sequences(alignment_text)
+    records = read_alignment_records(alignment_text)
+    if not records:
+        raise ValueError("MSA file did not contain any FASTA/A2M records.")
+    sequences = [normalize_a2m_sequence(sequence) for _, sequence in records]
+    lengths = {len(sequence) for sequence in sequences}
+    if len(lengths) != 1:
+        raise ValueError("Normalized alignment sequences must all have the same length.")
+    query_record_sequence = records[0][1]
     query_sequence = sequences[0]
-    ungapped_query_length = sum(character != "-" for character in query_sequence)
-    if ungapped_query_length != len(wild_type_sequence):
+    ungapped_query = "".join(
+        character.upper()
+        for character in query_record_sequence
+        if character not in {"-", "."}
+    )
+    if ungapped_query != wild_type_sequence:
         raise ValueError(
-            "The first MSA sequence must align to the wild-type sequence length "
-            f"after removing gaps: got {ungapped_query_length}, expected {len(wild_type_sequence)}."
+            "The first MSA sequence must match the wild-type sequence after removing gaps "
+            "and A2M dot placeholders."
         )
 
     covariates: dict[str, dict[str, float]] = {}
     aa_frequencies: dict[str, dict[str, float]] = {}
+    covered_positions = 0
+    match_column_index = 0
     wild_type_position = 0
-    for column_index, query_residue in enumerate(query_sequence):
-        if query_residue == "-":
+    for query_residue in query_record_sequence:
+        if query_residue == ".":
             continue
+        if query_residue == "-":
+            match_column_index += 1
+            continue
+
         wild_type_position += 1
-        column = [sequence[column_index] for sequence in sequences]
-        frequencies = amino_acid_frequencies(column, pseudocount=pseudocount)
-        entropy = normalized_entropy(frequencies)
         wild_type_residue = wild_type_sequence[wild_type_position - 1]
+        if query_residue.islower():
+            frequencies = amino_acid_frequencies([], pseudocount=pseudocount)
+            match_state_coverage = 0.0
+            match_column = None
+        else:
+            column = [sequence[match_column_index] for sequence in sequences]
+            frequencies = amino_acid_frequencies(column, pseudocount=pseudocount)
+            match_state_coverage = 1.0
+            match_column = match_column_index + 1
+            covered_positions += 1
+            match_column_index += 1
+        entropy = normalized_entropy(frequencies)
         wild_type_frequency = frequencies.get(wild_type_residue, 0.0)
         covariates[str(wild_type_position)] = {
             "msa_wild_type_frequency": wild_type_frequency,
             "msa_normalized_entropy": entropy,
             "msa_conservation": 1.0 - entropy,
+            "msa_match_state_coverage": match_state_coverage,
         }
+        if match_column is not None:
+            covariates[str(wild_type_position)]["msa_match_column"] = float(match_column)
         aa_frequencies[str(wild_type_position)] = frequencies
+    if wild_type_position != len(wild_type_sequence):
+        raise ValueError(
+            "The first MSA sequence did not map onto every wild-type position: "
+            f"mapped {wild_type_position}, expected {len(wild_type_sequence)}."
+        )
+    if match_column_index != len(query_sequence):
+        raise ValueError(
+            "The first MSA sequence did not consume every normalized match column: "
+            f"used {match_column_index}, expected {len(query_sequence)}."
+        )
 
     return {
         "alignment_records": len(sequences),
         "alignment_length": len(query_sequence),
         "wild_type_length": len(wild_type_sequence),
+        "covered_wild_type_positions": covered_positions,
+        "uncovered_wild_type_positions": len(wild_type_sequence) - covered_positions,
+        "match_state_coverage_fraction": covered_positions / len(wild_type_sequence),
         "pseudocount": pseudocount,
         "notes": {
             "msa_wild_type_frequency": "Frequency of the wild-type amino acid at this alignment column.",
             "msa_normalized_entropy": "Shannon entropy over amino-acid frequencies, normalized by log(20).",
             "msa_conservation": "One minus normalized entropy; higher means more conserved.",
+            "msa_match_state_coverage": "1.0 if the wild-type residue is represented by an MSA match-state column; 0.0 if it is lowercase/query-only in the A2M and receives a neutral uniform baseline.",
         },
         "covariates": covariates,
         "aa_frequencies": aa_frequencies,

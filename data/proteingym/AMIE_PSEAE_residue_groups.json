@@ -2,7 +2,7 @@
   "protein_id": "AMIE_PSEAE",
   "assay_id": "AMIE_PSEAE_Wrenbeck_2017",
   "residue_numbering": "1-indexed positions in the 346-aa ProteinGym target sequence",
-  "annotation_status": "conservative_nitrilase_like_motif_with_proteingym_af2_structure_shell",
+  "annotation_status": "uniprot_reviewed_active_site_with_proteingym_af2_structure_shell",
   "residue_groups": {
     "active_site_neighborhood": [
       57,
@@ -64,6 +64,6 @@
       220
     ]
   },
-  "source": "Nitrilase-like catalytic triad mapping plus a ProteinGym AF2 structure-derived catalytic-site shell.",
-  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the curated Glu59/Lys134/Cys166 catalytic-site candidates. The structure_catalytic_shell_5a group was derived from data/proteingym/structures/AMIE_PSEAE.pdb using scripts/derive_residue_shell.py and includes residues with any heavy atom within 5.0 Angstrom of any curated catalytic residue heavy atom. The source record is data/proteingym/source_records/AMIE_PSEAE_catalytic_shell_5A.json."
+  "source": "UniProtKB/Swiss-Prot P11436 active-site features plus a ProteinGym AF2 structure-derived catalytic-site shell. See data/proteingym/source_records/uniprot_P11436_AMIE_PSEAE_active_site.json.",
+  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the UniProt-backed Glu59/Lys134/Cys166 catalytic site. The structure_catalytic_shell_5a group was derived from data/proteingym/structures/AMIE_PSEAE.pdb using scripts/derive_residue_shell.py and includes residues with any heavy atom within 5.0 Angstrom of any curated catalytic residue heavy atom. The shell source record is data/proteingym/source_records/AMIE_PSEAE_catalytic_shell_5A.json."
 }

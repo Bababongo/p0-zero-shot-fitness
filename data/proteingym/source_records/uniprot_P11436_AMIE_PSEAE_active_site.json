@@ -1,0 +1,54 @@
+{
+  "source": "UniProtKB/Swiss-Prot P11436 (AMIE_PSEAE)",
+  "retrieved_on": "2026-07-14",
+  "url": "https://rest.uniprot.org/uniprotkb/P11436.txt",
+  "protein": "Aliphatic amidase AmiE",
+  "sequence_length": 346,
+  "active_site_annotations": [
+    {
+      "position": 59,
+      "residue": "Glu",
+      "role": "proton acceptor",
+      "uniprot_feature": "ACT_SITE 59"
+    },
+    {
+      "position": 134,
+      "residue": "Lys",
+      "role": "proton donor",
+      "uniprot_feature": "ACT_SITE 134"
+    },
+    {
+      "position": 166,
+      "residue": "Cys",
+      "role": "nucleophile",
+      "uniprot_feature": "ACT_SITE 166"
+    }
+  ],
+  "experimental_support": [
+    {
+      "positions": [59, 134],
+      "finding": "Site-directed mutagenesis supports a Cys-Glu-Lys catalytic triad; E59Q/E59D and K134N caused loss of activity, and K134R strongly reduced activity.",
+      "reference": "Novo et al., Biochemical Journal 365:731-738 (2002)",
+      "doi": "10.1042/bj20011714"
+    },
+    {
+      "positions": [166],
+      "finding": "Cys166 was identified as the active-site nucleophile; C166S/C166A caused loss of activity.",
+      "reference": "Farnaud et al., Biochemical Journal 340:711-714 (1999)",
+      "doi": "10.1042/bj3400711"
+    }
+  ],
+  "structure_support": [
+    {
+      "pdb_id": "2UXY",
+      "method": "X-ray",
+      "resolution_angstrom": 1.25,
+      "uniprot_note": "PDB cross-reference covers chain A residues 1-341."
+    },
+    {
+      "local_shell_file": "data/proteingym/source_records/AMIE_PSEAE_catalytic_shell_5A.json",
+      "method": "ProteinGym AF2 heavy-atom shell around curated active-site residues"
+    }
+  ],
+  "label_decision": "Use positions 59, 134, and 166 as the exact catalytic-site slice for AMIE_PSEAE_Wrenbeck_2017."
+}

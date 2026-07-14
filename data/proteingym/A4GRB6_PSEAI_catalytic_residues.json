@@ -2,7 +2,7 @@
   "protein_id": "A4GRB6_PSEAI",
   "assay_id": "A4GRB6_PSEAI_Chen_2020",
   "residue_numbering": "1-indexed positions in the 266-aa ProteinGym target sequence",
-  "annotation_status": "curated_motif_annotation_not_uniprot_backed",
+  "annotation_status": "vim2_metal_site_curated_from_reviewed_reference_unreviewed_pseudomonas_structure_features_and_b1_motif",
   "catalytic_residues": [114, 116, 118, 179, 198, 240],
   "metal_binding_residues": [114, 116, 118, 179, 198, 240],
   "mapped_from_b1_metallo_beta_lactamase_motifs": [
@@ -27,6 +27,6 @@
       "target_sequence_window": "FVIPGHGLPGGLDLL"
     }
   ],
-  "source": "Conserved B1 metallo-beta-lactamase active-site and zinc-binding motif mapping onto the ProteinGym VIM-2 target sequence.",
-  "evidence": "UniProt accession A4GRB6 is inactive/deleted, so this first VIM-2 benchmark uses transparent motif-based curation rather than UniProt feature annotations. The residues mark the conserved metal-binding/catalytic-site environment used to define the exact active-site slice for the first VIM-2 run."
+  "source": "A4GRB6 itself is inactive/deleted in UniProt, so the label uses VIM-2 reference records Q5U7L7 and Q9K2N0 plus conserved class B metallo-beta-lactamase motif mapping. See data/proteingym/source_records/uniprot_vim2_metal_site_reference.json.",
+  "evidence": "The ProteinGym sequence is length 266 and differs from reviewed VIM-2 Q5U7L7 at one non-site position, I185 versus V185. Q5U7L7 is a reviewed VIM-2 record with Zn-binding evidence at positions 114, 116, and 198 from PDB 6BM9. Q9K2N0 is an unreviewed Pseudomonas aeruginosa VIM-2 record with PDB-backed Zn-binding features at 114, 116, 118, 179, 198, and 240 across VIM-2 structures including 1KO2, 1KO3, 4BZ3, 4NQ2, 5ACU, 5ACW, and 5ACX. The six-residue label is therefore a conservative metal-site/mechanism-critical slice for evaluation only."
 }

@@ -1,0 +1,201 @@
+{
+  "artifacts": {
+    "fitness_scatter_svg": "fitness_scatter.svg",
+    "scored_variants_csv": "scored_variants.csv"
+  },
+  "benchmark": "P0 - Zero-Shot Fitness",
+  "data_scope": "MSA-derived conservation baseline scored on an existing P0 variant table",
+  "dataset": "ProteinGym Q59976_STRSQ_Romero_2015",
+  "input_files": {
+    "conservation_json": "results/proteingym_bgly_msa_conservation/conservation.json",
+    "scored_variants_csv": "results/proteingym_bgly_esm2_t12_35M/scored_variants.csv"
+  },
+  "metrics": {
+    "bootstrap_ci": {
+      "spearman_catalytic": {
+        "ci_high": 0.900709219858156,
+        "ci_low": -0.252305067710537,
+        "estimate": 0.4405594405594406,
+        "iterations": 1000,
+        "n": 12
+      },
+      "spearman_non_catalytic": {
+        "ci_high": 0.5853776671447648,
+        "ci_low": 0.5332594119431721,
+        "estimate": 0.5584743921714409,
+        "iterations": 1000,
+        "n": 2987
+      },
+      "spearman_overall": {
+        "ci_high": 0.58612296918417,
+        "ci_low": 0.5366347294254707,
+        "estimate": 0.5614833390200183,
+        "iterations": 1000,
+        "n": 2999
+      }
+    },
+    "matched_position_null": {
+      "catalytic": {
+        "direction": "inside_position_matched_null_interval",
+        "iterations": 1000,
+        "n_positions": 2,
+        "n_variants": 12,
+        "null_ci_high": 0.8727272727272727,
+        "null_ci_low": -0.24606643356643357,
+        "null_mean": 0.4414869879965142,
+        "observed_spearman": 0.4405594405594406,
+        "percentile_rank": 0.42653061224489797,
+        "two_sided_empirical_p": 0.8530612244897959
+      },
+      "residue_groups": {
+        "active_site_neighborhood": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 10,
+          "n_variants": 60,
+          "null_ci_high": 0.7474878450723854,
+          "null_ci_low": 0.2397997182427528,
+          "null_mean": 0.5307690850482438,
+          "observed_spearman": 0.3759204202734922,
+          "percentile_rank": 0.133,
+          "two_sided_empirical_p": 0.266
+        },
+        "curated_catalytic_site": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 2,
+          "n_variants": 12,
+          "null_ci_high": 0.8813286713286713,
+          "null_ci_low": -0.3467132867132867,
+          "null_mean": 0.4305959913402434,
+          "observed_spearman": 0.4405594405594406,
+          "percentile_rank": 0.4570273003033367,
+          "two_sided_empirical_p": 0.9140546006066734
+        },
+        "structure_catalytic_shell_5a": {
+          "direction": "lower_than_position_matched_null",
+          "iterations": 1000,
+          "n_positions": 25,
+          "n_variants": 149,
+          "null_ci_high": 0.6886239352198724,
+          "null_ci_low": 0.36501313374236094,
+          "null_mean": 0.5438154256619602,
+          "observed_spearman": 0.3595551577056657,
+          "percentile_rank": 0.022,
+          "two_sided_empirical_p": 0.044
+        }
+      }
+    },
+    "mutation_class_breakdown": {
+      "charge_preserving": {
+        "mean_fitness": -0.7799333333333334,
+        "mean_model_score": -2.197019306060133,
+        "n": 225,
+        "spearman": 0.5563468897960672
+      },
+      "class_changing": {
+        "mean_fitness": -0.9852549914432401,
+        "mean_model_score": -3.1742745690773155,
+        "n": 1753,
+        "spearman": 0.5714345306675498
+      },
+      "hydrophobic_or_special_preserving": {
+        "mean_fitness": -0.8404587945879459,
+        "mean_model_score": -2.7184576806661056,
+        "n": 813,
+        "spearman": 0.511215532921851
+      },
+      "polar_preserving": {
+        "mean_fitness": -1.1704423076923076,
+        "mean_model_score": -3.086466031624849,
+        "n": 208,
+        "spearman": 0.5835611023827809
+      }
+    },
+    "n_catalytic": 12,
+    "n_non_catalytic": 2987,
+    "n_variants": 2999,
+    "residue_group_bootstrap_ci": {
+      "active_site_neighborhood": {
+        "in_group": {
+          "ci_high": 0.5687905071101638,
+          "ci_low": 0.14121252722693897,
+          "estimate": 0.3759204202734922,
+          "iterations": 1000,
+          "n": 60
+        },
+        "outside_group": {
+          "ci_high": 0.5789344448190825,
+          "ci_low": 0.5280087351101416,
+          "estimate": 0.5525484897694193,
+          "iterations": 1000,
+          "n": 2939
+        }
+      },
+      "curated_catalytic_site": {
+        "in_group": {
+          "ci_high": 0.9007267006293077,
+          "ci_low": -0.28778194526229556,
+          "estimate": 0.4405594405594406,
+          "iterations": 1000,
+          "n": 12
+        },
+        "outside_group": {
+          "ci_high": 0.5861803469370138,
+          "ci_low": 0.5309854877340472,
+          "estimate": 0.5584743921714409,
+          "iterations": 1000,
+          "n": 2987
+        }
+      },
+      "structure_catalytic_shell_5a": {
+        "in_group": {
+          "ci_high": 0.49474104840479133,
+          "ci_low": 0.21367172058795722,
+          "estimate": 0.3595551577056657,
+          "iterations": 1000,
+          "n": 149
+        },
+        "outside_group": {
+          "ci_high": 0.5761006589673505,
+          "ci_low": 0.5174572161548867,
+          "estimate": 0.5477149066384368,
+          "iterations": 1000,
+          "n": 2850
+        }
+      }
+    },
+    "residue_group_breakdown": {
+      "active_site_neighborhood": {
+        "mean_fitness": -1.9500333333333333,
+        "mean_model_score": -5.91718523536166,
+        "n": 60,
+        "outside_n": 2939,
+        "outside_spearman": 0.5525484897694193,
+        "spearman": 0.3759204202734922
+      },
+      "curated_catalytic_site": {
+        "mean_fitness": -2.433666666666667,
+        "mean_model_score": -6.77045216017054,
+        "n": 12,
+        "outside_n": 2987,
+        "outside_spearman": 0.5584743921714409,
+        "spearman": 0.4405594405594406
+      },
+      "structure_catalytic_shell_5a": {
+        "mean_fitness": -1.7715100671140938,
+        "mean_model_score": -5.191595990936044,
+        "n": 149,
+        "outside_n": 2850,
+        "outside_spearman": 0.5477149066384368,
+        "spearman": 0.3595551577056657
+      }
+    },
+    "spearman_catalytic": 0.4405594405594406,
+    "spearman_non_catalytic": 0.5584743921714409,
+    "spearman_overall": 0.5614833390200183,
+    "top_5_enrichment_fitness_ge_0_7": 66.64444444444445
+  },
+  "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
+  "scorer": "MSAConservationLogOddsScorer"
+}

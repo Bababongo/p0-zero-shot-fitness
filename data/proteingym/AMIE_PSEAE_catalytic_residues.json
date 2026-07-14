@@ -2,7 +2,7 @@
   "protein_id": "AMIE_PSEAE",
   "assay_id": "AMIE_PSEAE_Wrenbeck_2017",
   "residue_numbering": "1-indexed positions in the 346-aa ProteinGym target sequence",
-  "annotation_status": "conservative_nitrilase_like_motif_and_af2_geometry_annotation",
+  "annotation_status": "uniprot_reviewed_active_site_with_mutagenesis_and_structure_shell",
   "catalytic_residues": [59, 134, 166],
   "mapped_from_nitrilase_like_catalytic_triads": [
     {
@@ -24,6 +24,6 @@
       "target_sequence_window": "ISLIICDDGNY"
     }
   ],
-  "source": "Nitrilase-like Cys/Glu/Lys active-site pattern mapped onto the ProteinGym AMIE target sequence, with AF2 geometry sanity check from data/proteingym/structures/AMIE_PSEAE.pdb.",
-  "evidence": "In the ProteinGym AF2 structure, Cys166 is spatially close to Glu59 and Lys134. Heavy-atom distances from Cys166 are approximately 3.44 A to Glu59 and 4.21 A to Lys134. These residues define a conservative exact active-site slice for the first AMIE benchmark."
+  "source": "UniProtKB/Swiss-Prot P11436 directly annotates Glu59, Lys134, and Cys166 as AmiE active-site residues. See data/proteingym/source_records/uniprot_P11436_AMIE_PSEAE_active_site.json.",
+  "evidence": "UniProt annotates Glu59 as proton acceptor, Lys134 as proton donor, and Cys166 as nucleophile. Novo et al. 2002 report loss or strong reduction of activity for E59 and K134 mutants, and Farnaud et al. 1999 report loss of activity for C166 mutants. The ProteinGym AF2 structure also places Cys166 close to Glu59 and Lys134, with heavy-atom distances from Cys166 of approximately 3.44 A to Glu59 and 4.21 A to Lys134."
 }

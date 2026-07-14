@@ -1,0 +1,47 @@
+{
+  "source": "UniProt VIM-2 reference records Q5U7L7 and Q9K2N0",
+  "retrieved_on": "2026-07-14",
+  "urls": [
+    "https://rest.uniprot.org/uniprotkb/Q5U7L7.txt",
+    "https://rest.uniprot.org/uniprotkb/Q9K2N0.txt"
+  ],
+  "protein": "Metallo-beta-lactamase VIM-2",
+  "sequence_length": 266,
+  "protein_gym_sequence_note": "The ProteinGym A4GRB6_PSEAI sequence is length 266 and differs from the reviewed Q5U7L7 VIM-2 sequence at one non-site position: ProteinGym I185 versus Q5U7L7 V185.",
+  "reviewed_reference_support": [
+    {
+      "accession": "Q5U7L7",
+      "entry_name": "BLBV2_ECOLX",
+      "support": "Reviewed VIM-2 record with Zn(2+) cofactor annotation and PDB-backed Zn-binding features.",
+      "pdb_id": "6BM9",
+      "pdb_binding_positions": [114, 116, 198]
+    }
+  ],
+  "pseudomonas_structure_support": [
+    {
+      "accession": "Q9K2N0",
+      "entry_name": "Q9K2N0_PSEAI",
+      "support": "Unreviewed Pseudomonas aeruginosa VIM-2 record with many X-ray structures and PDB-backed Zn-binding features.",
+      "pdb_backed_binding_positions_used_for_label": [114, 116, 118, 179, 198, 240],
+      "representative_pdb_evidence": {
+        "114": ["1KO2", "1KO3"],
+        "116": ["1KO2", "1KO3"],
+        "118": ["4BZ3", "4NQ2", "5ACU", "5ACW", "5ACX"],
+        "179": ["1KO2", "1KO3"],
+        "198": ["5ACU", "5ACW", "5ACX"],
+        "240": ["5ACW", "5ACX"]
+      }
+    }
+  ],
+  "motif_support": [
+    {
+      "positions": [114, 116, 118],
+      "motif": "HxHxD first metal-site motif"
+    },
+    {
+      "positions": [179, 198, 240],
+      "motif": "second zinc-site His/Cys/His region in class B metallo-beta-lactamases"
+    }
+  ],
+  "label_decision": "Use positions 114, 116, 118, 179, 198, and 240 as the exact metal-binding/mechanism-critical slice for A4GRB6_PSEAI_Chen_2020. Treat it as evaluation-only annotation, not a design protocol."
+}

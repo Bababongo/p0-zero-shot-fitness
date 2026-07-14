@@ -10,7 +10,7 @@
       "MSA_filename": "A4GRB6_PSEAI_full_11-26-2021_b03.a2m",
       "MSA_num_seqs": "108496",
       "UniProt_ID": "A4GRB6_PSEAI",
-      "exists_locally": false,
+      "exists_locally": true,
       "expected_local_path": "data/proteingym/msas/A4GRB6_PSEAI_full_11-26-2021_b03.a2m"
     },
     {
@@ -20,7 +20,7 @@
       "MSA_filename": "AMIE_PSEAE_full_11-26-2021_b02.a2m",
       "MSA_num_seqs": "140703",
       "UniProt_ID": "AMIE_PSEAE",
-      "exists_locally": false,
+      "exists_locally": true,
       "expected_local_path": "data/proteingym/msas/AMIE_PSEAE_full_11-26-2021_b02.a2m"
     },
     {
@@ -30,7 +30,7 @@
       "MSA_filename": "BLAT_ECOLX_full_11-26-2021_b02.a2m",
       "MSA_num_seqs": "209644",
       "UniProt_ID": "BLAT_ECOLX",
-      "exists_locally": false,
+      "exists_locally": true,
       "expected_local_path": "data/proteingym/msas/BLAT_ECOLX_full_11-26-2021_b02.a2m"
     },
     {
@@ -40,9 +40,9 @@
       "MSA_filename": "Q59976_STRSQ_full_11-26-2021_b03.a2m",
       "MSA_num_seqs": "105913",
       "UniProt_ID": "Q59976_STRSQ",
-      "exists_locally": false,
+      "exists_locally": true,
       "expected_local_path": "data/proteingym/msas/Q59976_STRSQ_full_11-26-2021_b03.a2m"
     }
   ],
-  "status": "missing_msa_files"
+  "status": "ready"
 }

@@ -22,7 +22,7 @@ This repo implements a reproducible Python benchmark for enzyme variant-effect p
 - residue-slice labeling for catalytic residues, active-site neighborhoods, ligand/metal/catalytic shells, and background residues,
 - matched residue-position null controls,
 - covariate-matched controls for mutation coverage, DMS variance, model-score sensitivity, relative sequence position, structure contact density, and approximate solvent accessibility,
-- MSA conservation-baseline infrastructure,
+- MSA conservation baseline across all four enzymes,
 - Savio/LBNL SLURM scripts for 35M model runs,
 - public-facing reports and portfolio artifacts.
 
@@ -68,20 +68,29 @@ The conservation scorer uses alignment-derived amino-acid frequencies:
 score = log frequency(mutant amino acid) - log frequency(wild-type amino acid)
 ```
 
-Status: implemented and tested, but not yet run on the four-enzyme panel because the local repo does not contain ProteinGym MSA files. The audit artifact is:
+Status: run on the four-enzyme panel using the official ProteinGym MSA bundle. Raw `.a2m` files are kept out of Git because they are large external source data; derived conservation profiles and result artifacts are stored in `results/`.
 
 ```text
 results/proteingym_msa_conservation_status.json
 ```
 
-Required MSA files include:
+The four MSA files used locally were:
 
 - `BLAT_ECOLX_full_11-26-2021_b02.a2m`
 - `A4GRB6_PSEAI_full_11-26-2021_b03.a2m`
 - `AMIE_PSEAE_full_11-26-2021_b02.a2m`
 - `Q59976_STRSQ_full_11-26-2021_b03.a2m`
 
-The official ProteinGym MSA bundle is a separate large external resource, not a file currently committed to this repo.
+ProteinGym A2M files include match-state and query-only/lowercase positions. The scorer maps covered match-state positions to real amino-acid frequencies and assigns neutral uniform frequencies to query-only positions, then records match-state coverage.
+
+| Dataset | Match-State Coverage | ESM-2 35M Overall | MSA Overall | ESM-2 35M Catalytic | MSA Catalytic |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| TEM-1 | 215 / 286 | 0.5548 | 0.4247 | 0.4596 | 0.4824 |
+| VIM-2 | 193 / 266 | 0.5280 | 0.4931 | 0.3449 | 0.3079 |
+| AMIE | 251 / 346 | 0.4082 | 0.4306 | 0.0911 | 0.2944 |
+| Beta-glucosidase | 442 / 501 | 0.4481 | 0.5615 | 0.5105 | 0.4406 |
+
+Interpretation: ESM-2 35M is strongest overall for TEM-1 and slightly ahead for VIM-2, while family-specific MSA conservation is stronger overall for AMIE and beta-glucosidase. This makes the benchmark sharper: the question is not just whether ESM-2 works, but whether it adds value beyond classical family conservation in the same mechanism slices.
 
 ## Metrics
 
@@ -219,14 +228,15 @@ Novelty comes from:
 - matched null controls,
 - explicit separation between exact catalytic residues, active-site neighborhoods, and structure-derived shells,
 - showing positive and negative cases,
-- adding a pathway for true MSA conservation baselines and SASA-matched controls.
+- running true MSA conservation baselines and SASA-matched controls.
 
 The intellectual move is to treat zero-shot PLM scores as something to audit mechanistically, not just leaderboard-rank globally.
 
 ## Limitations
 
-- MSA conservation baseline is implemented but not run because the local repo lacks the ProteinGym MSA files.
-- AMIE catalytic labels are conservative motif/structure curated and should be upgraded with stronger primary-source annotation.
+- Raw ProteinGym MSA files are external and intentionally not committed; derived conservation profiles are committed.
+- AMIE catalytic labels are now UniProt P11436-backed, but substrate-pocket labels beyond the catalytic triad remain future work.
+- VIM-2 exact metal-site labels are supported by VIM-2 reference records and PDB-backed structure features, but A4GRB6 itself is inactive/deleted in UniProt and the ProteinGym sequence differs from reviewed Q5U7L7 at one non-site residue.
 - TEM-1 ligand contacts use one structure/contact rule and could be expanded to multiple ligand-bound structures.
 - Approximate SASA is useful for control matching but not a substitute for a dedicated structural-biology package.
 - Spearman on exact catalytic residues can be noisy because the number of catalytic positions is small.
@@ -256,7 +266,7 @@ python scripts/audit_msa_conservation_inputs.py \
   --output-json results/proteingym_msa_conservation_status.json
 ```
 
-When MSA files are available:
+Regenerate the MSA baseline after staging ProteinGym MSA files locally:
 
 ```bash
 python scripts/derive_msa_conservation.py \
@@ -280,4 +290,4 @@ If asked what P0 proves:
 
 If asked what you would improve next:
 
-> I would run the MSA conservation baseline from the ProteinGym MSA bundle, upgrade AMIE label provenance, and compare ESM-2 against ESM-1v, MSA Transformer, and a conservation-plus-SASA baseline. That would separate language-model signal from classical evolutionary conservation and structural accessibility.
+> I would compare ESM-2 against ESM-1v and MSA Transformer, add a more formal conservation-plus-SASA model, and add ligand-bound or cofactor-aware structure labels where available. The MSA result already shows that classical family conservation can beat ESM-2 on some enzymes, so the next step is to ask where language-model pretraining adds value beyond that baseline.

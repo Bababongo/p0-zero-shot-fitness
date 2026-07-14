@@ -54,7 +54,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - matched residue-position null controls for mechanism-relevant residue slices,
 - covariate-matched null controls for mutation coverage, fitness variance, model-score sensitivity, relative position, and structure contact density,
 - approximate solvent-accessibility/SASA controls for structure-aware matched null tests,
-- an MSA conservation-baseline code path and local MSA availability audit,
+- a true MSA conservation baseline across the four-enzyme panel,
 - a placeholder-vs-ESM-2 baseline comparison across the four-enzyme panel,
 - reproducible CLI output and a simple SVG plot.
 
@@ -201,13 +201,13 @@ This repo now includes the ProteinGym `AMIE_PSEAE_Wrenbeck_2017` processed assay
 - `data/proteingym/AMIE_PSEAE_residue_groups.json`
 - `data/proteingym/structures/AMIE_PSEAE.pdb`
 
-AMIE uses a conservative nitrilase-like catalytic triad annotation supported by AF2 structure geometry:
+AMIE uses a UniProt-backed Cys-Glu-Lys catalytic triad annotation, with local AF2 structure-shell support:
 
 ```text
 [59, 134, 166]
 ```
 
-This is marked as motif/structure curated rather than primary-source or UniProt-backed. It should be upgraded later if a stronger AMIE-specific annotation source is selected.
+UniProtKB/Swiss-Prot P11436 directly annotates Glu59, Lys134, and Cys166 as active-site residues. The source record is `data/proteingym/source_records/uniprot_P11436_AMIE_PSEAE_active_site.json`.
 
 Run the AMIE placeholder baseline:
 
@@ -365,18 +365,28 @@ Four-enzyme ESM-2 35M comparison:
 
 35M scaling improves global zero-shot performance across the panel. The careful residue-zone interpretation is narrower: TEM-1 active-site neighborhood remains higher than matched-position null controls; VIM-2, AMIE, and beta-glucosidase mechanism slices are useful raw signals but inside matched null intervals at 35M.
 
+Four-enzyme MSA conservation baseline:
+
+| Dataset | Enzyme | MSA Overall | MSA Exact Site | MSA Background | ESM-2 35M Overall |
+| --- | --- | ---: | ---: | ---: | ---: |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4247 | 0.4824 | 0.4114 | 0.5548 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4931 | 0.3079 | 0.4724 | 0.5280 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4306 | 0.2944 | 0.4217 | 0.4082 |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.5615 | 0.4406 | 0.5585 | 0.4481 |
+
+The MSA baseline makes the result more intellectually honest: ESM-2 35M is stronger overall for TEM-1 and slightly stronger for VIM-2, but family-specific conservation is stronger overall for AMIE and beta-glucosidase.
+
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M and ESM-2 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2, AMIE, and beta-glucosidase use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, and MSA conservation baselines. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
 
 ## Next Scientific Steps
 
-1. Add conservation-matched and solvent-accessibility-matched null controls.
-2. Add mutation-count-matched and fitness-variance-matched controls.
-3. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
-4. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
-6. Turn the four-enzyme result into a clean portfolio figure and methods card.
+1. Add an explicit ESM-2-vs-MSA interpretation figure.
+2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
+3. Compare ESM-2 against ESM-1v and MSA Transformer.
+4. Add a formal conservation-plus-SASA baseline.
+5. Turn the four-enzyme result into a clean portfolio figure and methods card.
 
 ## Portfolio Signal
 

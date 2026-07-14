@@ -32,6 +32,27 @@ def test_derive_conservation_profile_reports_position_covariates() -> None:
     assert profile["aa_frequencies"]["2"]["C"] > profile["aa_frequencies"]["2"]["A"]
 
 
+def test_derive_conservation_profile_marks_lowercase_query_positions_as_uncovered() -> None:
+    alignment = "\n".join(
+        [
+            ">query",
+            "AcD",
+            ">homolog_1",
+            "A.D",
+            ">homolog_2",
+            "A.D",
+        ]
+    )
+
+    profile = derive_conservation_profile(alignment, "ACD", pseudocount=0.1)
+
+    assert profile["covered_wild_type_positions"] == 2
+    assert profile["uncovered_wild_type_positions"] == 1
+    assert profile["covariates"]["2"]["msa_match_state_coverage"] == 0.0
+    assert profile["aa_frequencies"]["2"]["C"] == pytest.approx(1 / 20)
+    assert conservation_log_odds_score(Mutation("C2V", "C", 2, "V"), profile) == pytest.approx(0.0)
+
+
 def test_conservation_log_odds_score_uses_mutant_frequency() -> None:
     alignment = "\n".join(
         [

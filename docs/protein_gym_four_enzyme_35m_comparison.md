@@ -65,6 +65,19 @@ After the pre-report control upgrade, each mechanism slice is also compared agai
 
 The control upgrade makes the final claim narrower and stronger. TEM-1 active-site neighborhood is the best positive mechanism-local result, VIM-2 is suggestive but not fully controlled, and AMIE/beta-glucosidase prevent a blanket "mechanism slices are special" conclusion.
 
+## MSA Conservation Baseline Read
+
+The true MSA conservation baseline asks whether ESM-2 is doing more than family-specific evolutionary conservation.
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ESM-2 Exact Site | MSA Exact Site |
+| --- | ---: | ---: | ---: | ---: |
+| TEM-1 | 0.5548 | 0.4247 | 0.4596 | 0.4824 |
+| VIM-2 | 0.5280 | 0.4931 | 0.3449 | 0.3079 |
+| AMIE | 0.4082 | 0.4306 | 0.0911 | 0.2944 |
+| Beta-glucosidase | 0.4481 | 0.5615 | 0.5105 | 0.4406 |
+
+Interpretation: ESM-2 35M is clearly stronger than MSA conservation for TEM-1 overall and slightly stronger for VIM-2 overall. MSA conservation is stronger overall for AMIE and beta-glucosidase. This makes the project more interesting, not weaker: the benchmark can now distinguish broad pretrained sequence-model signal from family-specific evolutionary conservation.
+
 ## Interpretation
 
 The four-enzyme 35M panel makes P0 more mature because it separates three claims that would otherwise get blurred together:
@@ -80,6 +93,8 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 ## Artifacts
 
 - `results/proteingym_four_enzyme_esm2_t12_35M_comparison.json`
+- `results/proteingym_four_enzyme_msa_conservation_comparison.json`
+- `results/proteingym_four_enzyme_esm2_t12_35M_vs_msa_conservation.json`
 - `results/proteingym_four_enzyme_covariate_control_summary.json`
 - `results/proteingym_four_enzyme_placeholder_vs_esm2_t12_35M_comparison.json`
 - `results/proteingym_blat_esm2_t12_35M/metrics.json`
@@ -89,8 +104,9 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 
 ## Next Scientific Step
 
-The pre-report control upgrade added local covariate controls. The remaining external-data upgrade is a true evolutionary conservation control, which requires per-position MSA-derived conservation features that are not stored in this repository:
+The pre-report control upgrade added local covariate controls, and the MSA upgrade added a true evolutionary-conservation baseline. The next scientific upgrades are now:
 
-- true MSA/per-position conservation controls,
 - model-family comparisons such as ESM-1v and MSA Transformer,
+- a formal conservation-plus-SASA baseline,
+- ligand-bound or cofactor-aware labels for VIM-2 where a clean rule is available,
 - and prospective validation on a new enzyme-design target.
