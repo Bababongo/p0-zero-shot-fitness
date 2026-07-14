@@ -82,7 +82,7 @@ sbatch hpc/savio_esm2_35m_amie.slurm
 sbatch hpc/savio_esm2_35m_bgly.slurm
 ```
 
-These are the next real scaling steps beyond the local 8M VIM-2, AMIE, and beta-glucosidase results.
+These are the first real scaling steps beyond the local 8M VIM-2, AMIE, and beta-glucosidase results.
 
 ## Step 6 - Watch The Job
 
@@ -137,7 +137,7 @@ python scripts/compare_metrics.py \
   --output results/proteingym_three_enzyme_esm2_t12_35M_comparison.json
 ```
 
-After beta-glucosidase finishes:
+The completed four-enzyme panel is:
 
 ```bash
 python scripts/compare_metrics.py \
@@ -150,7 +150,7 @@ python scripts/compare_metrics.py \
 
 Scientific interpretation:
 
-- If 35M improves all three enzymes, the 8M model was underpowered.
-- If VIM-2 stays strong in the active-site neighborhood, the TEM-1/VIM-2 pattern becomes more convincing.
-- If AMIE still stays inside matched-position null controls, it remains the useful counterexample.
-- If AMIE becomes significant at 35M, model scale may recover a mechanism-neighborhood signal that 8M missed.
+- 35M improves global Spearman across all four enzymes.
+- TEM-1 active-site neighborhood remains the strongest matched-null-positive 35M mechanism slice.
+- VIM-2, AMIE, and beta-glucosidase show useful raw mechanism signals, but their 35M mechanism slices remain inside matched-position null controls.
+- Beta-glucosidase is the scale counterexample: 8M had a catalytic-shell matched-null hit, while 35M strongly improved global performance but did not preserve that controlled shell signal.

@@ -70,28 +70,47 @@ Matched-position null read:
 | Active-site neighborhood | 0.3595 | -0.2463 to 0.4796 | 0.210 | Inside null |
 | AF2 catalytic shell, 5 A | 0.3712 | -0.0969 to 0.3450 | 0.018 | Higher than matched null |
 
+## ESM-2 35M Result
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4481 | - | 2,999 |
+| Curated catalytic site | 0.5105 | 0.4434 | 12 |
+| Active-site neighborhood | 0.4327 | 0.4341 | 60 |
+| AF2 catalytic shell, 5 A | 0.3808 | 0.4286 | 149 |
+
+Matched-position null read:
+
+| Slice | Observed Spearman | Null 95% Interval | Empirical p | Read |
+| --- | ---: | ---: | ---: | --- |
+| Curated catalytic site | 0.5105 | -0.4056 to 0.8419 | 0.772 | Inside null |
+| Active-site neighborhood | 0.4327 | 0.0794 to 0.7030 | 0.984 | Inside null |
+| AF2 catalytic shell, 5 A | 0.3808 | 0.2042 to 0.6283 | 0.654 | Inside null |
+
 ## Interpretation
 
-The overall beta-glucosidase ESM-2 8M score is modest, but the structure-derived catalytic shell is much stronger than the outside background and higher than matched random residue-position controls.
+The beta-glucosidase scaling result is a useful correction to the first 8M read.
+
+At 8M, the overall score is modest, but the structure-derived catalytic shell is much stronger than the outside background and higher than matched random residue-position controls.
+
+At 35M, the overall score improves sharply from `0.1442` to `0.4481`. However, the mechanism-slice result becomes more conservative: the AF2 catalytic shell, active-site neighborhood, and exact catalytic site all fall inside matched random residue-position controls.
 
 The exact two-glutamate catalytic slice has only 12 measured variants, so it should not be overclaimed. The more defensible signal is the 5 A catalytic shell: a broader mechanism-adjacent region with enough variants to compare against matched controls.
 
-This result makes P0 more interesting because beta-glucosidase behaves differently from AMIE. AMIE showed a useful raw active-site-neighborhood lift but stayed inside matched null controls. Beta-glucosidase shows a controlled 8M signal in the AF2 catalytic shell.
+This result makes P0 more interesting because beta-glucosidase behaves differently across scale. It shows that a mechanism-slice signal can appear at 8M but fail to persist at 35M once global model quality improves. The mature interpretation is not "beta-glucosidase catalytic shell is special." It is:
+
+> Scale improves global zero-shot fitness prediction, but mechanism-slice effects are enzyme- and model-size-dependent.
 
 ## Artifacts
 
 - `results/proteingym_bgly_placeholder/metrics.json`
 - `results/proteingym_bgly_esm2_t6_8M/metrics.json`
+- `results/proteingym_bgly_esm2_t12_35M/metrics.json`
 - `results/proteingym_bgly_placeholder_vs_esm2_t6_8M.json`
 - `results/proteingym_four_enzyme_esm2_t6_8M_comparison.json`
+- `results/proteingym_four_enzyme_esm2_t12_35M_comparison.json`
 - `hpc/savio_esm2_35m_bgly.slurm`
 
 ## Next Step
 
-Run the Savio 35M beta-glucosidase job:
-
-```bash
-sbatch hpc/savio_esm2_35m_bgly.slurm
-```
-
-Then compare against the existing three-enzyme 35M panel.
+Use this as the fourth-enzyme counterexample in the P0 panel, then add conservation-matched and solvent-accessibility-matched controls before making broader claims about mechanism-adjacent regions.

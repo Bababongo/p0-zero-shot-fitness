@@ -22,6 +22,8 @@ Read the three-enzyme comparison: [ProteinGym Three-Enzyme Comparison](docs/prot
 
 Read the four-enzyme 8M comparison: [ProteinGym Four-Enzyme ESM-2 8M Comparison](docs/protein_gym_four_enzyme_8m_comparison.md)
 
+Read the four-enzyme 35M comparison: [ProteinGym Four-Enzyme ESM-2 35M Comparison](docs/protein_gym_four_enzyme_35m_comparison.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters
@@ -39,7 +41,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
 - ESM-2 8M masked-marginal scoring across four enzymes,
-- ESM-2 35M masked-marginal scoring across three enzymes, with beta-glucosidase Savio script ready,
+- ESM-2 35M masked-marginal scoring across four enzymes,
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
 - mutation-class breakdown,
@@ -293,6 +295,17 @@ Beta-glucosidase ESM-2 8M result:
 
 The beta-glucosidase AF2 catalytic shell is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.3712`, null 95% interval `-0.0969 to 0.3450`, empirical p = `0.018`.
 
+Beta-glucosidase ESM-2 35M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4481 | - | 2,999 |
+| Curated catalytic site | 0.5105 | 0.4434 | 12 |
+| AF2 catalytic shell, 5 A | 0.3808 | 0.4286 | 149 |
+| Active-site neighborhood | 0.4327 | 0.4341 | 60 |
+
+The beta-glucosidase 35M result is scientifically useful because it changes the 8M story. Scaling strongly improves global performance from `0.1442` to `0.4481`, but the AF2 catalytic shell no longer clears matched random residue-position controls: observed Spearman `0.3808`, null 95% interval `0.2042 to 0.6283`, empirical p = `0.654`.
+
 The exact two-residue catalytic site has only 12 measured variants, so it is useful as a biological label but too small to overclaim alone.
 
 ## Validate The Enzyme Panel Registry
@@ -331,29 +344,29 @@ Four-enzyme ESM-2 8M comparison:
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | 0.3157 | Active-site neighborhood, 0.4092 |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.1442 | 0.4196 | 0.1363 | AF2 catalytic shell, 0.3712 |
 
-Three-enzyme ESM-2 35M comparison:
+Four-enzyme ESM-2 35M comparison:
 
 | Dataset | Enzyme | Overall | Exact Site | Background | Best Mechanism Slice |
 | --- | --- | ---: | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | 0.5428 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
 | `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | 0.4434 | Active-site neighborhood, 0.4327; AF2 catalytic shell, 0.3808 |
 
-35M scaling improves global zero-shot performance across all three enzymes. The careful residue-zone interpretation is narrower: TEM-1 active-site neighborhood remains higher than matched-position null controls; VIM-2 and AMIE mechanism slices are useful raw signals but inside matched null intervals at 35M.
+35M scaling improves global zero-shot performance across the panel. The careful residue-zone interpretation is narrower: TEM-1 active-site neighborhood remains higher than matched-position null controls; VIM-2, AMIE, and beta-glucosidase mechanism slices are useful raw signals but inside matched null intervals at 35M.
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. TEM-1, VIM-2, AMIE, and beta-glucosidase have ESM-2 8M baselines; TEM-1, VIM-2, and AMIE also have ESM-2 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2, AMIE, and beta-glucosidase use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M and ESM-2 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2, AMIE, and beta-glucosidase use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
 
 ## Next Scientific Steps
 
-1. Run beta-glucosidase ESM-2 35M on Savio.
-2. Add conservation-matched and solvent-accessibility-matched null controls.
-3. Add mutation-count-matched and fitness-variance-matched controls.
-4. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
-5. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
-7. Turn the four-enzyme result into a clean portfolio figure and methods card.
+1. Add conservation-matched and solvent-accessibility-matched null controls.
+2. Add mutation-count-matched and fitness-variance-matched controls.
+3. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
+4. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
+5. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
+6. Turn the four-enzyme result into a clean portfolio figure and methods card.
 
 ## Portfolio Signal
 

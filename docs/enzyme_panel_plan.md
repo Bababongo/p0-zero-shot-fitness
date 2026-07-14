@@ -211,7 +211,7 @@ Current status:
 
 1. `A4GRB6_PSEAI_Chen_2020` - added, placeholder, ESM-2 8M, and ESM-2 35M complete.
 2. `AMIE_PSEAE_Wrenbeck_2017` - added, placeholder, ESM-2 8M, and ESM-2 35M complete.
-3. `Q59976_STRSQ_Romero_2015` - added, placeholder and ESM-2 8M complete; Savio ESM-2 35M script ready.
+3. `Q59976_STRSQ_Romero_2015` - added, placeholder, ESM-2 8M, and ESM-2 35M complete.
 
 Why these three:
 
@@ -251,7 +251,7 @@ Beta-glucosidase is now local and runnable:
 - Exact curated catalytic-site variants: 12
 - ProteinGym AF2 catalytic-shell variants: 149
 - Active-site-neighborhood variants: 60
-- Current scorers: placeholder baseline and ESM-2 8M
+- Current scorers: placeholder baseline, ESM-2 8M, and ESM-2 35M
 - Savio script: `hpc/savio_esm2_35m_bgly.slurm`
 
 Beta-glucosidase ESM-2 8M:
@@ -265,15 +265,25 @@ Beta-glucosidase ESM-2 8M:
 
 The beta-glucosidase AF2 catalytic shell is higher than matched random residue-position controls at 8M: observed Spearman `0.3712`, null 95% interval `-0.0969 to 0.3450`, empirical p = `0.018`.
 
-This is a different pattern from AMIE. The exact catalytic site is still too small to overclaim, but the structure-derived shell gives a controlled mechanism-adjacent signal.
+Beta-glucosidase ESM-2 35M:
 
-## Three-Enzyme 35M Comparison
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.4481 | - | 2,999 |
+| Curated catalytic site | 0.5105 | 0.4434 | 12 |
+| AF2 catalytic shell, 5 A | 0.3808 | 0.4286 | 149 |
+| Active-site neighborhood | 0.4327 | 0.4341 | 60 |
+
+At 35M, beta-glucosidase has the largest global rescue in the panel, improving from `0.1442` to `0.4481`. But its catalytic shell, active-site neighborhood, and exact catalytic site all remain inside matched-position null controls. This is a different pattern from the 8M result and a useful warning against overclaiming one model-size slice.
+
+## Four-Enzyme 35M Comparison
 
 | Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
 | `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 
 ## Four-Enzyme 8M Comparison
 
@@ -296,4 +306,4 @@ P0 v3 is successful when it can answer:
 
 ## Interview Version
 
-> P0 started as one TEM-1 case study. I upgraded it into a mechanism-stratified enzyme benchmark seed across TEM-1, VIM-2, AMIE, and beta-glucosidase. TEM-1, VIM-2, and AMIE have ESM-2 8M and 35M results; beta-glucosidase has ESM-2 8M and a Savio 35M script ready. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The current result says scale improves global zero-shot performance, exact catalytic-site slices remain small and noisy, and mechanism-neighborhood or structure-shell signal is enzyme-dependent and must be tested against matched controls.
+> P0 started as one TEM-1 case study. I upgraded it into a mechanism-stratified enzyme benchmark seed across TEM-1, VIM-2, AMIE, and beta-glucosidase. All four enzymes now have ESM-2 8M and 35M results. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The current result says scale improves global zero-shot performance, exact catalytic-site slices remain small and noisy, and mechanism-neighborhood or structure-shell signal is enzyme-dependent and must be tested against matched controls.

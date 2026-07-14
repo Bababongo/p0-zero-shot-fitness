@@ -8,9 +8,7 @@ The first local run used ESM-2 8M. I then ran ESM-2 35M on Savio as the first sc
 
 I later added a matched residue-position null control. That changed the most careful interpretation: the exact UniProt active-site-only slice is not unusual compared with same-size random position groups, but the broader active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 
-I then expanded the benchmark seed to VIM-2 metallo-beta-lactamase and AMIE aliphatic amidase, and ran ESM-2 35M on all three enzymes. Scaling improved global zero-shot performance across the panel, but the mechanism-slice story became more nuanced: TEM-1 retained a matched-null active-site-neighborhood signal, while VIM-2 and AMIE showed useful raw mechanism signals that remained inside matched-position null intervals.
-
-I later added beta-glucosidase as a fourth enzyme at the local ESM-2 8M scale. Its overall correlation is modest, but its AF2-derived catalytic shell is higher than matched random residue-position controls, giving the panel a different mechanism-slice pattern to test with the next 35M run.
+I then expanded the benchmark seed to VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase, and ran ESM-2 35M across all four enzymes. Scaling improved global zero-shot performance across the panel, but the mechanism-slice story became more nuanced: TEM-1 retained a matched-null active-site-neighborhood signal, while VIM-2, AMIE, and beta-glucosidase showed useful raw mechanism signals that remained inside matched-position null intervals at 35M.
 
 ## Why I Built This
 
@@ -160,32 +158,28 @@ Still, this is the kind of eval slice I want more life-science AI systems to exp
 
 ## Enzyme-Panel Expansion
 
-After the TEM-1 result, I upgraded P0 into a three-enzyme benchmark seed. The current 35M panel result is:
+After the TEM-1 result, I upgraded P0 into a four-enzyme benchmark seed. The current 35M panel result is:
 
 | Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
 | `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 
 The matched-position null controls make the result more careful:
 
 - TEM-1 active-site neighborhood is higher than same-size random residue-position controls at 35M.
 - VIM-2 active-site neighborhood and metal-site shell are strong in raw Spearman, but remain inside matched-position null intervals at 35M.
 - AMIE active-site neighborhood is higher than outside background, but remains inside same-size random residue-position controls at 35M.
+- Beta-glucosidase has the largest 8M-to-35M global improvement, but its catalytic shell no longer clears matched-position null controls at 35M.
 - Exact catalytic-site slices remain small, noisy, and easy to overclaim.
 
 The current strongest claim is therefore:
 
-> Scaling improves global zero-shot performance, but exact catalytic chemistry remains harder than broader sequence and structure constraints. Broader active-site neighborhoods can contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
+> Scaling improves global zero-shot performance, but exact catalytic chemistry remains harder to interpret than broader sequence and structure constraints. Broader active-site neighborhoods can contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
 
-I also added beta-glucosidase as a fourth enzyme at ESM-2 8M:
-
-| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
-| --- | --- | ---: | ---: | --- |
-| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.1442 | 0.4196 | AF2 catalytic shell, 0.3712 |
-
-The beta-glucosidase AF2 catalytic shell is higher than same-size random residue-position controls at 8M, with empirical p = `0.018`. The next step is to run the matching Savio 35M job before folding it into the main scaling claim.
+Beta-glucosidase is the clearest example of why the controls matter. At 8M, its AF2 catalytic shell was higher than same-size random residue-position controls, with empirical p = `0.018`. At 35M, global Spearman improved from `0.1442` to `0.4481`, but the catalytic shell fell inside the matched-position null interval. The stronger model improved the average task without making the mechanism slice statistically special.
 
 ## What This Repo Demonstrates
 
@@ -195,8 +189,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - validates mutation strings against the wild-type sequence,
 - labels UniProt active-site and substrate-binding variants,
 - labels structure-derived ligand-contact variants from PDB 1M40,
-- labels AF2-derived mechanism shells for VIM-2 and AMIE,
-- labels an AF2-derived catalytic shell for beta-glucosidase,
+- labels AF2-derived mechanism shells for VIM-2, AMIE, and beta-glucosidase,
 - labels active-site-neighborhood variants,
 - adds matched residue-position null controls for mechanism-relevant slices,
 - runs a swappable scorer interface,
@@ -208,11 +201,10 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Run beta-glucosidase ESM-2 35M on Savio.
-2. Add conservation-matched and solvent-accessibility-matched null controls.
-3. Add ESM-1v or an MSA-based baseline.
-4. Run ESM-2 150M as the next scaling step.
-5. Turn the four-enzyme result into a short portfolio figure and methods card.
+1. Add conservation-matched and solvent-accessibility-matched null controls.
+2. Add ESM-1v or an MSA-based baseline.
+3. Run ESM-2 150M as the next scaling step.
+4. Turn the four-enzyme result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 

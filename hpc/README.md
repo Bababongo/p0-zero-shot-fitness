@@ -52,9 +52,7 @@ python scripts/compare_metrics.py \
   --output results/proteingym_three_enzyme_esm2_t12_35M_comparison.json
 ```
 
-Then update `docs/public_writeup.md` and `docs/protein_gym_three_enzyme_comparison.md` with the 35M three-enzyme table.
-
-After the beta-glucosidase 35M job finishes, add it to a four-enzyme 35M comparison:
+The current completed panel includes beta-glucosidase, so the main comparison artifact is the four-enzyme 35M comparison:
 
 ```bash
 python scripts/compare_metrics.py \
@@ -64,3 +62,5 @@ python scripts/compare_metrics.py \
   results/proteingym_bgly_esm2_t12_35M/metrics.json \
   --output results/proteingym_four_enzyme_esm2_t12_35M_comparison.json
 ```
+
+Then update `docs/public_writeup.md`, `docs/protein_gym_four_enzyme_35m_comparison.md`, and the Obsidian P0 result notes.
