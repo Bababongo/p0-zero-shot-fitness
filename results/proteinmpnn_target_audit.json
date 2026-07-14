@@ -1,0 +1,103 @@
+{
+  "manifest": "data/proteingym/proteinmpnn_targets.json",
+  "ready_targets": 3,
+  "targets": [
+    {
+      "chain": "A",
+      "dataset_id": "BLAT_ECOLX_Firnberg_2014",
+      "exact_sequence_match": false,
+      "first_mismatch": {
+        "position": 1,
+        "structure_residue": "H",
+        "wild_type_residue": "M"
+      },
+      "first_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "H",
+        "residue_name": "HIS",
+        "residue_number": "26"
+      },
+      "last_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "W",
+        "residue_name": "TRP",
+        "residue_number": "290"
+      },
+      "manifest_status": "needs_target_aligned_structure_or_profile_remap",
+      "protein_id": "BLAT_ECOLX",
+      "ready_for_target_numbered_profile": false,
+      "structure_length": 263,
+      "wild_type_length": 286
+    },
+    {
+      "chain": "A",
+      "dataset_id": "A4GRB6_PSEAI_Chen_2020",
+      "exact_sequence_match": true,
+      "first_mismatch": null,
+      "first_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "M",
+        "residue_name": "MET",
+        "residue_number": "1"
+      },
+      "last_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "E",
+        "residue_name": "GLU",
+        "residue_number": "266"
+      },
+      "manifest_status": "target_aligned_ready",
+      "protein_id": "A4GRB6_PSEAI",
+      "ready_for_target_numbered_profile": true,
+      "structure_length": 266,
+      "wild_type_length": 266
+    },
+    {
+      "chain": "A",
+      "dataset_id": "AMIE_PSEAE_Wrenbeck_2017",
+      "exact_sequence_match": true,
+      "first_mismatch": null,
+      "first_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "M",
+        "residue_name": "MET",
+        "residue_number": "1"
+      },
+      "last_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "A",
+        "residue_name": "ALA",
+        "residue_number": "346"
+      },
+      "manifest_status": "target_aligned_ready",
+      "protein_id": "AMIE_PSEAE",
+      "ready_for_target_numbered_profile": true,
+      "structure_length": 346,
+      "wild_type_length": 346
+    },
+    {
+      "chain": "A",
+      "dataset_id": "Q59976_STRSQ_Romero_2015",
+      "exact_sequence_match": true,
+      "first_mismatch": null,
+      "first_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "M",
+        "residue_name": "MET",
+        "residue_number": "1"
+      },
+      "last_structure_residue": {
+        "insertion_code": "",
+        "one_letter": "H",
+        "residue_name": "HIS",
+        "residue_number": "501"
+      },
+      "manifest_status": "target_aligned_ready",
+      "protein_id": "Q59976_STRSQ",
+      "ready_for_target_numbered_profile": true,
+      "structure_length": 501,
+      "wild_type_length": 501
+    }
+  ],
+  "total_targets": 4
+}

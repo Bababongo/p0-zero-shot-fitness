@@ -133,3 +133,61 @@ def test_score_structure_profile_baseline_script(tmp_path: Path) -> None:
     assert metrics["metrics"]["n_variants"] == 4
     assert (output_dir / "scored_variants.csv").exists()
     assert (output_dir / "fitness_scatter.svg").exists()
+
+
+def test_score_structure_profile_baseline_can_skip_missing_positions(tmp_path: Path) -> None:
+    scored_variants = tmp_path / "scored_variants.csv"
+    scored_variants.write_text(
+        "\n".join(
+            [
+                "variant,wild_type,position,mutant,fitness,is_catalytic,residue_groups,mutation_class,model_score",
+                "A1V,A,1,V,0.1,true,pocket,class_changing,0.0",
+                "C2V,C,2,V,0.3,false,,class_changing,0.0",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    profile = tmp_path / "structure_profile.json"
+    profile.write_text(
+        json.dumps(
+            {
+                "scorer": "ProteinMPNNProfileScorer",
+                "positions": {
+                    "1": {
+                        "wild_type": "A",
+                        "log_probabilities": {
+                            "A": -0.1,
+                            "V": -1.0,
+                        },
+                    },
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    output_dir = tmp_path / "out"
+
+    subprocess.run(
+        [
+            sys.executable,
+            "scripts/score_structure_profile_baseline.py",
+            "--scored-variants-csv",
+            str(scored_variants),
+            "--structure-profile-json",
+            str(profile),
+            "--output-dir",
+            str(output_dir),
+            "--dataset-name",
+            "fixture",
+            "--drop-missing-profile-positions",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        check=True,
+    )
+
+    metrics = json.loads((output_dir / "metrics.json").read_text(encoding="utf-8"))
+
+    assert metrics["metrics"]["n_variants"] == 1
+    assert metrics["skipped_variants"]["n"] == 1
+    assert metrics["skipped_variants"]["variants"][0]["variant"] == "C2V"

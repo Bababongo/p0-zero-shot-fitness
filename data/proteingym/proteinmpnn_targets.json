@@ -1,0 +1,63 @@
+{
+  "format": "p0_proteinmpnn_target_manifest.v1",
+  "score_definition": "log P(mutant amino acid | backbone) - log P(wild type amino acid | backbone)",
+  "notes": [
+    "Structure profile positions must map to the same 1-indexed target sequence positions used in the DMS CSV.",
+    "The three ProteinGym AF2 structures currently match their FASTA lengths directly.",
+    "TEM-1 currently uses experimental PDB 1M40 as a ligand-contact source, but 1M40 is missing termini and uses PDB residue numbering. For ProteinMPNN scoring, stage a target-aligned BLAT_ECOLX structure or explicitly remap the profile before running the full panel."
+  ],
+  "targets": [
+    {
+      "dataset_id": "BLAT_ECOLX_Firnberg_2014",
+      "enzyme": "TEM-1 beta-lactamase",
+      "protein_id": "BLAT_ECOLX",
+      "wild_type_fasta": "data/proteingym/BLAT_ECOLX.fasta",
+      "structure_path": "data/proteingym/structures/1M40.pdb",
+      "chain": "A",
+      "structure_status": "needs_target_aligned_structure_or_profile_remap",
+      "scored_variants_csv": "results/proteingym_blat_esm2_t12_35M/scored_variants.csv",
+      "position_covariates_json": "results/proteingym_blat_esm2_t12_35M/position_covariates.json",
+      "structure_profile_json": "results/proteingym_blat_proteinmpnn/profile.json",
+      "output_dir": "results/proteingym_blat_proteinmpnn"
+    },
+    {
+      "dataset_id": "A4GRB6_PSEAI_Chen_2020",
+      "enzyme": "VIM-2 metallo-beta-lactamase",
+      "protein_id": "A4GRB6_PSEAI",
+      "wild_type_fasta": "data/proteingym/A4GRB6_PSEAI.fasta",
+      "structure_path": "data/proteingym/structures/A4GRB6_PSEAI.pdb",
+      "chain": "A",
+      "structure_status": "target_aligned_ready",
+      "scored_variants_csv": "results/proteingym_vim2_esm2_t12_35M/scored_variants.csv",
+      "position_covariates_json": "results/proteingym_vim2_esm2_t12_35M/position_covariates.json",
+      "structure_profile_json": "results/proteingym_vim2_proteinmpnn/profile.json",
+      "output_dir": "results/proteingym_vim2_proteinmpnn"
+    },
+    {
+      "dataset_id": "AMIE_PSEAE_Wrenbeck_2017",
+      "enzyme": "AMIE aliphatic amidase",
+      "protein_id": "AMIE_PSEAE",
+      "wild_type_fasta": "data/proteingym/AMIE_PSEAE.fasta",
+      "structure_path": "data/proteingym/structures/AMIE_PSEAE.pdb",
+      "chain": "A",
+      "structure_status": "target_aligned_ready",
+      "scored_variants_csv": "results/proteingym_amie_esm2_t12_35M/scored_variants.csv",
+      "position_covariates_json": "results/proteingym_amie_esm2_t12_35M/position_covariates.json",
+      "structure_profile_json": "results/proteingym_amie_proteinmpnn/profile.json",
+      "output_dir": "results/proteingym_amie_proteinmpnn"
+    },
+    {
+      "dataset_id": "Q59976_STRSQ_Romero_2015",
+      "enzyme": "Beta-glucosidase",
+      "protein_id": "Q59976_STRSQ",
+      "wild_type_fasta": "data/proteingym/Q59976_STRSQ.fasta",
+      "structure_path": "data/proteingym/structures/Q59976_STRSQ.pdb",
+      "chain": "A",
+      "structure_status": "target_aligned_ready",
+      "scored_variants_csv": "results/proteingym_bgly_esm2_t12_35M/scored_variants.csv",
+      "position_covariates_json": "results/proteingym_bgly_esm2_t12_35M/position_covariates.json",
+      "structure_profile_json": "results/proteingym_bgly_proteinmpnn/profile.json",
+      "output_dir": "results/proteingym_bgly_proteinmpnn"
+    }
+  ]
+}

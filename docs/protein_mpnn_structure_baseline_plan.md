@@ -93,6 +93,26 @@ Run ProteinMPNN on all four enzymes and compare:
 
 Do not start with MSA Transformer unless the ProteinMPNN comparison changes the story or leaves a clear ambiguity.
 
+## Readiness Audit
+
+Use:
+
+```bash
+python scripts/audit_proteinmpnn_targets.py \
+  --output-json results/proteinmpnn_target_audit.json
+```
+
+Current audit result:
+
+| Dataset | Structure | Ready? | Reason |
+| --- | --- | --- | --- |
+| TEM-1 / `BLAT_ECOLX_Firnberg_2014` | `1M40.pdb` | No | Experimental structure starts at PDB residue 26, has 263 residues, and does not directly match the 286-aa DMS target sequence. Stage a target-aligned BLAT_ECOLX structure or remap the ProteinMPNN profile before scoring. |
+| VIM-2 / `A4GRB6_PSEAI_Chen_2020` | `A4GRB6_PSEAI.pdb` | Yes | Structure sequence matches the 266-aa DMS target sequence. |
+| AMIE / `AMIE_PSEAE_Wrenbeck_2017` | `AMIE_PSEAE.pdb` | Yes | Structure sequence matches the 346-aa DMS target sequence. |
+| Beta-glucosidase / `Q59976_STRSQ_Romero_2015` | `Q59976_STRSQ.pdb` | Yes | Structure sequence matches the 501-aa DMS target sequence. |
+
+This means the first ProteinMPNN run should use VIM-2, AMIE, and beta-glucosidase. Add TEM-1 after a target-aligned BLAT_ECOLX structure is staged.
+
 ## Expected Interpretation
 
 The strongest final claim would not be "ProteinMPNN wins" or "ESM-2 wins."

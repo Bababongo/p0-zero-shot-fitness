@@ -40,6 +40,8 @@ Each job writes metrics, scored variants, and a scatter plot under `results/`.
 
 For the concrete Savio workflow, see `SAVIO.md`.
 
+For the ProteinMPNN structure-conditioned baseline, see `SAVIO_PROTEINMPNN.md`.
+
 ## After Jobs Finish
 
 Run:

@@ -27,8 +27,10 @@ def parse_bool(value: str) -> bool:
 def load_scored_variants_with_structure_profile_scores(
     scored_variants_csv: Path,
     structure_profile: dict[str, object],
-) -> list[VariantRecord]:
+    drop_missing_profile_positions: bool = False,
+) -> tuple[list[VariantRecord], list[dict[str, object]]]:
     records: list[VariantRecord] = []
+    skipped: list[dict[str, object]] = []
     with scored_variants_csv.open("r", encoding="utf-8", newline="") as handle:
         for row in csv.DictReader(handle):
             mutation = Mutation(
@@ -42,16 +44,29 @@ def load_scored_variants_with_structure_profile_scores(
                 for group_name in row.get("residue_groups", "").split(";")
                 if group_name
             )
+            try:
+                model_score = structure_profile_log_odds_score(mutation, structure_profile)
+            except ValueError as error:
+                if drop_missing_profile_positions and "missing position" in str(error):
+                    skipped.append(
+                        {
+                            "variant": mutation.raw,
+                            "position": mutation.position,
+                            "reason": str(error),
+                        }
+                    )
+                    continue
+                raise
             records.append(
                 VariantRecord(
                     mutation=mutation,
                     fitness=float(row["fitness"]),
                     is_catalytic=parse_bool(row["is_catalytic"]),
-                    model_score=structure_profile_log_odds_score(mutation, structure_profile),
+                    model_score=model_score,
                     residue_groups=residue_groups,
                 )
             )
-    return records
+    return records, skipped
 
 
 def main() -> int:
@@ -73,15 +88,24 @@ def main() -> int:
     parser.add_argument("--null-seed", type=int, default=2026)
     parser.add_argument("--covariate-null-iterations", type=int, default=0)
     parser.add_argument("--covariate-null-seed", type=int, default=707)
+    parser.add_argument(
+        "--drop-missing-profile-positions",
+        action="store_true",
+        help=(
+            "Skip variants whose target position is absent from the structure profile. "
+            "Use only for structures with known missing termini or unresolved residues."
+        ),
+    )
     args = parser.parse_args()
 
     structure_profile = load_structure_log_probability_profile(args.structure_profile_json)
     scorer_name = args.scorer_name or str(
         structure_profile.get("scorer", "StructureLogProbabilityProfileScorer")
     )
-    records = load_scored_variants_with_structure_profile_scores(
+    records, skipped_variants = load_scored_variants_with_structure_profile_scores(
         args.scored_variants_csv,
         structure_profile,
+        drop_missing_profile_positions=args.drop_missing_profile_positions,
     )
     position_covariates = load_position_covariates(args.position_covariates_json)
     metrics = summarize_records(
@@ -110,6 +134,13 @@ def main() -> int:
             "position_covariates_json": str(args.position_covariates_json)
             if args.position_covariates_json
             else None,
+        },
+        "skipped_variants": {
+            "n": len(skipped_variants),
+            "reason": "missing structure-profile positions"
+            if skipped_variants
+            else None,
+            "variants": skipped_variants,
         },
         "structure_profile_metadata": {
             key: value
