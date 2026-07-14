@@ -15,11 +15,15 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = [
+  "numpy>=1.23",
   "pytest>=8.0"
 ]
 esm = [
   "fair-esm>=2.0.0",
   "torch"
+]
+proteinmpnn = [
+  "numpy>=1.23"
 ]
 
 [project.scripts]

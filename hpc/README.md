@@ -42,6 +42,12 @@ For the concrete Savio workflow, see `SAVIO.md`.
 
 For the ProteinMPNN structure-conditioned baseline, see `SAVIO_PROTEINMPNN.md`.
 
+After ProteinMPNN profile JSON files are generated, score the three ready enzymes with:
+
+```bash
+sbatch hpc/savio_score_proteinmpnn_profiles.slurm
+```
+
 ## After Jobs Finish
 
 Run:

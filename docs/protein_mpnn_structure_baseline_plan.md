@@ -81,6 +81,22 @@ python scripts/score_structure_profile_baseline.py \
 
 Repeat for VIM-2, AMIE, and beta-glucosidase using the matching existing `scored_variants.csv` and `position_covariates.json`.
 
+## Convert ProteinMPNN NPZ Output
+
+ProteinMPNN can write probability NPZ files such as `log_p`, `S`, `mask`, and `design_mask` when run in probability-output mode. Convert that file into the P0 profile schema with:
+
+```bash
+python scripts/convert_proteinmpnn_npz_to_profile.py \
+  --proteinmpnn-npz path/to/proteinmpnn_output.npz \
+  --wild-type-fasta data/proteingym/A4GRB6_PSEAI.fasta \
+  --protein A4GRB6_PSEAI \
+  --structure A4GRB6_PSEAI.pdb \
+  --chain A \
+  --output-json results/proteingym_vim2_proteinmpnn/profile.json
+```
+
+The converter checks that ProteinMPNN's native sequence indices match the FASTA. If that check fails, do not force it unless you have intentionally remapped the profile.
+
 ## Minimum Valuable Comparison
 
 Run ProteinMPNN on all four enzymes and compare:

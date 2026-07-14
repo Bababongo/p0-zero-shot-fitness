@@ -69,6 +69,27 @@ Each profile must use P0's target-numbered profile schema:
 
 The important part is that JSON position `"1"` means DMS target position 1, not arbitrary PDB residue number 1 unless the structure audit says the structure is target-aligned.
 
+Operationally, this is two files per enzyme:
+
+1. ProteinMPNN writes an NPZ probability file.
+2. P0 converts the NPZ into `profile.json`.
+
+The conversion command is:
+
+```bash
+python scripts/convert_proteinmpnn_npz_to_profile.py \
+  --proteinmpnn-npz PATH_FROM_PROTEINMPNN.npz \
+  --wild-type-fasta data/proteingym/A4GRB6_PSEAI.fasta \
+  --protein A4GRB6_PSEAI \
+  --structure A4GRB6_PSEAI.pdb \
+  --chain A \
+  --output-json results/proteingym_vim2_proteinmpnn/profile.json
+```
+
+Repeat with the AMIE and beta-glucosidase FASTA/profile paths.
+
+If using the public ProteinMPNN repo, the probability-generation step should be run in a separate ProteinMPNN environment. The key setting is to generate per-position amino-acid probabilities from the fixed backbone, then pass the resulting NPZ through `scripts/convert_proteinmpnn_npz_to_profile.py`.
+
 ## Step 3 - Score The Profiles Through P0
 
 VIM-2:
