@@ -1,0 +1,29 @@
+{
+  "protein_id": "AMIE_PSEAE",
+  "assay_id": "AMIE_PSEAE_Wrenbeck_2017",
+  "residue_numbering": "1-indexed positions in the 346-aa ProteinGym target sequence",
+  "annotation_status": "conservative_nitrilase_like_motif_and_af2_geometry_annotation",
+  "catalytic_residues": [59, 134, 166],
+  "mapped_from_nitrilase_like_catalytic_triads": [
+    {
+      "role": "catalytic base / acid candidate",
+      "residue": "Glu",
+      "target_position": 59,
+      "target_sequence_window": "DLVVFPEYSLQ"
+    },
+    {
+      "role": "lysine catalytic-triad candidate",
+      "residue": "Lys",
+      "target_position": 134,
+      "target_sequence_window": "QKYRKIIPWCP"
+    },
+    {
+      "role": "nucleophilic cysteine candidate",
+      "residue": "Cys",
+      "target_position": 166,
+      "target_sequence_window": "ISLIICDDGNY"
+    }
+  ],
+  "source": "Nitrilase-like Cys/Glu/Lys active-site pattern mapped onto the ProteinGym AMIE target sequence, with AF2 geometry sanity check from data/proteingym/structures/AMIE_PSEAE.pdb.",
+  "evidence": "In the ProteinGym AF2 structure, Cys166 is spatially close to Glu59 and Lys134. Heavy-atom distances from Cys166 are approximately 3.44 A to Glu59 and 4.21 A to Lys134. These residues define a conservative exact active-site slice for the first AMIE benchmark."
+}

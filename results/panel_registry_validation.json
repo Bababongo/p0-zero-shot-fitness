@@ -56,10 +56,10 @@
       "enzyme_class_or_family": "Hydrolase amidase",
       "estimated_masked_marginal_score_units": 2154542,
       "local_status": {
-        "has_local_catalytic_json": false,
+        "has_local_catalytic_json": true,
         "has_local_dms_csv": true,
         "has_local_fasta": true,
-        "has_local_residue_groups_json": false
+        "has_local_residue_groups_json": true
       },
       "main_annotation_need": "Catalytic triad/site labels and substrate-pocket contacts",
       "metadata_found": true,
@@ -70,7 +70,7 @@
       "selection_type": "Activity",
       "sequence_length": 346,
       "single_mutants": 6227,
-      "status": "metadata_ready_needs_local_data_and_annotations",
+      "status": "ready_for_p0_pipeline",
       "structure_file": "AMIE_PSEAE.pdb",
       "tier": 1,
       "uniprot_id": "AMIE_PSEAE"
@@ -458,7 +458,7 @@
     }
   ],
   "status_counts": {
-    "metadata_ready_needs_local_data_and_annotations": 15,
-    "ready_for_p0_pipeline": 2
+    "metadata_ready_needs_local_data_and_annotations": 14,
+    "ready_for_p0_pipeline": 3
   }
 }

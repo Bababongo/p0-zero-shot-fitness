@@ -170,15 +170,16 @@ Current validator result:
 | --- | ---: |
 | Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
-| Ready for current P0 pipeline | 2 |
-| Need local data and annotations | 15 |
+| Ready for current P0 pipeline | 3 |
+| Need local data and annotations | 14 |
 
 The ready datasets are:
 
 - `BLAT_ECOLX_Firnberg_2014` - TEM-1 beta-lactamase.
 - `A4GRB6_PSEAI_Chen_2020` - VIM-2 metallo-beta-lactamase.
+- `AMIE_PSEAE_Wrenbeck_2017` - AMIE aliphatic amidase.
 
-The other 15 ProteinGym candidates have matching metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
+The other 14 ProteinGym candidates have matching metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
 
 ## First Second-Enzyme Case
 
@@ -202,13 +203,13 @@ Current VIM-2 ESM-2 8M result:
 
 The active-site-neighborhood slice is higher than matched random residue-position controls for ESM-2 8M, while the exact curated metal-binding-site slice remains inside the matched null.
 
-## First Three Datasets To Add
+## First Three Dataset Status
 
-Start with:
+Current status:
 
-1. Run ESM-2 35M on `A4GRB6_PSEAI_Chen_2020`.
-2. Add `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
-3. Add `Q59976_STRSQ_Romero_2015` - beta-glucosidase.
+1. `A4GRB6_PSEAI_Chen_2020` - added, placeholder and ESM-2 8M complete.
+2. `AMIE_PSEAE_Wrenbeck_2017` - added, placeholder and ESM-2 8M complete.
+3. `Q59976_STRSQ_Romero_2015` - next dataset to materialize and annotate.
 
 Why these three:
 
@@ -216,6 +217,36 @@ Why these three:
 - They avoid pathogen-linked targets while still testing mechanistically distinct enzyme chemistry.
 - All three require explicit active-site, pocket, or cofactor residue zones.
 - Together, they move P0 beyond TEM-1 without making the scope explode.
+
+## First Non-Beta-Lactamase Case
+
+AMIE aliphatic amidase is now local and runnable:
+
+- Dataset: `AMIE_PSEAE_Wrenbeck_2017`
+- Variants: 6,227 single mutants
+- Exact curated catalytic-site variants: 57
+- ProteinGym AF2 catalytic-shell variants: 621
+- Active-site-neighborhood variants: 259
+- Current scorers: placeholder baseline and ESM-2 8M
+
+AMIE ESM-2 8M:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.3264 | - | 6,227 |
+| Curated catalytic site | 0.2057 | 0.3157 | 57 |
+| AF2 catalytic shell, 5 A | 0.2630 | 0.3152 | 621 |
+| Active-site neighborhood | 0.4092 | 0.3017 | 259 |
+
+The active-site-neighborhood slice is stronger than the outside background, but remains inside same-size random residue-position controls for ESM-2 8M. This is a valuable counterexample to overclaiming the TEM-1 and VIM-2 pattern.
+
+## Three-Enzyme Comparison
+
+| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
+| --- | --- | ---: | ---: | --- |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | Active-site neighborhood, 0.6453 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | Active-site neighborhood, 0.6128 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | Active-site neighborhood, 0.4092 |
 
 ## Success Criteria
 
@@ -229,4 +260,4 @@ P0 v3 is successful when it can answer:
 
 ## Interview Version
 
-> P0 started as one TEM-1 case study. I upgraded it into the start of a mechanism-stratified enzyme benchmark. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The next phase expands from TEM-1 to a panel of enzymes and asks whether the active-site-neighborhood signal is systematic after controlling for slice size, conservation, solvent accessibility, and mutation class.
+> P0 started as one TEM-1 case study. I upgraded it into the start of a mechanism-stratified enzyme benchmark across TEM-1, VIM-2, and AMIE. The key idea is that average DMS correlation is not enough; I want to know where inside enzymes protein language models work. The current result suggests exact catalytic-site slices are small and noisy, while active-site neighborhoods can show stronger signal, but AMIE proves that the pattern is enzyme-dependent and needs matched controls.

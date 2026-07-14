@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1 and VIM-2 ProteinGym benchmarks, a materialized AMIE aliphatic-amidase dataset awaiting mechanism labels, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1, VIM-2, and AMIE ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -13,6 +13,10 @@ Read the v2 novelty upgrade: [Matched Residue-Position Null Controls](docs/p0_v2
 Read the v3 enzyme-panel plan: [P0 Enzyme Panel Plan](docs/enzyme_panel_plan.md)
 
 Read the first VIM-2 expansion note: [ProteinGym VIM-2 Result](docs/protein_gym_vim2_result.md)
+
+Read the first AMIE expansion note: [ProteinGym AMIE Result](docs/protein_gym_amie_result.md)
+
+Read the three-enzyme comparison: [ProteinGym Three-Enzyme Comparison](docs/protein_gym_three_enzyme_comparison.md)
 
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
@@ -26,6 +30,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - UniProt-backed catalytic versus non-catalytic residue labeling,
 - structure-derived ligand-contact residue grouping from PDB 1M40,
 - ProteinGym AF2-derived VIM-2 metal-site shell grouping,
+- ProteinGym AF2-derived AMIE catalytic-shell grouping,
 - a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
 - Spearman correlation overall and by residue group,
@@ -155,15 +160,57 @@ The AF2 structure metal-site shell is higher than same-size random residue-posit
 
 The active-site-neighborhood slice is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.6128`, null 95% interval `0.1787 to 0.5736`, empirical p = `0.012`.
 
-## Next Dataset: AMIE Aliphatic Amidase
+## Run The AMIE ProteinGym Benchmark
 
-AMIE has been materialized from the ProteinGym substitutions archive:
+This repo now includes the ProteinGym `AMIE_PSEAE_Wrenbeck_2017` processed assay file and metadata for AMIE aliphatic amidase.
 
 - `data/proteingym/AMIE_PSEAE_Wrenbeck_2017.csv`
 - `data/proteingym/AMIE_PSEAE.fasta`
 - `data/proteingym/AMIE_PSEAE_Wrenbeck_2017_metadata.json`
+- `data/proteingym/AMIE_PSEAE_catalytic_residues.json`
+- `data/proteingym/AMIE_PSEAE_residue_groups.json`
+- `data/proteingym/structures/AMIE_PSEAE.pdb`
 
-It still needs curated catalytic-site and substrate-pocket labels before it should run through the P0 mechanism-slice benchmark.
+AMIE uses a conservative nitrilase-like catalytic triad annotation supported by AF2 structure geometry:
+
+```text
+[59, 134, 166]
+```
+
+This is marked as motif/structure curated rather than primary-source or UniProt-backed. It should be upgraded later if a stronger AMIE-specific annotation source is selected.
+
+Run the AMIE placeholder baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-amie \
+  --output-dir results/proteingym_amie_placeholder \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+Run the AMIE ESM-2 8M baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-amie \
+  --scorer esm2 \
+  --esm-model esm2_t6_8M_UR50D \
+  --output-dir results/proteingym_amie_esm2_t6_8M \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+AMIE ESM-2 8M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.3264 | - | 6,227 |
+| Curated catalytic site | 0.2057 | 0.3157 | 57 |
+| AF2 catalytic shell, 5 A | 0.2630 | 0.3152 | 621 |
+| Active-site neighborhood | 0.4092 | 0.3017 | 259 |
+
+The AMIE active-site neighborhood is stronger than the outside background, but remains inside the same-size matched-position null interval for ESM-2 8M. This makes AMIE an important counterexample: the mechanism-neighborhood signal is not automatically significant in every enzyme.
 
 ## Validate The Enzyme Panel Registry
 
@@ -183,55 +230,33 @@ Current validation summary:
 | --- | ---: |
 | Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
-| Ready for current P0 pipeline | 2 |
-| Need local data and annotations | 15 |
+| Ready for current P0 pipeline | 3 |
+| Need local data and annotations | 14 |
 
 Recommended next panel path:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase, already active as the first second-enzyme case.
-2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, the next public ProteinGym hydrolase case.
+1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase, active as the first second-enzyme case.
+2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, active as the first non-beta-lactamase hydrolase case.
 3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase, a second non-beta-lactamase enzyme-function case.
 
-First real result:
+Three-enzyme ESM-2 8M comparison:
 
-| Scorer | Overall Spearman | Catalytic Spearman | Non-catalytic Spearman | Top-5 Enrichment |
-| --- | ---: | ---: | ---: | ---: |
-| Placeholder | 0.0430 | 0.1231 | 0.0342 | 0.5247 |
-| ESM-2 8M | 0.4113 | 0.3023 | 0.4042 | 2.6237 |
-
-Mechanism-relevant residue slices:
-
-| Scorer | Group | Spearman | Outside-group Spearman | Variants |
-| --- | --- | ---: | ---: | ---: |
-| Placeholder | UniProt active site | 0.1231 | 0.0342 | 57 |
-| Placeholder | PDB 1M40 ligand contact, 5 A | 0.1777 | 0.0361 | 277 |
-| Placeholder | Active-site neighborhood | 0.2916 | 0.0278 | 461 |
-| ESM-2 8M | UniProt active site | 0.3023 | 0.4042 | 57 |
-| ESM-2 8M | PDB 1M40 ligand contact, 5 A | 0.6076 | 0.3997 | 277 |
-| ESM-2 8M | Active-site neighborhood | 0.6453 | 0.3752 | 461 |
-
-ESM-2 8M 95% bootstrap intervals from 1,000 resamples:
-
-| Group | Spearman | 95% Bootstrap CI |
-| --- | ---: | ---: |
-| Overall | 0.4113 | 0.3846 to 0.4342 |
-| UniProt active-site positions | 0.3023 | 0.0478 to 0.5341 |
-| Non-active-site positions | 0.4042 | 0.3783 to 0.4278 |
-| PDB 1M40 ligand-contact positions | 0.6076 | 0.5274 to 0.6779 |
-| Outside ligand-contact positions | 0.3997 | 0.3755 to 0.4224 |
-| Active-site neighborhood | 0.6453 | 0.5825 to 0.6994 |
-| Outside active-site neighborhood | 0.3752 | 0.3497 to 0.4006 |
+| Dataset | Enzyme | Overall | Exact Site | Background | Best Mechanism Slice |
+| --- | --- | ---: | ---: | ---: | --- |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | 0.4042 | Active-site neighborhood, 0.6453 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | 0.4123 | Active-site neighborhood, 0.6128 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | 0.3157 | Active-site neighborhood, 0.4092 |
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real TEM-1 ProteinGym run uses a processed public DMS assay and can run either with the placeholder scorer or with ESM-2. The VIM-2 ProteinGym run now has local data, curated motif annotations, a ProteinGym AF2 structure-derived metal-site shell, a placeholder baseline, and an ESM-2 8M baseline.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. TEM-1 has UniProt and PDB-backed labels. VIM-2 and AMIE use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
 
 ## Next Scientific Steps
 
-1. Run ESM-2 35M on VIM-2 for model-size comparison.
+1. Run ESM-2 35M on VIM-2 and AMIE for model-size comparison.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-3. Materialize aliphatic amidase from the public ProteinGym archive.
-4. Add aliphatic amidase catalytic-site and substrate-pocket labels.
+3. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
+4. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
 5. Add conservation-matched and solvent-accessibility-matched null controls.
 6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
 

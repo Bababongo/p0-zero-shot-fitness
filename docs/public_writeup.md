@@ -154,6 +154,26 @@ This does not prove catalytic residues are generally easier for protein language
 
 Still, this is the kind of eval slice I want more life-science AI systems to expose. Aggregate performance can hide the behavior that matters for mechanistic biology.
 
+## Enzyme-Panel Expansion
+
+After the TEM-1 result, I upgraded P0 into a three-enzyme benchmark seed:
+
+| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
+| --- | --- | ---: | ---: | --- |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | Active-site neighborhood, 0.6453 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | Active-site neighborhood, 0.6128 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | Active-site neighborhood, 0.4092 |
+
+The matched-position null controls make the result more careful:
+
+- TEM-1 and VIM-2 active-site neighborhoods are higher than same-size random residue-position controls.
+- AMIE active-site neighborhood is higher than outside background, but remains inside same-size random residue-position controls.
+- Exact catalytic-site slices remain small, noisy, and easy to overclaim.
+
+The current strongest claim is therefore:
+
+> Exact catalytic-site slices are usually too sparse to interpret alone. Broader active-site neighborhoods often contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
+
 ## What This Repo Demonstrates
 
 This project is not just a notebook result. It is a small, reproducible benchmark scaffold:
@@ -162,6 +182,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - validates mutation strings against the wild-type sequence,
 - labels UniProt active-site and substrate-binding variants,
 - labels structure-derived ligand-contact variants from PDB 1M40,
+- labels AF2-derived mechanism shells for VIM-2 and AMIE,
 - labels active-site-neighborhood variants,
 - adds matched residue-position null controls for mechanism-relevant slices,
 - runs a swappable scorer interface,
@@ -175,9 +196,9 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 1. Run ESM-2 150M as the next scaling step.
 2. Add ESM-1v or an MSA-based baseline.
-3. Repeat the benchmark across multiple enzyme DMS assays.
-4. Add additional ligand-bound TEM-1 structures to test contact-label robustness.
-5. Turn the result into a short portfolio figure and methods card.
+3. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+4. Add conservation-matched and solvent-accessibility-matched null controls.
+5. Turn the three-enzyme result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 

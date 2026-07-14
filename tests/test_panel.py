@@ -27,8 +27,8 @@ def test_validate_panel_registry_against_local_proteingym_metadata() -> None:
 
     assert payload["n_candidates"] == 17
     assert payload["n_metadata_matches"] == 17
-    assert payload["status_counts"]["ready_for_p0_pipeline"] == 2
-    assert payload["status_counts"]["metadata_ready_needs_local_data_and_annotations"] == 15
+    assert payload["status_counts"]["ready_for_p0_pipeline"] == 3
+    assert payload["status_counts"]["metadata_ready_needs_local_data_and_annotations"] == 14
 
     recommendations = [candidate["dms_id"] for candidate in payload["recommended_first_three"]]
     assert recommendations == [

@@ -220,3 +220,31 @@ def run_proteingym_vim2_benchmark(
         null_iterations=null_iterations,
         null_seed=null_seed,
     )
+
+
+def run_proteingym_amie_benchmark(
+    output_dir: Path,
+    scorer: VariantScorer | None = None,
+    bootstrap_iterations: int = 0,
+    bootstrap_seed: int = 13,
+    null_iterations: int = 0,
+    null_seed: int = 2026,
+) -> JsonDict:
+    root = Path(__file__).resolve().parents[2]
+    data_dir = root / "data" / "proteingym"
+    return run_external_benchmark(
+        output_dir=output_dir,
+        dms_csv=data_dir / "AMIE_PSEAE_Wrenbeck_2017.csv",
+        wild_type_fasta=data_dir / "AMIE_PSEAE.fasta",
+        catalytic_json=data_dir / "AMIE_PSEAE_catalytic_residues.json",
+        residue_groups_json=data_dir / "AMIE_PSEAE_residue_groups.json",
+        dataset_name="ProteinGym AMIE_PSEAE_Wrenbeck_2017",
+        scorer=scorer,
+        variant_column="mutant",
+        fitness_column="DMS_score",
+        single_only=True,
+        bootstrap_iterations=bootstrap_iterations,
+        bootstrap_seed=bootstrap_seed,
+        null_iterations=null_iterations,
+        null_seed=null_seed,
+    )

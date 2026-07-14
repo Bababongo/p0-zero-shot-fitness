@@ -1,0 +1,298 @@
+{
+  "chain": "A",
+  "contacts": [
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 4.046,
+      "residue_name": "MET",
+      "target_position": 22
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 3.922,
+      "residue_name": "PHE",
+      "target_position": 57
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 1.332,
+      "residue_name": "PRO",
+      "target_position": 58
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "GLU",
+      "target_position": 59
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 1.333,
+      "residue_name": "TYR",
+      "target_position": 60
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 3.107,
+      "residue_name": "SER",
+      "target_position": 61
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 3.373,
+      "residue_name": "SER",
+      "target_position": 101
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 4.217,
+      "residue_name": "THR",
+      "target_position": 103
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 2.691,
+      "residue_name": "ASN",
+      "target_position": 117
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 4.969,
+      "residue_name": "THR",
+      "target_position": 118
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 3.786,
+      "residue_name": "TYR",
+      "target_position": 132
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 1.335,
+      "residue_name": "ARG",
+      "target_position": 133
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "LYS",
+      "target_position": 134
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 1.331,
+      "residue_name": "ILE",
+      "target_position": 135
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 3.18,
+      "residue_name": "ILE",
+      "target_position": 136
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 3.916,
+      "residue_name": "PRO",
+      "target_position": 137
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 3.954,
+      "residue_name": "TRP",
+      "target_position": 138
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 2.775,
+      "residue_name": "GLU",
+      "target_position": 142
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 4.263,
+      "residue_name": "TYR",
+      "target_position": 145
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 3.629,
+      "residue_name": "PRO",
+      "target_position": 146
+    },
+    {
+      "closest_site_position": 134,
+      "closest_site_residue_name": "LYS",
+      "min_distance_angstrom": 2.794,
+      "residue_name": "GLY",
+      "target_position": 147
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 4.25,
+      "residue_name": "ILE",
+      "target_position": 164
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 1.335,
+      "residue_name": "ILE",
+      "target_position": 165
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 0.0,
+      "residue_name": "CYS",
+      "target_position": 166
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 1.334,
+      "residue_name": "ASP",
+      "target_position": 167
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 3.146,
+      "residue_name": "ASP",
+      "target_position": 168
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 2.89,
+      "residue_name": "GLY",
+      "target_position": 169
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 4.296,
+      "residue_name": "ASN",
+      "target_position": 170
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 2.713,
+      "residue_name": "ARG",
+      "target_position": 188
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 2.867,
+      "residue_name": "CYS",
+      "target_position": 189
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 3.341,
+      "residue_name": "GLN",
+      "target_position": 190
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 2.803,
+      "residue_name": "GLY",
+      "target_position": 191
+    },
+    {
+      "closest_site_position": 166,
+      "closest_site_residue_name": "CYS",
+      "min_distance_angstrom": 3.601,
+      "residue_name": "TYR",
+      "target_position": 192
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 4.438,
+      "residue_name": "ALA",
+      "target_position": 218
+    },
+    {
+      "closest_site_position": 59,
+      "closest_site_residue_name": "GLU",
+      "min_distance_angstrom": 4.576,
+      "residue_name": "ALA",
+      "target_position": 220
+    }
+  ],
+  "cutoff_angstrom": 5.0,
+  "group_name": "structure_catalytic_shell_5a",
+  "method": "Residues are included if any heavy atom is within the cutoff distance of any heavy atom from the requested site residues.",
+  "pdb": "AMIE_PSEAE.pdb",
+  "site_json": "data/proteingym/AMIE_PSEAE_catalytic_residues.json",
+  "site_key": "catalytic_residues",
+  "site_positions": [
+    59,
+    134,
+    166
+  ],
+  "target_positions": [
+    22,
+    57,
+    58,
+    59,
+    60,
+    61,
+    101,
+    103,
+    117,
+    118,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    142,
+    145,
+    146,
+    147,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    188,
+    189,
+    190,
+    191,
+    192,
+    218,
+    220
+  ]
+}

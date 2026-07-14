@@ -1,6 +1,6 @@
 # P0 Extensive Project Report: Zero-Shot Fitness
 
-Report date: 2026-07-11
+Report date: 2026-07-13
 
 Project repository: `p0-zero-shot-fitness`
 
@@ -10,7 +10,7 @@ Core question:
 
 ## 1. Executive Summary
 
-P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of an enzyme. The project uses a real deep mutational scanning dataset for TEM-1 beta-lactamase from ProteinGym, scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and now includes a validated enzyme-panel registry for expanding the question beyond one enzyme.
+P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of enzymes. The project now runs on three ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. It scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and slices performance by exact catalytic sites, structure-derived mechanism shells, active-site neighborhoods, and background residues.
 
 The scientific motivation is simple: a protein language model can look good overall while still failing on the residues that matter most for enzyme engineering. Enzyme function is not only about broad evolutionary conservation or stability. It can depend on active-site chemistry, substrate positioning, cofactors, binding-pocket geometry, and transition-state stabilization. P0 turns that concern into a measurable benchmark.
 
@@ -27,7 +27,7 @@ The short interpretation:
 - A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
-P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is underway: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 has been added as the first second-enzyme case with placeholder and ESM-2 8M baselines.
+P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is now a real three-enzyme benchmark seed: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 plus AMIE have been added with placeholder and ESM-2 8M baselines.
 
 ## 1.1 v2 Addendum: Matched Residue-Position Null Controls
 
@@ -75,18 +75,19 @@ Current validation result:
 | --- | ---: |
 | Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
-| Ready for current P0 pipeline | 2 |
-| Need local data and annotations | 15 |
+| Ready for current P0 pipeline | 3 |
+| Need local data and annotations | 14 |
 
-Completed first expansion:
+Completed first expansions:
 
 1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase placeholder and ESM-2 8M baselines.
+2. `AMIE_PSEAE_Wrenbeck_2017` - AMIE aliphatic amidase placeholder and ESM-2 8M baselines.
 
 Recommended next expansion:
 
-1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase structure-derived residue-zone refinement.
-2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase as the next public ProteinGym hydrolase.
-3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase as a second non-beta-lactamase enzyme-function case.
+1. Run ESM-2 35M on VIM-2 and AMIE for model-size comparison.
+2. Upgrade AMIE labels with stronger primary-source or experimental-structure provenance.
+3. Add `Q59976_STRSQ_Romero_2015` - beta-glucosidase as the next non-beta-lactamase enzyme-function case.
 
 This is scientifically important because it turns P0 from "one interesting TEM-1 result" into a controlled plan for asking whether residue-zone behavior generalizes across mechanisms.
 
@@ -119,11 +120,41 @@ ESM-2 8M result:
 
 The exact curated metal-binding-site slice is positive but inside the matched-position null. The active-site-neighborhood slice is higher than same-size random residue-position controls, with empirical p = 0.012. This mirrors the TEM-1 pattern: exact catalytic or metal-site positions are small and hard to interpret alone, while broader functional neighborhoods show stronger model signal.
 
+## 1.4 v3 Addendum: AMIE Non-Beta-Lactamase Case
+
+AMIE is the first non-beta-lactamase enzyme case in P0.
+
+Dataset:
+
+- ProteinGym dataset: `AMIE_PSEAE_Wrenbeck_2017`
+- Protein: AMIE aliphatic amidase
+- Variants: 6,227 single mutants
+- Current runs: placeholder and ESM-2 8M baselines with bootstrap intervals and matched-position null controls
+
+The current conservative catalytic-site labels are:
+
+```text
+[59, 134, 166]
+```
+
+These are motif and AF2-geometry curated labels, not UniProt-backed AMIE feature annotations. The AF2 structure places Cys166 close to Glu59 and Lys134, supporting a catalytic-geometry slice, but AMIE label provenance should be upgraded later.
+
+ESM-2 8M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.3264 | - | 6,227 |
+| Curated catalytic site | 0.2057 | 0.3157 | 57 |
+| AF2 catalytic shell, 5 A | 0.2630 | 0.3152 | 621 |
+| Active-site neighborhood | 0.4092 | 0.3017 | 259 |
+
+AMIE is scientifically useful because it does not simply repeat the TEM-1 and VIM-2 result. The active-site-neighborhood slice is stronger than its outside background, but remains inside same-size matched-position null controls. That makes the three-enzyme claim more honest: active-site-neighborhood signal can be strong, but it is enzyme-dependent and must be tested against null controls.
+
 ## 2. The 30-Second Explanation
 
-P0 asks whether protein language models fail differently near catalytic residues. I used a public TEM-1 beta-lactamase deep mutational scanning dataset from ProteinGym, scored mutations with ESM-2, and compared model scores to experimental fitness. Instead of only reporting one overall correlation, I split the assay into biologically meaningful residue groups: UniProt active-site residues, substrate-binding residues, PDB ligand-contact residues, active-site neighborhoods, and the rest of the protein.
+P0 asks whether protein language models fail differently near catalytic residues. I started with a public TEM-1 beta-lactamase deep mutational scanning dataset from ProteinGym, scored mutations with ESM-2, and compared model scores to experimental fitness. I then expanded the benchmark to VIM-2 metallo-beta-lactamase and AMIE aliphatic amidase. Instead of only reporting one overall correlation, I split each assay into biologically meaningful residue groups: exact catalytic or metal-binding sites, structure-derived mechanism shells, active-site neighborhoods, and the rest of the protein.
 
-The result: ESM-2 performs much better than a placeholder baseline, and the 35M model improves over the 8M model. But the tiny active-site-only slice remains noisier and lower than the non-active-site background. Broader ligand-contact and active-site-neighborhood regions show stronger signal. That matters because aggregate model performance can hide biologically important failure modes.
+The result: ESM-2 performs much better than a placeholder baseline. In TEM-1 and VIM-2, active-site-neighborhood regions show unusually strong signal relative to matched-position null controls. In AMIE, the neighborhood is stronger than the outside background but not stronger than matched random positions. That matters because aggregate model performance can hide biologically important failure modes, and matched controls prevent overclaiming small mechanistic slices.
 
 ## 3. Why This Project Exists
 
@@ -689,13 +720,13 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would add aliphatic amidase and beta-glucosidase as the next public ProteinGym enzyme-function cases, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
+I would run ESM-2 35M on VIM-2 and AMIE, upgrade AMIE label provenance, and add beta-glucosidase as the next non-beta-lactamase enzyme-function case. Then I would add conservation-matched and solvent-accessibility-matched controls to test whether the active-site-neighborhood signal is just conservation or buried-core stability.
 
 ## 20. Limitations
 
 The project has clear limitations:
 
-1. The completed ESM scoring results currently use two beta-lactamases; the panel still needs more enzyme classes.
+1. The completed ESM scoring results use three enzymes; the panel still needs more enzyme classes and stronger annotation provenance.
 2. The active-site-only group is small.
 3. The ligand-contact group comes from one inhibitor-bound structure.
 4. DMS fitness reflects an assay context, not pure catalytic chemistry.
@@ -709,10 +740,10 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Run ESM-2 35M on VIM-2.
+1. Run ESM-2 35M on VIM-2 and AMIE.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
-3. Materialize aliphatic amidase from the public ProteinGym archive.
-4. Add aliphatic amidase catalytic-site and substrate-pocket labels.
+3. Upgrade AMIE catalytic-site and substrate-pocket labels with stronger provenance.
+4. Add beta-glucosidase as the next public non-beta-lactamase enzyme-function case.
 5. Run ESM-2 150M using the existing Savio workflow.
 6. Add ESM-1v as a variant-effect baseline.
 7. Add an MSA-based baseline if compute and data setup allow.

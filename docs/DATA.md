@@ -102,7 +102,7 @@ The structure shell is not a ligand-bound experimental contact map. It is a stru
 
 ## AMIE Assay
 
-This repository includes the raw local files for the next public ProteinGym enzyme-function case:
+This repository includes the local files for the first non-beta-lactamase ProteinGym enzyme-function case:
 
 - `data/proteingym/AMIE_PSEAE_Wrenbeck_2017.csv`
 - Dataset ID: `AMIE_PSEAE_Wrenbeck_2017`
@@ -115,8 +115,28 @@ Local support files currently present:
 
 - `data/proteingym/AMIE_PSEAE.fasta`
 - `data/proteingym/AMIE_PSEAE_Wrenbeck_2017_metadata.json`
+- `data/proteingym/AMIE_PSEAE_catalytic_residues.json`
+- `data/proteingym/AMIE_PSEAE_residue_groups.json`
+- `data/proteingym/structures/AMIE_PSEAE.pdb`
+- `data/proteingym/source_records/AMIE_PSEAE_catalytic_shell_5A.json`
 
-AMIE is not yet runnable through the P0 benchmark because it still needs curated catalytic-residue and residue-group JSON files. The next biology step is to verify catalytic-site and substrate-pocket labels from primary sources before adding those files.
+## AMIE Catalytic Labels
+
+The AMIE exact site currently used is:
+
+```text
+[59, 134, 166]
+```
+
+These are 1-indexed positions in the 346-aa ProteinGym target sequence. The labels are conservative nitrilase-like motif and AF2-geometry annotations, not UniProt-backed AMIE feature labels. The AF2 structure places Cys166 close to Glu59 and Lys134, supporting a local catalytic-geometry slice, but the provenance should be upgraded later with a stronger AMIE-specific primary source or experimental structure.
+
+## AMIE Residue Groups
+
+The AMIE residue-group file defines:
+
+- `curated_catalytic_site`: positions 59, 134, and 166.
+- `active_site_neighborhood`: a +/-2 residue window around those curated positions.
+- `structure_catalytic_shell_5a`: residues with any heavy atom within 5.0 Angstrom of any curated catalytic residue heavy atom in the ProteinGym AF2 structure `AMIE_PSEAE.pdb`.
 
 ## Model Outputs
 
