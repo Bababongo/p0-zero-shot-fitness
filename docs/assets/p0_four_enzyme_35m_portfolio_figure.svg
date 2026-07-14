@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">P0 four-enzyme ESM-2 35M portfolio figure</title>
+<desc id="desc">A chart comparing overall, exact catalytic-site, and active-site-neighborhood Spearman correlations across four enzyme DMS datasets.</desc>
+<rect width="1400" height="760" rx="28" fill="#f7f4ed"/>
+<text x="56" y="62" font-family="Inter, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#18201d">P0: Mechanism-sliced protein fitness</text>
+<text x="56" y="98" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" fill="#60716b">ESM-2 35M improves global ranking, but mechanism-slice claims need matched controls.</text>
+<text x="56" y="139" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.6" fill="#60716b">FOUR ENZYMES • 19,013 SINGLE MUTANTS • ACTIVE-SITE-NEIGHBORHOOD NULL HITS: 1/4</text>
+<line x1="265.0" y1="164" x2="265.0" y2="575" stroke="#d8d0c2" stroke-width="1"/>
+<text x="265.0" y="605" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">0.00</text>
+<line x1="510.0" y1="164" x2="510.0" y2="575" stroke="#d8d0c2" stroke-width="1"/>
+<text x="510.0" y="605" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">0.25</text>
+<line x1="755.0" y1="164" x2="755.0" y2="575" stroke="#d8d0c2" stroke-width="1"/>
+<text x="755.0" y="605" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">0.50</text>
+<line x1="1000.0" y1="164" x2="1000.0" y2="575" stroke="#d8d0c2" stroke-width="1"/>
+<text x="1000.0" y="605" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">0.75</text>
+<text x="632.5" y="633" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" fill="#60716b">Spearman correlation against experimental DMS fitness</text>
+<rect x="56" y="145" width="28" height="12" rx="6" fill="#27847a"/>
+<text x="92" y="155" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">Overall</text>
+<circle cx="279" cy="151" r="7" fill="#c37a2c"/>
+<text x="302" y="155" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">Exact catalytic/metal site</text>
+<rect x="482" y="144" width="14" height="14" transform="rotate(45 489 151)" fill="#6257a8"/>
+<text x="512" y="155" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">Active-site neighborhood</text>
+<text x="56" y="207" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#18201d">TEM-1</text>
+<text x="56" y="232" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">serine beta-lactamase</text>
+<text x="56" y="254" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">4,783 variants</text>
+<line x1="265" y1="231" x2="1000" y2="231" stroke="#b8ad9b" stroke-width="1.2"/>
+<rect x="265" y="220" width="543.7" height="20" rx="10" fill="#27847a"/>
+<text x="818.7" y="235" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#18201d">0.555</text>
+<circle cx="715.4" cy="266" r="8" fill="#c37a2c"/>
+<text x="728.4" y="271" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.460</text>
+<rect x="945.7" y="258" width="16" height="16" transform="rotate(45 953.7 266)" fill="#6257a8"/>
+<text x="967.7" y="271" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.703</text>
+<rect x="1040" y="213" width="292" height="34" rx="17" fill="#dce9df" stroke="#b8ad9b" stroke-width="1"/>
+<text x="1186" y="234" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#18201d">clears matched null, p=0.012</text>
+<text x="56" y="305" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#18201d">VIM-2</text>
+<text x="56" y="330" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">metallo-beta-lactamase</text>
+<text x="56" y="352" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">5,004 variants</text>
+<line x1="265" y1="329" x2="1000" y2="329" stroke="#b8ad9b" stroke-width="1.2"/>
+<rect x="265" y="318" width="517.4" height="20" rx="10" fill="#27847a"/>
+<text x="792.4" y="333" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#18201d">0.528</text>
+<circle cx="603.0" cy="364" r="8" fill="#c37a2c"/>
+<text x="616.0" y="369" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.345</text>
+<rect x="858.1" y="356" width="16" height="16" transform="rotate(45 866.1 364)" fill="#6257a8"/>
+<text x="880.1" y="369" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.613</text>
+<rect x="1040" y="311" width="292" height="34" rx="17" fill="#ece5da" stroke="#b8ad9b" stroke-width="1"/>
+<text x="1186" y="332" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#18201d">inside matched null, p=0.142</text>
+<text x="56" y="403" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#18201d">AMIE</text>
+<text x="56" y="428" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">aliphatic amidase</text>
+<text x="56" y="450" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">6,227 variants</text>
+<line x1="265" y1="427" x2="1000" y2="427" stroke="#b8ad9b" stroke-width="1.2"/>
+<rect x="265" y="416" width="400.0" height="20" rx="10" fill="#27847a"/>
+<text x="675.0" y="431" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#18201d">0.408</text>
+<circle cx="354.3" cy="462" r="8" fill="#c37a2c"/>
+<text x="367.3" y="467" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.091</text>
+<rect x="681.8" y="454" width="16" height="16" transform="rotate(45 689.8 462)" fill="#6257a8"/>
+<text x="703.8" y="467" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.433</text>
+<rect x="1040" y="409" width="292" height="34" rx="17" fill="#ece5da" stroke="#b8ad9b" stroke-width="1"/>
+<text x="1186" y="430" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#18201d">inside matched null, p=0.778</text>
+<text x="56" y="501" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#18201d">Beta-glucosidase</text>
+<text x="56" y="526" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">GH1 glycoside hydrolase</text>
+<text x="56" y="548" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#60716b">2,999 variants</text>
+<line x1="265" y1="525" x2="1000" y2="525" stroke="#b8ad9b" stroke-width="1.2"/>
+<rect x="265" y="514" width="439.1" height="20" rx="10" fill="#27847a"/>
+<text x="714.1" y="529" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#18201d">0.448</text>
+<circle cx="765.3" cy="560" r="8" fill="#c37a2c"/>
+<text x="778.3" y="565" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.510</text>
+<rect x="681.1" y="552" width="16" height="16" transform="rotate(45 689.1 560)" fill="#6257a8"/>
+<text x="703.1" y="565" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">0.433</text>
+<rect x="1040" y="507" width="292" height="34" rx="17" fill="#ece5da" stroke="#b8ad9b" stroke-width="1"/>
+<text x="1186" y="528" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#18201d">inside matched null, p=0.984</text>
+<rect x="56" y="656" width="1276" height="54" rx="18" fill="#e8efe9" stroke="#b8ad9b" stroke-width="1"/>
+<text x="82" y="680" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#18201d">Interview takeaway</text>
+<text x="230" y="680" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" fill="#18201d">Scale helps the aggregate task. The mechanistic claim only survives where the residue slice beats matched-position controls.</text>
+<text x="82" y="703" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#60716b">Source: results/proteingym_four_enzyme_esm2_t12_35M_comparison.json</text>
+</svg>

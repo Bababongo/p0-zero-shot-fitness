@@ -15,6 +15,8 @@ This comparison is the first completed P0 enzyme-panel scaling result. It asks w
 
 ## ESM-2 35M Results
 
+![P0 four-enzyme ESM-2 35M portfolio figure](assets/p0_four_enzyme_35m_portfolio_figure.svg)
+
 | Dataset | Overall Spearman | Exact Site Spearman | Background Spearman | Best Mechanism Slice |
 | --- | ---: | ---: | ---: | --- |
 | TEM-1 | 0.5548 | 0.4596 | 0.5428 | Ligand contact, 0.7127; active-site neighborhood, 0.7027 |

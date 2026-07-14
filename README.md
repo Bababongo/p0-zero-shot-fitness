@@ -8,6 +8,8 @@ Read the public-facing result writeup: [Do Protein Language Models Fail Differen
 
 Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_project_report.md)
 
+Read the portfolio card: [Mechanism-Sliced Zero-Shot Fitness](docs/p0_portfolio_card.md)
+
 Read the v2 novelty upgrade: [Matched Residue-Position Null Controls](docs/p0_v2_novelty_upgrade.md)
 
 Read the v3 enzyme-panel plan: [P0 Enzyme Panel Plan](docs/enzyme_panel_plan.md)
