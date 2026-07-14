@@ -85,6 +85,18 @@
           "observed_spearman": 0.5733762534290499,
           "percentile_rank": 1.0,
           "two_sided_empirical_p": 0.0
+        },
+        "structure_wl3_inhibitor_contact_5a": {
+          "direction": "inside_position_matched_null_interval",
+          "iterations": 1000,
+          "n_positions": 13,
+          "n_variants": 247,
+          "null_ci_high": 0.6421288500888841,
+          "null_ci_low": 0.12240117693340988,
+          "null_mean": 0.4188281362230794,
+          "observed_spearman": 0.4841377410117316,
+          "percentile_rank": 0.666,
+          "two_sided_empirical_p": 0.668
         }
       }
     },
@@ -165,6 +177,22 @@
           "iterations": 1000,
           "n": 4202
         }
+      },
+      "structure_wl3_inhibitor_contact_5a": {
+        "in_group": {
+          "ci_high": 0.575815668972782,
+          "ci_low": 0.3875240192869174,
+          "estimate": 0.4841377410117316,
+          "iterations": 1000,
+          "n": 247
+        },
+        "outside_group": {
+          "ci_high": 0.45500787999723213,
+          "ci_low": 0.4079428895076197,
+          "estimate": 0.4316139648855452,
+          "iterations": 1000,
+          "n": 4757
+        }
       }
     },
     "residue_group_breakdown": {
@@ -191,6 +219,14 @@
         "outside_n": 4202,
         "outside_spearman": 0.384289002825258,
         "spearman": 0.5733762534290499
+      },
+      "structure_wl3_inhibitor_contact_5a": {
+        "mean_fitness": -2.753595336720648,
+        "mean_model_score": -2.170448704048583,
+        "n": 247,
+        "outside_n": 4757,
+        "outside_spearman": 0.4316139648855452,
+        "spearman": 0.4841377410117316
       }
     },
     "spearman_catalytic": 0.37022589659990685,

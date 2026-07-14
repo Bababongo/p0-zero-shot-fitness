@@ -184,7 +184,7 @@ The other 13 ProteinGym candidates have matching metadata, but still need local 
 
 ## First Second-Enzyme Case
 
-Status: VIM-2 placeholder baseline, ESM-2 8M baseline, ESM-2 35M baseline, and ProteinGym AF2 structure-derived metal-site shell completed.
+Status: VIM-2 placeholder baseline, ESM-2 8M baseline, ESM-2 35M baseline, ProteinGym AF2 structure-derived metal-site shell, and RCSB 5ACX/WL3 inhibitor-contact label completed.
 
 Dataset:
 
@@ -193,6 +193,7 @@ Dataset:
 - Variants: 5,004 single mutants
 - Exact curated metal-binding/catalytic-site variants: 113
 - Active-site-neighborhood variants: 448
+- 5ACX/WL3 inhibitor-contact variants: 247
 
 Current VIM-2 ESM-2 35M result:
 
@@ -200,10 +201,11 @@ Current VIM-2 ESM-2 35M result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.5280 | - | 5,004 |
 | Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5207 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 | Active-site neighborhood | 0.6133 | 0.4897 | 448 |
 
-The 35M model improves VIM-2 overall performance, and the active-site-neighborhood plus metal-site shell remain strong in raw Spearman. However, both fall inside matched-position null intervals at 35M, while the exact curated metal-binding-site slice also remains inside the matched null.
+The 35M model improves VIM-2 overall performance, and the WL3 inhibitor-contact, active-site-neighborhood, and metal-site shell remain strong in raw Spearman. However, these slices fall inside matched-position or stricter conservation-plus-SASA controls at 35M, while the exact curated metal-binding-site slice also remains inside the matched null.
 
 ## First Panel Dataset Status
 
@@ -281,7 +283,7 @@ At 35M, beta-glucosidase has the largest global rescue in the panel, improving f
 | Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 

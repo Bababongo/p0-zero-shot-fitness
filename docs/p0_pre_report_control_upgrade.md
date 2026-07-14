@@ -21,6 +21,8 @@ The new control asks:
 - Added `scripts/summarize_control_readouts.py`.
 - Added approximate solvent-accessibility/SASA covariates after this pre-report upgrade.
 - Added MSA conservation-baseline infrastructure and an MSA availability audit.
+- Added true MSA conservation profiles and conservation-plus-SASA controls after staging the ProteinGym MSA bundle locally.
+- Added a VIM-2 experimental 5ACX/WL3 inhibitor-contact residue group after this pre-report upgrade.
 - Refreshed all four ESM-2 35M metric JSON files with covariate-matched controls.
 - Added a placeholder-vs-ESM-2 comparison artifact as a simple non-ESM baseline check.
 
@@ -37,7 +39,7 @@ The new control asks:
 | `structure_solvent_accessibility` | approximate residue SASA from PDB heavy atoms | Whether a slice is explained by similar solvent exposure. |
 | `combined_available` | all available covariates above | A stricter combined nearest-neighbor null. |
 
-Important limitation: this repo does not contain the external ProteinGym MSA `.a2m` files. Therefore this upgrade does **not** claim to have run a true evolutionary conservation baseline yet. It now includes the code path and audit for that baseline, but the actual conservation result remains blocked on staging the MSA files.
+Important limitation: this repo does not commit the external ProteinGym MSA `.a2m` files because they are large source artifacts. Derived MSA conservation profiles and conservation-matched result files are committed in `results/`.
 
 ## Main Read
 
@@ -61,6 +63,7 @@ That is exactly the kind of nuance the final P0 report needs.
 | TEM-1 | ligand contact, 5 A | inside, p = 0.070 | inside, p = 0.062 | inside, p = 0.120 | inside, p = 0.082 | inside, p = 0.092 |
 | VIM-2 | active-site neighborhood | inside, p = 0.142 | inside, p = 0.182 | inside, p = 0.194 | higher, p = 0.024 | inside, p = 0.176 |
 | VIM-2 | metal-site shell, 5 A | inside, p = 0.084 | inside/borderline, p = 0.058 | inside, p = 0.224 | higher, p = 0.000 | inside/borderline, p = 0.054 |
+| VIM-2 | WL3 inhibitor contact, 5 A | inside, p = 0.186 | inside, p = 0.282 | inside, p = 0.706 | inside, p = 0.262 | inside, p = 0.782 |
 | AMIE | exact catalytic site | inside, p = 0.408 | inside, p = 0.286 | inside, p = 0.086 | inside, p = 0.202 | lower, p = 0.002 |
 | AMIE | catalytic shell, 5 A | inside, p = 0.312 | inside, p = 0.100 | inside, p = 0.066 | lower, p = 0.000 | inside, p = 0.240 |
 | Beta-glucosidase | catalytic shell, 5 A | inside, p = 0.654 | inside, p = 0.646 | lower, p = 0.046 | inside, p = 0.130 | inside, p = 0.232 |
@@ -87,11 +90,13 @@ Do **not** say:
 
 ### VIM-2
 
-VIM-2 has strong raw mechanism-neighborhood and metal-shell Spearman, but the strict controls make the result more cautious.
+VIM-2 has strong raw mechanism-neighborhood, metal-shell, and WL3 inhibitor-contact Spearman, but the strict controls make the result more cautious.
 
 The structure-contact control still shows elevated metal-shell and active-neighborhood performance. However, the combined controls are inside or borderline. This suggests:
 
 > VIM-2 mechanism-adjacent regions show real raw signal, but the evidence is not strong enough to claim a general mechanism-specific advantage after all confounders are matched.
+
+The 5ACX/WL3 inhibitor-contact group is the cleanest biological label upgrade here. It reaches Spearman `0.6613`, but remains inside the conservation-plus-SASA matched null (`p = 0.876`). That makes it a better label, not a license to overclaim ligand-chemistry understanding.
 
 ### AMIE
 
@@ -134,6 +139,7 @@ This does not replace a true conservation baseline, but it does show that the ES
 - `results/proteingym_bgly_esm2_t12_35M/position_covariates.json`
 - `results/proteingym_four_enzyme_covariate_control_summary.json`
 - `results/proteingym_four_enzyme_placeholder_vs_esm2_t12_35M_comparison.json`
+- `data/proteingym/source_records/5ACX_WL3_contacts_5A.json`
 - refreshed `results/proteingym_four_enzyme_esm2_t12_35M_comparison.json`
 
 ## Best Final P0 Claim After This Upgrade
@@ -142,4 +148,4 @@ This does not replace a true conservation baseline, but it does show that the ES
 
 ## What Remains External
 
-A true evolutionary conservation-matched control needs per-position MSA-derived conservation scores. The current repository does not include those MSA artifacts, so the final report should state this clearly rather than pretending that the local proxy controls are evolutionary conservation.
+The raw ProteinGym MSA `.a2m` files remain external source data and are not committed. The repository commits derived conservation profiles and result artifacts needed to inspect the current analysis.

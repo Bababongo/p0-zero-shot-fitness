@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1, VIM-2, AMIE, and beta-glucosidase ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1, VIM-2, AMIE, and beta-glucosidase ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, ligand-bound VIM-2 inhibitor-contact labels, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -42,6 +42,7 @@ Protein language models can capture evolutionary and stability constraints, but 
 - UniProt-backed catalytic versus non-catalytic residue labeling,
 - structure-derived ligand-contact residue grouping from PDB 1M40,
 - ProteinGym AF2-derived VIM-2 metal-site shell grouping,
+- RCSB 5ACX-derived VIM-2 WL3 inhibitor-contact grouping,
 - ProteinGym AF2-derived AMIE catalytic-shell grouping,
 - ProteinGym AF2-derived beta-glucosidase catalytic-shell grouping,
 - a validated enzyme-panel registry for multi-enzyme follow-up,
@@ -151,6 +152,7 @@ VIM-2 placeholder result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.0194 | - | 5,004 |
 | Curated metal-binding site | 0.1214 | 0.0045 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.3257 | 0.0022 | 247 |
 | Active-site neighborhood | 0.2003 | -0.0006 | 448 |
 
 The placeholder scorer is not the scientific model result. Its job is to prove the second-enzyme data path, labels, metrics, bootstrap intervals, and matched-position null controls before spending ESM compute.
@@ -173,6 +175,7 @@ VIM-2 ESM-2 8M result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.4305 | - | 5,004 |
 | Curated metal-binding site | 0.3702 | 0.4123 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.4841 | 0.4316 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.5734 | 0.3843 | 802 |
 | Active-site neighborhood | 0.6128 | 0.3936 | 448 |
 
@@ -186,10 +189,11 @@ VIM-2 ESM-2 35M result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.5280 | - | 5,004 |
 | Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5207 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 | Active-site neighborhood | 0.6133 | 0.4897 | 448 |
 
-The 35M model improves VIM-2 overall performance, but the metal-site shell and active-site-neighborhood slices fall inside matched-position null intervals at this scale. That makes the project more careful: raw mechanism-slice lifts need matched controls before they become biological claims.
+The 35M model improves VIM-2 overall performance. The ligand-bound 5ACX/WL3 contact group is the strongest raw VIM-2 mechanism slice, but it still falls inside the conservation-plus-SASA matched null. That makes the project more careful: raw mechanism-slice lifts need matched controls before they become biological claims.
 
 ## Run The AMIE ProteinGym Benchmark
 
@@ -360,7 +364,7 @@ Four-enzyme ESM-2 35M comparison:
 | Dataset | Enzyme | Overall | Exact Site | Background | Best Mechanism Slice |
 | --- | --- | ---: | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | 0.5428 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal shell, 0.5846 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | 0.4434 | Active-site neighborhood, 0.4327; AF2 catalytic shell, 0.3808 |
 
@@ -383,6 +387,7 @@ Four-enzyme conservation-plus-SASA matched control:
 | --- | --- | ---: | ---: | ---: | --- |
 | TEM-1 | Active-site neighborhood | 0.7027 | 0.4481 to 0.7133 | 0.094 | High, but inside strict conservation+SASA control |
 | VIM-2 | Metal-site shell, 5 A | 0.5846 | 0.3734 to 0.6016 | 0.110 | Suggestive, but inside strict conservation+SASA control |
+| VIM-2 | 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.3873 to 0.7863 | 0.876 | Strong raw pocket signal, but inside strict conservation+SASA control |
 | AMIE | Catalytic shell, 5 A | 0.3071 | 0.3496 to 0.5602 | 0.004 | Lower than matched conservation+SASA control |
 | Beta-glucosidase | Catalytic shell, 5 A | 0.3808 | 0.3407 to 0.6218 | 0.166 | Inside strict conservation+SASA control |
 
@@ -390,14 +395,14 @@ This is the strongest control so far. It says the raw mechanism-slice lifts are 
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, MSA conservation baselines, and conservation-plus-SASA matched controls. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, MSA conservation baselines, and conservation-plus-SASA matched controls. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance plus an experimental 5ACX/WL3 ligand-contact group, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
 
 ## Next Scientific Steps
 
 1. Add an explicit ESM-2-vs-MSA interpretation figure.
-2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-3. Compare ESM-2 against ESM-1v and MSA Transformer.
-4. Turn the four-enzyme result into a clean portfolio figure and methods card.
+2. Compare ESM-2 against ESM-1v and MSA Transformer.
+3. Add prospective validation on a new enzyme-design target.
+4. Turn the four-enzyme result into a clean methods card.
 
 ## Portfolio Signal
 

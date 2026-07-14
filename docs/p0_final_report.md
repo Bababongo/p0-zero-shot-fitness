@@ -31,7 +31,7 @@ This repo implements a reproducible Python benchmark for enzyme variant-effect p
 | Dataset | Enzyme | Chemistry / Role | Single Mutants | Main Mechanism Slices |
 | --- | --- | --- | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | Serine beta-lactam hydrolysis | 4,783 | UniProt catalytic site, substrate-binding site, PDB ligand contacts, active-site neighborhood |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | Zinc-dependent beta-lactam hydrolysis | 5,004 | Metal-binding site, AF2 metal-site shell, active-site neighborhood |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | Zinc-dependent beta-lactam hydrolysis | 5,004 | Metal-binding site, AF2 metal-site shell, 5ACX/WL3 inhibitor contact, active-site neighborhood |
 | `AMIE_PSEAE_Wrenbeck_2017` | Aliphatic amidase | Amidase/nitrilase-like hydrolysis | 6,227 | Curated catalytic site, AF2 catalytic shell, active-site neighborhood |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | Glycoside hydrolysis | 2,999 | Curated catalytic site, AF2 catalytic shell, active-site neighborhood |
 
@@ -167,17 +167,21 @@ Interpretation: TEM-1 supports a mechanism-local signal, but the strictest contr
 
 | Slice | Spearman | Outside Spearman | Variants |
 | --- | ---: | ---: | ---: |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5207 | 247 |
 | Active-site neighborhood | 0.6133 | 0.4897 | 448 |
 | Structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 | Curated metal-binding site | 0.3449 | 0.5085 | 113 |
 
-VIM-2 is the strongest structure-shell result after the SASA upgrade. The metal-site shell clears:
+VIM-2 now has the cleanest ligand-bound label upgrade in the panel: a 5ACX/WL3 inhibitor-contact group derived from experimental mmCIF coordinates using direct target-sequence numbering. It is the strongest raw VIM-2 mechanism slice at `0.6613`.
 
-- solvent-accessibility matching: `p = 0.012`,
-- contact-density matching: `p = 0.000`,
-- combined covariate matching: `p = 0.044`.
+The controls make the read more cautious:
 
-Interpretation: ESM-2 performs especially well on a broad metal-site shell, but the exact metal-binding residue set remains weak. This suggests a neighborhood-level evolutionary or structural constraint signal, not atomistic catalytic understanding.
+- position-matched null: inside, `p = 0.186`,
+- solvent-accessibility matching: inside, `p = 0.092`,
+- conservation-plus-SASA matching: inside, `p = 0.876`,
+- strict combined covariate matching: inside, `p = 0.782`.
+
+Interpretation: ESM-2 performs well in the VIM-2 ligand/metal neighborhood in raw correlation, but the strict controls say this is not enough to claim atomistic catalytic or ligand-chemistry understanding. The more defensible claim is that VIM-2 has strong mechanism-adjacent signal that overlaps with conservation and structural-exposure effects.
 
 ### AMIE
 
@@ -214,7 +218,7 @@ The main contribution is not "ESM-2 solves enzyme design." It is:
 The results suggest three kinds of behavior:
 
 1. Broad global signal: all four enzymes show positive whole-protein Spearman.
-2. Neighborhood signal: TEM-1 active-site neighborhood and VIM-2 metal-site shell show the most credible mechanism-local lifts.
+2. Neighborhood signal: TEM-1 active-site neighborhood and VIM-2 ligand/metal neighborhoods show the strongest raw mechanism-local lifts.
 3. Mechanism failure or ambiguity: AMIE and beta-glucosidase show that catalytic sites and catalytic shells can remain weak despite global model utility.
 
 ## What Is Novel Enough
@@ -229,7 +233,8 @@ Novelty comes from:
 - explicit separation between exact catalytic residues, active-site neighborhoods, and structure-derived shells,
 - showing positive and negative cases,
 - running true MSA conservation baselines and SASA-matched controls,
-- adding conservation-plus-SASA matched controls to test whether mechanism slices remain unusual after matching both family conservation and structural exposure.
+- adding conservation-plus-SASA matched controls to test whether mechanism slices remain unusual after matching both family conservation and structural exposure,
+- adding an experimental 5ACX/WL3 ligand-bound VIM-2 contact group with mmCIF target-sequence mapping.
 
 The intellectual move is to treat zero-shot PLM scores as something to audit mechanistically, not just leaderboard-rank globally.
 
@@ -237,7 +242,7 @@ The intellectual move is to treat zero-shot PLM scores as something to audit mec
 
 - Raw ProteinGym MSA files are external and intentionally not committed; derived conservation profiles are committed.
 - AMIE catalytic labels are now UniProt P11436-backed, but substrate-pocket labels beyond the catalytic triad remain future work.
-- VIM-2 exact metal-site labels are supported by VIM-2 reference records and PDB-backed structure features, but A4GRB6 itself is inactive/deleted in UniProt and the ProteinGym sequence differs from reviewed Q5U7L7 at one non-site residue.
+- VIM-2 exact metal-site labels are supported by VIM-2 reference records and PDB-backed structure features, and the WL3 contact group is supported by RCSB 5ACX. A4GRB6 itself is inactive/deleted in UniProt and the ProteinGym sequence differs from reviewed Q5U7L7 at one non-site residue.
 - TEM-1 ligand contacts use one structure/contact rule and could be expanded to multiple ligand-bound structures.
 - Approximate SASA is useful for control matching but not a substitute for a dedicated structural-biology package.
 - Spearman on exact catalytic residues can be noisy because the number of catalytic positions is small.
@@ -289,8 +294,8 @@ python scripts/score_msa_conservation_baseline.py \
 
 If asked what P0 proves:
 
-> I built a zero-shot enzyme fitness benchmark around a mechanism-aware question. Instead of only asking whether ESM-2 correlates with DMS fitness globally, I split residues into catalytic sites, active-site neighborhoods, ligand or metal shells, and background residues. Then I added matched null controls so I could tell whether a mechanism slice was genuinely unusual or just confounded by mutation coverage, variance, model-score spread, position, burial, or solvent exposure. The result is nuanced: ESM-2 35M works globally across four enzymes, VIM-2 and TEM-1 show the strongest mechanism-local signals, and AMIE/beta-glucosidase show that PLMs can still fail on chemistry-relevant residues.
+> I built a zero-shot enzyme fitness benchmark around a mechanism-aware question. Instead of only asking whether ESM-2 correlates with DMS fitness globally, I split residues into catalytic sites, active-site neighborhoods, ligand or metal shells, and background residues. Then I added matched null controls so I could tell whether a mechanism slice was genuinely unusual or just confounded by mutation coverage, variance, model-score spread, position, burial, conservation, or solvent exposure. The result is nuanced: ESM-2 35M works globally across four enzymes, VIM-2 and TEM-1 show the strongest raw mechanism-local signals, and AMIE/beta-glucosidase show that PLMs can still fail on chemistry-relevant residues.
 
 If asked what you would improve next:
 
-> I would compare ESM-2 against ESM-1v and MSA Transformer, add ligand-bound or cofactor-aware structure labels where available, and test the story prospectively on a new enzyme-design target. The MSA and conservation-plus-SASA controls already show that classical conservation and structural exposure explain part of the mechanism-slice signal, so the next step is to ask where language-model pretraining adds value beyond those baselines.
+> I would compare ESM-2 against ESM-1v and MSA Transformer, add more ligand-bound or cofactor-aware structure labels where clean experimental structures exist, and test the story prospectively on a new enzyme-design target. The MSA and conservation-plus-SASA controls already show that classical conservation and structural exposure explain part of the mechanism-slice signal, so the next step is to ask where language-model pretraining adds value beyond those baselines.

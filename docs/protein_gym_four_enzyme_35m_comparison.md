@@ -20,7 +20,7 @@ This comparison is the first completed P0 enzyme-panel scaling result. It asks w
 | Dataset | Overall Spearman | Exact Site Spearman | Background Spearman | Best Mechanism Slice |
 | --- | ---: | ---: | ---: | --- |
 | TEM-1 | 0.5548 | 0.4596 | 0.5428 | Ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| VIM-2 | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| VIM-2 | 0.5280 | 0.3449 | 0.5085 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | AMIE | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
 | Beta-glucosidase | 0.4481 | 0.5105 | 0.4434 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 
@@ -38,7 +38,7 @@ This comparison is the first completed P0 enzyme-panel scaling result. It asks w
 | Dataset | Exact Site | Structure Slice | Active-Site Neighborhood |
 | --- | --- | --- | --- |
 | TEM-1 | Inside null, p = 0.668 | Inside null, p = 0.070 | Higher than null, p = 0.012 |
-| VIM-2 | Inside null, p = 0.476 | Inside null, p = 0.084 | Inside null, p = 0.142 |
+| VIM-2 | Inside null, p = 0.476 | Inside null, p = 0.084; WL3 inhibitor contact inside null, p = 0.186 | Inside null, p = 0.142 |
 | AMIE | Inside null, p = 0.408 | Inside null, p = 0.312 | Inside null, p = 0.778 |
 | Beta-glucosidase | Inside null, p = 0.772 | Inside null, p = 0.654 | Inside null, p = 0.984 |
 
@@ -60,6 +60,7 @@ After the pre-report control upgrade, each mechanism slice is also compared agai
 | TEM-1 | Ligand contact, 5 A | Suggestive but inside the strict controls: combined p = 0.092. |
 | VIM-2 | Active-site neighborhood | Raw signal remains high, but combined control is inside null, p = 0.176. |
 | VIM-2 | Metal-site shell, 5 A | Structure-contact control is high, p = 0.000, but combined control is only borderline, p = 0.054. |
+| VIM-2 | WL3 inhibitor contact, 5 A | Strongest raw VIM-2 slice at 0.6613, but inside strict combined control, p = 0.782. |
 | AMIE | Exact catalytic site | Negative control: lower than strict combined covariate null, p = 0.002. |
 | Beta-glucosidase | Catalytic shell, 5 A | Does not survive stricter controls; lower than model-score-sensitivity control, p = 0.046. |
 
@@ -88,6 +89,7 @@ The strongest control now matches mechanism slices against random residue slices
 | TEM-1 | Ligand contact, 5 A | 0.7127 | 0.3901 to 0.7625 | 0.212 | Inside conservation+SASA null |
 | VIM-2 | Active-site neighborhood | 0.6133 | 0.3234 to 0.6468 | 0.178 | Inside conservation+SASA null |
 | VIM-2 | Metal-site shell, 5 A | 0.5846 | 0.3734 to 0.6016 | 0.110 | Inside conservation+SASA null |
+| VIM-2 | WL3 inhibitor contact, 5 A | 0.6613 | 0.3873 to 0.7863 | 0.876 | Inside conservation+SASA null |
 | AMIE | Exact catalytic site | 0.0911 | 0.1799 to 0.6217 | 0.002 | Lower than conservation+SASA null |
 | AMIE | Catalytic shell, 5 A | 0.3071 | 0.3496 to 0.5602 | 0.004 | Lower than conservation+SASA null |
 | Beta-glucosidase | Catalytic shell, 5 A | 0.3808 | 0.3407 to 0.6218 | 0.166 | Inside conservation+SASA null |
@@ -123,5 +125,5 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 The pre-report control upgrade added local covariate controls, the MSA upgrade added a true evolutionary-conservation baseline, and the conservation-plus-SASA control added the strictest mechanism-slice test so far. The next scientific upgrades are now:
 
 - model-family comparisons such as ESM-1v and MSA Transformer,
-- ligand-bound or cofactor-aware labels for VIM-2 where a clean rule is available,
+- additional ligand-bound or cofactor-aware labels where clean experimental structures are available,
 - and prospective validation on a new enzyme-design target.

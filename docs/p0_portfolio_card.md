@@ -18,6 +18,7 @@ Do protein language models fail differently near catalytic and mechanism-relevan
 - A four-enzyme ProteinGym panel: TEM-1, VIM-2, AMIE, and beta-glucosidase.
 - ESM-2 masked-marginal scoring at 8M and 35M scale.
 - Residue-slice evaluation for exact catalytic or metal-binding sites, active-site neighborhoods, structure-derived mechanism shells, and background residues.
+- Experimental VIM-2 ligand-pocket labeling from the 5ACX/WL3 inhibitor-bound structure.
 - Bootstrap intervals, matched residue-position null controls, and covariate-matched null controls.
 - Savio SLURM workflows for GPU scoring and artifact recovery.
 
@@ -26,7 +27,7 @@ Do protein language models fail differently near catalytic and mechanism-relevan
 | Enzyme | Overall Spearman | Exact Site | Active-Site Neighborhood | Matched-Null Read |
 | --- | ---: | ---: | ---: | --- |
 | TEM-1 | 0.5548 | 0.4596 | 0.7027 | Active-site neighborhood clears null, p = 0.012 |
-| VIM-2 | 0.5280 | 0.3449 | 0.6133 | Inside null, p = 0.142 |
+| VIM-2 | 0.5280 | 0.3449 | 0.6133; WL3 contact 0.6613 | Inside null, p = 0.142; WL3 contact inside null, p = 0.186 |
 | AMIE | 0.4082 | 0.0911 | 0.4335 | Inside null, p = 0.778 |
 | Beta-glucosidase | 0.4481 | 0.5105 | 0.4327 | Inside null, p = 0.984 |
 
@@ -38,7 +39,7 @@ The key result is that ESM-2 35M improves global zero-shot ranking across all fo
 
 The pre-report control upgrade narrows the claim further. TEM-1 active-site neighborhood remains the strongest positive mechanism-local signal after mutation-count, fitness-variance, fitness-distribution, and structure-contact controls, but it becomes borderline under the strict combined covariate control. AMIE and beta-glucosidase become useful counterexamples rather than inconvenient results.
 
-The MSA and conservation-plus-SASA upgrades narrow the claim again. ESM-2 35M beats MSA conservation overall on TEM-1 and slightly on VIM-2, but MSA conservation beats ESM-2 overall on AMIE and beta-glucosidase. After matching mechanism slices on both MSA conservation and approximate solvent exposure, no 35M mechanism slice cleanly clears the null interval.
+The MSA and conservation-plus-SASA upgrades narrow the claim again. ESM-2 35M beats MSA conservation overall on TEM-1 and slightly on VIM-2, but MSA conservation beats ESM-2 overall on AMIE and beta-glucosidase. The new VIM-2 5ACX/WL3 ligand-contact group gives a stronger biology label and the highest raw VIM-2 slice, but after matching mechanism slices on both MSA conservation and approximate solvent exposure, no 35M mechanism slice cleanly clears the null interval.
 
 Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic shell cleared matched controls. At 35M, global performance improved sharply, but the shell no longer cleared matched controls.
 
@@ -61,7 +62,7 @@ Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic 
 ## Next Scientific Upgrade
 
 1. Compare against ESM-1v or MSA Transformer.
-2. Add ligand-bound or cofactor-aware structure labels where available.
+2. Compare whether ESM-1v or MSA Transformer changes the mechanism-slice story.
 3. Add prospective validation on a new enzyme-design target.
 
 ## Website Blurb

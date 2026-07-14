@@ -78,7 +78,9 @@ Local support files:
 - `data/proteingym/A4GRB6_PSEAI_catalytic_residues.json`
 - `data/proteingym/A4GRB6_PSEAI_residue_groups.json`
 - `data/proteingym/structures/A4GRB6_PSEAI.pdb`
+- `data/proteingym/structures/5ACX.cif`
 - `data/proteingym/source_records/A4GRB6_PSEAI_metal_site_shell_5A.json`
+- `data/proteingym/source_records/5ACX_WL3_contacts_5A.json`
 
 ## VIM-2 Catalytic / Metal-Site Labels
 
@@ -97,8 +99,9 @@ The VIM-2 residue-group file defines:
 - `curated_metal_binding_site`: positions 114, 116, 118, 179, 198, and 240.
 - `active_site_neighborhood`: a +/-2 residue window around those curated motif positions.
 - `structure_metal_site_shell_5a`: residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom in the ProteinGym AF2 structure `A4GRB6_PSEAI.pdb`.
+- `structure_wl3_inhibitor_contact_5a`: residues with any protein heavy atom within 5.0 Angstrom of WL3 inhibitor heavy atoms in RCSB 5ACX.
 
-The structure shell is not a ligand-bound experimental contact map. It is a structure-derived metal-site proximity slice from the ProteinGym AF2 model. A ligand-bound VIM-2 contact group should still be added later if a suitable experimental structure and reproducible ligand/contact rule are selected.
+The metal-site shell is a structure-derived metal-site proximity slice from the ProteinGym AF2 model. The WL3 group is the ligand-bound experimental contact map for VIM-2. It is derived from 5ACX mmCIF `label_seq_id` numbering, and chain A plus chain B produce the same target-position set.
 
 ## AMIE Assay
 

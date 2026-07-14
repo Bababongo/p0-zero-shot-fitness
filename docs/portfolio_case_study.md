@@ -18,12 +18,12 @@ Frontier AI systems for biology need evaluation tasks that reflect where scienti
 
 ## Current Evidence
 
-The current repo runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It includes ESM-2 8M and 35M masked-marginal scoring for all four enzymes, TEM-1 UniProt/PDB annotation validation, structure-derived mechanism shells, and matched-position null controls.
+The current repo runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It includes ESM-2 8M and 35M masked-marginal scoring for all four enzymes, TEM-1 UniProt/PDB annotation validation, VIM-2 5ACX/WL3 ligand-pocket labels, structure-derived mechanism shells, and matched controls.
 
 Key ESM-2 35M results:
 
 - TEM-1 overall Spearman: 0.5548; active-site-neighborhood Spearman: 0.7027; ligand-contact Spearman: 0.7127
-- VIM-2 overall Spearman: 0.5280; active-site-neighborhood Spearman: 0.6133; metal-site shell Spearman: 0.5846
+- VIM-2 overall Spearman: 0.5280; WL3 inhibitor-contact Spearman: 0.6613; active-site-neighborhood Spearman: 0.6133; metal-site shell Spearman: 0.5846
 - AMIE overall Spearman: 0.4082; active-site-neighborhood Spearman: 0.4335; exact catalytic-site Spearman: 0.0911
 - Beta-glucosidase overall Spearman: 0.4481; exact catalytic-site Spearman: 0.5105; catalytic-shell Spearman: 0.3808
 
@@ -33,4 +33,4 @@ Beta-glucosidase is the most useful scaling counterexample. At 8M, overall Spear
 
 ## Next Evidence Upgrade
 
-The next version should add conservation-matched controls, add solvent-accessibility-matched controls, compare against ESM-1v or an MSA-aware baseline, and create a compact portfolio figure that explains the four-enzyme result.
+The next version should compare against ESM-1v or MSA Transformer, create an ESM-2-vs-MSA interpretation figure, and test the story prospectively on a new enzyme-design target.

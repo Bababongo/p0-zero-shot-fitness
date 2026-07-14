@@ -163,14 +163,14 @@ After the TEM-1 result, I upgraded P0 into a four-enzyme benchmark seed. The cur
 | Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Best Mechanism Slice |
 | --- | --- | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | Active-site neighborhood, 0.4335 |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 
 The matched-position null controls make the result more careful:
 
 - TEM-1 active-site neighborhood is higher than same-size random residue-position controls at 35M.
-- VIM-2 active-site neighborhood and metal-site shell are strong in raw Spearman, but remain inside matched-position null intervals at 35M.
+- VIM-2 WL3 inhibitor contact, active-site neighborhood, and metal-site shell are strong in raw Spearman, but remain inside matched-position or stricter conservation-plus-SASA controls at 35M.
 - AMIE active-site neighborhood is higher than outside background, but remains inside same-size random residue-position controls at 35M.
 - Beta-glucosidase has the largest 8M-to-35M global improvement, but its catalytic shell no longer clears matched-position null controls at 35M.
 - Exact catalytic-site slices remain small, noisy, and easy to overclaim.

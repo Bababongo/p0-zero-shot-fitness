@@ -31,7 +31,7 @@ For the fourth-enzyme extensions with beta-glucosidase, see [ProteinGym Four-Enz
 | Dataset | Overall Spearman | Exact Site Spearman | Background Spearman | Best Mechanism Slice |
 | --- | ---: | ---: | ---: | --- |
 | TEM-1 | 0.5548 | 0.4596 | 0.5428 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| VIM-2 | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| VIM-2 | 0.5280 | 0.3449 | 0.5085 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | AMIE | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
 
 ## 8M To 35M Scaling Read
@@ -39,7 +39,7 @@ For the fourth-enzyme extensions with beta-glucosidase, see [ProteinGym Four-Enz
 | Dataset | 8M Overall | 35M Overall | Change | Most Important 35M Observation |
 | --- | ---: | ---: | ---: | --- |
 | TEM-1 | 0.4113 | 0.5548 | +0.1435 | Active-site neighborhood remains higher than matched null controls. |
-| VIM-2 | 0.4305 | 0.5280 | +0.0975 | Active-site neighborhood and metal shell remain strong in raw Spearman, but fall inside matched null controls. |
+| VIM-2 | 0.4305 | 0.5280 | +0.0975 | WL3 inhibitor contact, active-site neighborhood, and metal shell remain strong in raw Spearman, but fall inside matched controls. |
 | AMIE | 0.3264 | 0.4082 | +0.0818 | Overall performance improves, but exact catalytic-site performance remains weak. |
 
 ## ESM-2 8M Matched-Position Null Read

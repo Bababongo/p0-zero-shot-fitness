@@ -868,6 +868,100 @@
             "observed_spearman": 0.5846324586702588,
             "two_sided_empirical_p": 0.084
           }
+        },
+        "structure_wl3_inhibitor_contact_5a": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7789905748020547,
+              "null_ci_low": 0.3971706490417615,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.782
+            },
+            "conservation_plus_sasa": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7862773390189491,
+              "null_ci_low": 0.3873114794603307,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.876
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.6924842576742214,
+              "null_ci_low": 0.18480736186067587,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.098
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7388706081836423,
+              "null_ci_low": 0.2206429367867931,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.282
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7851298127365595,
+              "null_ci_low": 0.35326269378626224,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.706
+            },
+            "msa_conservation": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7476364207241669,
+              "null_ci_low": 0.37054123369708025,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.478
+            },
+            "mutation_count": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.3388501514635102,
+              "null_ci_low": -0.048835554585792695,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.0
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.7261111649000472,
+              "null_ci_low": 0.2355160943232044,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.262
+            },
+            "structure_solvent_accessibility": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 13,
+              "n_variants": 247,
+              "null_ci_high": 0.6803289045449323,
+              "null_ci_low": 0.17752659828913278,
+              "observed_spearman": 0.6612974896237143,
+              "two_sided_empirical_p": 0.092
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 13,
+            "n_variants": 247,
+            "null_ci_high": 0.7075889701943392,
+            "null_ci_low": 0.24838740285163444,
+            "observed_spearman": 0.6612974896237143,
+            "two_sided_empirical_p": 0.186
+          }
         }
       },
       "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",

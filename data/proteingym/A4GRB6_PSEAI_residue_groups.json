@@ -2,7 +2,7 @@
   "protein_id": "A4GRB6_PSEAI",
   "assay_id": "A4GRB6_PSEAI_Chen_2020",
   "residue_numbering": "1-indexed positions in the 266-aa ProteinGym target sequence",
-  "annotation_status": "vim2_metal_site_curated_with_proteingym_af2_structure_shell",
+  "annotation_status": "vim2_metal_site_curated_with_proteingym_af2_shell_and_5acx_inhibitor_contacts",
   "residue_groups": {
     "active_site_neighborhood": [
       112,
@@ -36,6 +36,21 @@
       118,
       179,
       198,
+      240
+    ],
+    "structure_wl3_inhibitor_contact_5a": [
+      62,
+      67,
+      87,
+      116,
+      117,
+      118,
+      179,
+      198,
+      201,
+      205,
+      209,
+      210,
       240
     ],
     "structure_metal_site_shell_5a": [
@@ -84,6 +99,6 @@
       242
     ]
   },
-  "source": "VIM-2 reference-record metal-site evidence, conserved class B metallo-beta-lactamase motif mapping, and a ProteinGym AF2 structure-derived metal-site shell. See data/proteingym/source_records/uniprot_vim2_metal_site_reference.json.",
-  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the curated VIM-2 metal-binding/catalytic-site residues. The curated_metal_binding_site group is the exact six-residue site from the label file. The structure_metal_site_shell_5a group was derived from data/proteingym/structures/A4GRB6_PSEAI.pdb using scripts/derive_residue_shell.py and includes residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom. The shell source record is data/proteingym/source_records/A4GRB6_PSEAI_metal_site_shell_5A.json."
+  "source": "VIM-2 reference-record metal-site evidence, conserved class B metallo-beta-lactamase motif mapping, a ProteinGym AF2 structure-derived metal-site shell, and RCSB 5ACX inhibitor-contact evidence. See data/proteingym/source_records/uniprot_vim2_metal_site_reference.json and data/proteingym/source_records/5ACX_WL3_contacts_5A.json.",
+  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the curated VIM-2 metal-binding/catalytic-site residues. The curated_metal_binding_site group is the exact six-residue site from the label file. The structure_metal_site_shell_5a group was derived from data/proteingym/structures/A4GRB6_PSEAI.pdb using scripts/derive_residue_shell.py and includes residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom. The structure_wl3_inhibitor_contact_5a group was derived from RCSB 5ACX mmCIF coordinates using scripts/derive_ligand_contacts.py, includes residues with any protein heavy atom within 5.0 Angstrom of WL3 inhibitor heavy atoms, and uses mmCIF label_seq_id target-sequence numbering. Chain A and chain B produced the same target-position set. The shell source record is data/proteingym/source_records/A4GRB6_PSEAI_metal_site_shell_5A.json."
 }

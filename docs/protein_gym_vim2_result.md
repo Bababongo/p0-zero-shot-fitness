@@ -17,7 +17,7 @@ This is the first second-enzyme case in the P0 v3 panel.
 - ProteinGym protein ID: `A4GRB6_PSEAI`
 - Variants: 5,004 single mutants
 - Assay context: beta-lactam antibiotic resistance
-- Scorers: placeholder conservation scorer and ESM-2 8M masked-marginal scorer
+- Scorers: placeholder conservation scorer, ESM-2 8M masked-marginal scorer, and ESM-2 35M masked-marginal scorer
 
 ## Residue Labels
 
@@ -29,11 +29,17 @@ The exact curated metal-binding/catalytic-site labels are:
 
 These are 1-indexed positions in the 266-aa ProteinGym target sequence.
 
-Structure-derived upgrade:
+Structure-derived upgrades:
 
 UniProt accession A4GRB6 is inactive/deleted, so this VIM-2 benchmark uses transparent conserved B1 metallo-beta-lactamase motif curation rather than UniProt feature annotations. It now also adds a ProteinGym AF2-derived `structure_metal_site_shell_5a` group: residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom.
 
-Important caveat: this structure shell is not a ligand-bound experimental contact map. It is a structure-derived metal-site proximity slice.
+It also adds an experimental ligand-bound contact group from RCSB 5ACX, a VIM-2 structure crystallized with the WL3 inhibitor. The group is named `structure_wl3_inhibitor_contact_5a` and contains residues with any protein heavy atom within 5.0 Angstrom of WL3 heavy atoms. The script uses mmCIF `label_seq_id` numbering so structure residues map directly back to the 266-aa ProteinGym target sequence.
+
+```text
+[62, 67, 87, 116, 117, 118, 179, 198, 201, 205, 209, 210, 240]
+```
+
+Chain A and chain B in 5ACX produced the same target-position set. The source record is `data/proteingym/source_records/5ACX_WL3_contacts_5A.json`.
 
 ## Placeholder Baseline Result
 
@@ -53,6 +59,7 @@ Metrics:
 | --- | ---: | ---: | ---: |
 | Overall | 0.0194 | - | 5,004 |
 | Curated metal-binding site | 0.1214 | 0.0045 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.3257 | 0.0022 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.1720 | -0.0236 | 802 |
 | Active-site neighborhood | 0.2003 | -0.0006 | 448 |
 
@@ -61,6 +68,7 @@ Matched-position null result:
 | Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Curated metal-binding site | 0.1214 | 0.0141 | -0.3536 to 0.4080 | 0.606 | inside null |
+| 5ACX WL3 inhibitor contact, 5 A | 0.3257 | 0.0026 | -0.2522 to 0.2609 | 0.022 | higher than null |
 | AF2 structure metal-site shell, 5 A | 0.1720 | -0.0260 | -0.1491 to 0.0978 | 0.000 | higher than null |
 | Active-site neighborhood | 0.2003 | -0.0009 | -0.1638 to 0.1883 | 0.030 | higher than null |
 
@@ -79,7 +87,7 @@ What this result proves:
 What it does not prove yet:
 
 - It does not prove the active-site-neighborhood signal generalizes.
-- It now includes an AF2 structure-derived metal-site shell, but not an experimental ligand-bound contact map.
+- It now includes both an AF2 structure-derived metal-site shell and an experimental 5ACX/WL3 ligand-bound contact map.
 
 ## ESM-2 8M Result
 
@@ -101,6 +109,7 @@ Metrics:
 | --- | ---: | ---: | ---: |
 | Overall | 0.4305 | - | 5,004 |
 | Curated metal-binding site | 0.3702 | 0.4123 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.4841 | 0.4316 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.5734 | 0.3843 | 802 |
 | Active-site neighborhood | 0.6128 | 0.3936 | 448 |
 
@@ -121,6 +130,7 @@ Matched-position null result:
 | Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Curated metal-binding site | 0.3702 | 0.3830 | -0.0700 to 0.7427 | 0.896 | inside null |
+| 5ACX WL3 inhibitor contact, 5 A | 0.4841 | 0.4188 | 0.1224 to 0.6421 | 0.668 | inside null |
 | AF2 structure metal-site shell, 5 A | 0.5734 | 0.3821 | 0.2323 to 0.5188 | 0.000 | higher than null |
 | Active-site neighborhood | 0.6128 | 0.3827 | 0.1787 to 0.5736 | 0.012 | higher than null |
 
@@ -152,6 +162,7 @@ Metrics:
 | --- | ---: | ---: | ---: |
 | Overall | 0.5280 | - | 5,004 |
 | Curated metal-binding site | 0.3449 | 0.5085 | 113 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5207 | 247 |
 | AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 | Active-site neighborhood | 0.6133 | 0.4897 | 448 |
 
@@ -160,15 +171,16 @@ Matched-position null result:
 | Slice | Observed Spearman | Null Mean | Null 95% Interval | Empirical p | Direction |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Curated metal-binding site | 0.3449 | 0.4739 | 0.0464 to 0.7853 | 0.476 | inside null |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5053 | 0.2484 to 0.7076 | 0.186 | inside null |
 | AF2 structure metal-site shell, 5 A | 0.5846 | 0.4735 | 0.3448 to 0.5985 | 0.084 | inside null, near high edge |
 | Active-site neighborhood | 0.6133 | 0.4809 | 0.2821 to 0.6508 | 0.142 | inside null |
 
 ## 35M Interpretation
 
-The 35M model improves VIM-2 overall performance from 0.4305 to 0.5280. The active-site neighborhood and AF2 metal-site shell remain strong in raw Spearman, but they are no longer above matched-position null controls at the 35M scale.
+The 35M model improves VIM-2 overall performance from 0.4305 to 0.5280. The new 5ACX/WL3 inhibitor-contact group is the strongest raw VIM-2 slice at 0.6613, but it remains inside the same-size matched-position null and inside the stricter conservation-plus-SASA control.
 
-This weakens a simple "VIM-2 mechanism neighborhoods are always unusually high" claim, but it strengthens the project scientifically. The result now says that model scale improves global zero-shot fitness prediction while exact metal-binding chemistry remains difficult, and that mechanism-slice claims need matched controls rather than only outside-background comparisons.
+This weakens a simple "VIM-2 mechanism neighborhoods are always unusually high" claim, but it strengthens the project scientifically. The result now says that model scale improves global zero-shot fitness prediction while exact metal-binding chemistry remains difficult, and that even experimentally ligand-bound pocket slices need matched controls rather than only outside-background comparisons.
 
 ## Next Step
 
-Add conservation-matched and solvent-accessibility-matched controls, then add the next non-beta-lactamase enzyme-function case. A ligand-bound experimental contact group remains a later upgrade if a suitable VIM-2 structure and ligand/contact rule are selected.
+The ligand-bound VIM-2 contact-label upgrade is complete. The next VIM-2-specific upgrade is model-family comparison: test whether ESM-1v, MSA Transformer, or MSA conservation behaves differently on the exact metal site, AF2 metal shell, and 5ACX/WL3 inhibitor-contact group.

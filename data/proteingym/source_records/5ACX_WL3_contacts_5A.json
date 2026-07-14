@@ -1,0 +1,138 @@
+{
+  "contacts": [
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.731,
+      "pdb_position": 61,
+      "residue_name": "PHE",
+      "target_position": 62
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.55,
+      "pdb_position": 67,
+      "residue_name": "TYR",
+      "target_position": 67
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.754,
+      "pdb_position": 87,
+      "residue_name": "TRP",
+      "target_position": 87
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.608,
+      "pdb_position": 118,
+      "residue_name": "HIS",
+      "target_position": 116
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.116,
+      "pdb_position": 119,
+      "residue_name": "ASP",
+      "target_position": 117
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.524,
+      "pdb_position": 120,
+      "residue_name": "ASP",
+      "target_position": 118
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.402,
+      "pdb_position": 196,
+      "residue_name": "HIS",
+      "target_position": 179
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 3.184,
+      "pdb_position": 221,
+      "residue_name": "OCS",
+      "target_position": 198
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 4.64,
+      "pdb_position": 224,
+      "residue_name": "TYR",
+      "target_position": 201
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 2.753,
+      "pdb_position": 228,
+      "residue_name": "ARG",
+      "target_position": 205
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 4.649,
+      "pdb_position": 232,
+      "residue_name": "GLY",
+      "target_position": 209
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 2.961,
+      "pdb_position": 233,
+      "residue_name": "ASN",
+      "target_position": 210
+    },
+    {
+      "auth_chain": "A",
+      "label_chain": "A",
+      "min_distance_angstrom": 2.862,
+      "pdb_position": 263,
+      "residue_name": "HIS",
+      "target_position": 240
+    }
+  ],
+  "cutoff_angstrom": 5.0,
+  "evidence_note": "Chain A and chain B were both checked; both crystallographic copies produced the same target-position set at a 5.0 Angstrom heavy-atom cutoff.",
+  "format": "mmCIF",
+  "ligand": "WL3",
+  "ligand_name": "2-(4-fluorophenyl)carbonylbenzoic acid",
+  "ligand_chain": "A",
+  "method": "Residues are included if any protein heavy atom with a numeric mmCIF label_seq_id is within the cutoff distance of any ligand heavy atom. label_seq_id is used as target-sequence numbering.",
+  "protein_chain": "A",
+  "source": {
+    "pdb_id": "5ACX",
+    "rcsb_url": "https://www.rcsb.org/structure/5ACX",
+    "primary_citation": "Christopeit et al. Discovery of Novel Inhibitor Scaffolds against the Metallo-beta-lactamase VIM-2 by SPR Based Fragment Screening. J Med Chem 2015.",
+    "doi": "10.1021/acs.jmedchem.5b01289"
+  },
+  "structure": "5ACX.cif",
+  "target_positions": [
+    62,
+    67,
+    87,
+    116,
+    117,
+    118,
+    179,
+    198,
+    201,
+    205,
+    209,
+    210,
+    240
+  ]
+}

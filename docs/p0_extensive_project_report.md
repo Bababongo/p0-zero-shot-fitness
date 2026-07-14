@@ -10,7 +10,7 @@ Core question:
 
 ## 1. Executive Summary
 
-P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of enzymes. The project now runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and slices performance by exact catalytic sites, structure-derived mechanism shells, active-site neighborhoods, and background residues.
+P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of enzymes. The project now runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and slices performance by exact catalytic sites, structure-derived mechanism shells, ligand-bound contact groups, active-site neighborhoods, and background residues.
 
 The scientific motivation is simple: a protein language model can look good overall while still failing on the residues that matter most for enzyme engineering. Enzyme function is not only about broad evolutionary conservation or stability. It can depend on active-site chemistry, substrate positioning, cofactors, binding-pocket geometry, and transition-state stabilization. P0 turns that concern into a measurable benchmark.
 
@@ -117,10 +117,11 @@ ESM-2 35M result:
 | --- | ---: | ---: | ---: |
 | Overall | 0.5280 | - | 5,004 |
 | Curated metal-binding site | 0.3449 | 0.5085 | 113 |
-| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 | Active-site neighborhood | 0.6133 | 0.4897 | 448 |
+| 5ACX WL3 inhibitor contact, 5 A | 0.6613 | 0.5207 | 247 |
+| AF2 structure metal-site shell, 5 A | 0.5846 | 0.4778 | 802 |
 
-The 35M model improves VIM-2 overall performance. The exact curated metal-binding-site slice remains inside the matched-position null. The active-site-neighborhood and AF2 metal-site shell slices are strong in raw Spearman, but also remain inside matched-position null intervals at 35M. This keeps the VIM-2 story careful: model scale helps globally, but mechanism-slice claims need controls.
+The 35M model improves VIM-2 overall performance. The exact curated metal-binding-site slice remains inside the matched-position null. The new 5ACX/WL3 inhibitor-contact group is the strongest raw VIM-2 mechanism slice, but it also remains inside matched-position and conservation-plus-SASA controls. This keeps the VIM-2 story careful: model scale helps globally, but even ligand-bound pocket labels need controls before they become biological claims.
 
 ## 1.4 v3 Addendum: AMIE Non-Beta-Lactamase Case
 
@@ -159,7 +160,7 @@ The first four-enzyme 35M panel is now complete.
 | Dataset | Enzyme | Overall ESM-2 35M | Exact Site | Background | Best Mechanism Slice |
 | --- | --- | ---: | ---: | ---: | --- |
 | `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.5548 | 0.4596 | 0.5428 | PDB ligand contact, 0.7127; active-site neighborhood, 0.7027 |
-| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | Active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.5280 | 0.3449 | 0.5085 | WL3 inhibitor contact, 0.6613; active-site neighborhood, 0.6133; metal-site shell, 0.5846 |
 | `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.4082 | 0.0911 | 0.3991 | Active-site neighborhood, 0.4335 |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.4481 | 0.5105 | 0.4434 | Active-site neighborhood, 0.4327; catalytic shell, 0.3808 |
 
@@ -168,7 +169,7 @@ Matched-position null controls at 35M:
 | Dataset | Exact Site | Structure Slice | Active-Site Neighborhood |
 | --- | --- | --- | --- |
 | TEM-1 | Inside null, p = 0.668 | Inside null, p = 0.070 | Higher than null, p = 0.012 |
-| VIM-2 | Inside null, p = 0.476 | Inside null, p = 0.084 | Inside null, p = 0.142 |
+| VIM-2 | Inside null, p = 0.476 | Inside null, p = 0.084; WL3 inhibitor contact inside null, p = 0.186 | Inside null, p = 0.142 |
 | AMIE | Inside null, p = 0.408 | Inside null, p = 0.312 | Inside null, p = 0.778 |
 | Beta-glucosidase | Inside null, p = 0.772 | Inside null, p = 0.654 | Inside null, p = 0.984 |
 
@@ -759,7 +760,7 @@ I would add conservation-matched and solvent-accessibility-matched controls to t
 The project has clear limitations:
 
 1. The active-site-only groups are small, especially beta-glucosidase with only 12 exact catalytic-site variants.
-2. The ligand-contact group comes from one inhibitor-bound TEM-1 structure.
+2. The ligand-contact groups come from one inhibitor-bound TEM-1 structure and one inhibitor-bound VIM-2 structure.
 3. DMS fitness reflects an assay context, not pure catalytic chemistry.
 4. ESM-2 is sequence-only and does not explicitly model ligand chemistry or transition states.
 5. The benchmark does not yet include ESM-1v, MSA Transformer, or structure-aware baselines.
@@ -771,15 +772,13 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Add conservation-matched and solvent-accessibility-matched controls.
-2. Add mutation-count-matched and fitness-variance-matched controls.
-3. Upgrade AMIE catalytic-site and substrate-pocket labels with stronger provenance.
-4. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
-5. Run ESM-2 150M using the existing Savio workflow.
-6. Add ESM-1v as a variant-effect baseline.
-7. Add an MSA-based baseline if compute and data setup allow.
-8. Add more ligand-bound TEM-1 structures to test contact-label robustness.
-9. Turn the four-enzyme result into a clean portfolio figure and methods card.
+1. Add an explicit ESM-2-vs-MSA interpretation figure.
+2. Add ESM-1v as a variant-effect baseline.
+3. Compare against MSA Transformer if compute and dependency setup allow.
+4. Add more ligand-bound or cofactor-aware labels where clean experimental structures exist.
+5. Upgrade AMIE substrate-pocket labels with stronger provenance.
+6. Add prospective validation on a new enzyme-design target.
+7. Turn the four-enzyme result into a clean methods card.
 
 ## 22. Portfolio Value
 
@@ -787,7 +786,7 @@ P0 is strong portfolio evidence because it demonstrates five things at once.
 
 ### Biology Depth
 
-The project uses enzyme DMS data, catalytic residues, substrate-binding residues, PDB ligand contacts, and active-site-neighborhood annotations.
+The project uses enzyme DMS data, catalytic residues, substrate-binding residues, PDB/mmCIF ligand contacts, metal-site labels, and active-site-neighborhood annotations.
 
 ### ML and Evaluation Depth
 
