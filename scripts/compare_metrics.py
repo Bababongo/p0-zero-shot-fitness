@@ -15,6 +15,7 @@ KEY_METRICS = [
     "top_5_enrichment_fitness_ge_0_7",
     "residue_group_breakdown",
     "matched_position_null",
+    "matched_covariate_null",
 ]
 
 

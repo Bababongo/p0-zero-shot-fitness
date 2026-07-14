@@ -12,7 +12,7 @@ from p0_zero_shot_fitness.io import (
     write_scored_variants,
 )
 from p0_zero_shot_fitness.labeling import is_catalytic_mutation, residue_groups_for_mutation
-from p0_zero_shot_fitness.metrics import summarize_records
+from p0_zero_shot_fitness.metrics import PositionCovariates, summarize_records
 from p0_zero_shot_fitness.models import JsonDict, VariantRecord
 from p0_zero_shot_fitness.mutations import parse_mutation
 from p0_zero_shot_fitness.plotting.svg import write_scatter_svg
@@ -53,12 +53,16 @@ def run_fixture_benchmark(
     scorer: VariantScorer | None = None,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
 ) -> JsonDict:
     scorer = scorer or PlaceholderConservationScorer()
     wild_type_sequence = read_fasta_sequence(load_fixture_text("wild_type.fasta"))
     catalytic_payload = load_fixture_json("catalytic_residues.json")
     catalytic_residues = set(catalytic_payload["catalytic_residues"])
     dms_rows = load_dms_csv_text(load_fixture_text("dms_fixture.csv"))
+    position_covariates = load_position_covariates(position_covariates_json)
 
     records = build_variant_records(
         dms_rows=dms_rows,
@@ -66,7 +70,14 @@ def run_fixture_benchmark(
         catalytic_residues=catalytic_residues,
         scorer=scorer,
     )
-    metrics = summarize_records(records, null_iterations=null_iterations, null_seed=null_seed)
+    metrics = summarize_records(
+        records,
+        null_iterations=null_iterations,
+        null_seed=null_seed,
+        position_covariates=position_covariates,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
+    )
     payload = {
         "benchmark": "P0 - Zero-Shot Fitness",
         "question": "Do protein language models fail differently on catalytic residues than on the rest of the protein?",
@@ -100,12 +111,17 @@ def run_external_benchmark(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
+    covariate_nearest_pool_size: int = 25,
 ) -> JsonDict:
     scorer = scorer or PlaceholderConservationScorer()
     wild_type_sequence = read_fasta_sequence(wild_type_fasta.read_text(encoding="utf-8"))
     catalytic_payload = load_external_json(catalytic_json)
     catalytic_residues = set(catalytic_payload["catalytic_residues"])
     residue_groups = load_residue_groups(residue_groups_json)
+    position_covariates = load_position_covariates(position_covariates_json)
     dms_rows = load_dms_csv_path(dms_csv)
 
     records = build_variant_records(
@@ -124,6 +140,10 @@ def run_external_benchmark(
         bootstrap_seed=bootstrap_seed,
         null_iterations=null_iterations,
         null_seed=null_seed,
+        position_covariates=position_covariates,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
+        covariate_nearest_pool_size=covariate_nearest_pool_size,
     )
     payload = {
         "benchmark": "P0 - Zero-Shot Fitness",
@@ -136,6 +156,7 @@ def run_external_benchmark(
             "wild_type_fasta": str(wild_type_fasta),
             "catalytic_json": str(catalytic_json),
             "residue_groups_json": str(residue_groups_json) if residue_groups_json else None,
+            "position_covariates_json": str(position_covariates_json) if position_covariates_json else None,
         },
         "metrics": metrics,
         "artifacts": {
@@ -166,6 +187,21 @@ def load_residue_groups(path: Path | None) -> dict[str, set[int]]:
     }
 
 
+def load_position_covariates(path: Path | None) -> PositionCovariates:
+    if path is None:
+        return {}
+    payload = load_external_json(path)
+    raw_covariates = payload.get("covariates", payload.get("position_covariates", {}))
+    return {
+        int(position): {
+            covariate_name: float(value)
+            for covariate_name, value in covariates.items()
+            if isinstance(value, int | float)
+        }
+        for position, covariates in raw_covariates.items()
+    }
+
+
 def run_proteingym_blat_benchmark(
     output_dir: Path,
     scorer: VariantScorer | None = None,
@@ -173,6 +209,9 @@ def run_proteingym_blat_benchmark(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
 ) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
@@ -191,6 +230,9 @@ def run_proteingym_blat_benchmark(
         bootstrap_seed=bootstrap_seed,
         null_iterations=null_iterations,
         null_seed=null_seed,
+        position_covariates_json=position_covariates_json,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
     )
 
 
@@ -201,6 +243,9 @@ def run_proteingym_vim2_benchmark(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
 ) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
@@ -219,6 +264,9 @@ def run_proteingym_vim2_benchmark(
         bootstrap_seed=bootstrap_seed,
         null_iterations=null_iterations,
         null_seed=null_seed,
+        position_covariates_json=position_covariates_json,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
     )
 
 
@@ -229,6 +277,9 @@ def run_proteingym_amie_benchmark(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
 ) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
@@ -247,6 +298,9 @@ def run_proteingym_amie_benchmark(
         bootstrap_seed=bootstrap_seed,
         null_iterations=null_iterations,
         null_seed=null_seed,
+        position_covariates_json=position_covariates_json,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
     )
 
 
@@ -257,6 +311,9 @@ def run_proteingym_bgly_benchmark(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates_json: Path | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
 ) -> JsonDict:
     root = Path(__file__).resolve().parents[2]
     data_dir = root / "data" / "proteingym"
@@ -275,4 +332,7 @@ def run_proteingym_bgly_benchmark(
         bootstrap_seed=bootstrap_seed,
         null_iterations=null_iterations,
         null_seed=null_seed,
+        position_covariates_json=position_covariates_json,
+        covariate_null_iterations=covariate_null_iterations,
+        covariate_null_seed=covariate_null_seed,
     )

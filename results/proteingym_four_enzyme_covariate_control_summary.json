@@ -1,0 +1,1191 @@
+{
+  "control_names": [
+    "mutation_count",
+    "fitness_variance",
+    "fitness_distribution",
+    "model_score_sensitivity",
+    "structure_contact_density",
+    "combined_available"
+  ],
+  "runs": [
+    {
+      "control_readouts": {
+        "active_site_neighborhood": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.7057013867007229,
+              "null_ci_low": 0.4170356428218655,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.058
+            },
+            "fitness_distribution": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.6081094541149928,
+              "null_ci_low": 0.2779301658854422,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.0
+            },
+            "fitness_variance": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.6780762060578419,
+              "null_ci_low": 0.32969146081863593,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.014
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.710892161593854,
+              "null_ci_low": 0.43122831081160395,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.076
+            },
+            "mutation_count": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.6254863989593213,
+              "null_ci_low": 0.4524018486254191,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.0
+            },
+            "structure_contact_density": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 26,
+              "n_variants": 461,
+              "null_ci_high": 0.6778632580766172,
+              "null_ci_low": 0.3644433133840861,
+              "observed_spearman": 0.7027197151291893,
+              "two_sided_empirical_p": 0.022
+            }
+          },
+          "position_matched": {
+            "direction": "higher_than_position_matched_null",
+            "n_positions": 26,
+            "n_variants": 461,
+            "null_ci_high": 0.6781286869948314,
+            "null_ci_low": 0.31883511140043025,
+            "observed_spearman": 0.7027197151291893,
+            "two_sided_empirical_p": 0.012
+          }
+        },
+        "catalytic": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8751053787749684,
+              "null_ci_low": -0.023851994537848007,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.556
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8441192420712532,
+              "null_ci_low": -0.24780823419638212,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.93
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8745040093244476,
+              "null_ci_low": -0.296668821211746,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.99
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.882994097242341,
+              "null_ci_low": 0.10456552088500436,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.276
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8453053097090886,
+              "null_ci_low": 0.2618834219012385,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.284
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8338027419667834,
+              "null_ci_low": 0.06227368791361285,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.486
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 4,
+            "n_variants": 57,
+            "null_ci_high": 0.8358497105909843,
+            "null_ci_low": -0.06342560302441914,
+            "observed_spearman": 0.45958853555533685,
+            "two_sided_empirical_p": 0.722
+          }
+        },
+        "structure_ligand_contact_5a": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.7413066659490293,
+              "null_ci_low": 0.3668675700659057,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.092
+            },
+            "fitness_distribution": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.6957459175340801,
+              "null_ci_low": 0.19399871082615155,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.036
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.7205912784607064,
+              "null_ci_low": 0.23550327118287653,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.062
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.7472545847158159,
+              "null_ci_low": 0.3188604584506009,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.12
+            },
+            "mutation_count": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.708983057628978,
+              "null_ci_low": 0.4244090606977004,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.042
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 16,
+              "n_variants": 277,
+              "null_ci_high": 0.7221299259209097,
+              "null_ci_low": 0.3504842351882441,
+              "observed_spearman": 0.7127005773724054,
+              "two_sided_empirical_p": 0.082
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 16,
+            "n_variants": 277,
+            "null_ci_high": 0.72270582096644,
+            "null_ci_low": 0.2819611444739688,
+            "observed_spearman": 0.7127005773724054,
+            "two_sided_empirical_p": 0.07
+          }
+        },
+        "uniprot_active_site": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8782248060103559,
+              "null_ci_low": -0.01116732938786195,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.582
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8268576244701993,
+              "null_ci_low": -0.3146779617214966,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.902
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8695892986697924,
+              "null_ci_low": -0.32912728581369594,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.956
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8719513183466077,
+              "null_ci_low": 0.09720012680356631,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.306
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8464479087768068,
+              "null_ci_low": 0.1949094217982492,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.324
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 4,
+              "n_variants": 57,
+              "null_ci_high": 0.8418792125406881,
+              "null_ci_low": 0.03540341592432089,
+              "observed_spearman": 0.45958853555533685,
+              "two_sided_empirical_p": 0.478
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 4,
+            "n_variants": 57,
+            "null_ci_high": 0.8355672206926478,
+            "null_ci_low": 0.027311279306279166,
+            "observed_spearman": 0.45958853555533685,
+            "two_sided_empirical_p": 0.668
+          }
+        },
+        "uniprot_substrate_binding_site": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8847791408263561,
+              "null_ci_low": 0.07453803400639328,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.746
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8267708591453888,
+              "null_ci_low": -0.07502294619602477,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.916
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8912901784897326,
+              "null_ci_low": -0.2530639097744361,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.71
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8531380144044395,
+              "null_ci_low": 0.10249595007465634,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.782
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8808752806073763,
+              "null_ci_low": 0.08951238270178855,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.52
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 55,
+              "null_ci_high": 0.8326932407080795,
+              "null_ci_low": -0.008673362481674027,
+              "observed_spearman": 0.49648088170337173,
+              "two_sided_empirical_p": 0.64
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 3,
+            "n_variants": 55,
+            "null_ci_high": 0.8625941167858894,
+            "null_ci_low": -0.11024710560427602,
+            "observed_spearman": 0.49648088170337173,
+            "two_sided_empirical_p": 0.726
+          }
+        }
+      },
+      "dataset": "ProteinGym BLAT_ECOLX_Firnberg_2014",
+      "path": "results/proteingym_blat_esm2_t12_35M/metrics.json",
+      "scorer": "ESM2MaskedMarginalScorer",
+      "spearman_catalytic": 0.45958853555533685,
+      "spearman_non_catalytic": 0.5427871148026987,
+      "spearman_overall": 0.5548074662487292
+    },
+    {
+      "control_readouts": {
+        "active_site_neighborhood": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.6439015247584123,
+              "null_ci_low": 0.3201473850482394,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.176
+            },
+            "fitness_distribution": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.5573851548217509,
+              "null_ci_low": 0.22481751569709624,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.0
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.6567834842011141,
+              "null_ci_low": 0.3014681515135755,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.182
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.6534751140981028,
+              "null_ci_low": 0.3028512543121467,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.194
+            },
+            "mutation_count": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.3170323517330566,
+              "null_ci_low": 0.03544026787486952,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.0
+            },
+            "structure_contact_density": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.5999563063692999,
+              "null_ci_low": 0.25567242461543294,
+              "observed_spearman": 0.6133324605084269,
+              "two_sided_empirical_p": 0.024
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 24,
+            "n_variants": 448,
+            "null_ci_high": 0.6508322441015345,
+            "null_ci_low": 0.2821202077431659,
+            "observed_spearman": 0.6133324605084269,
+            "two_sided_empirical_p": 0.142
+          }
+        },
+        "catalytic": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6580759173568782,
+              "null_ci_low": -0.12718879731070656,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.754
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.48902391608108364,
+              "null_ci_low": -0.2776195297786598,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.292
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.7910287357485674,
+              "null_ci_low": 0.027842692533565555,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.43
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6348656682740921,
+              "null_ci_low": -0.05311858848255691,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.792
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6021830710626123,
+              "null_ci_low": -0.185193625657063,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.552
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.707412128218777,
+              "null_ci_low": 0.035406440663991644,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.71
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 6,
+            "n_variants": 113,
+            "null_ci_high": 0.7722451195804054,
+            "null_ci_low": 0.04671187877350167,
+            "observed_spearman": 0.3448749085102136,
+            "two_sided_empirical_p": 0.472
+          }
+        },
+        "curated_metal_binding_site": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6715323707498835,
+              "null_ci_low": -0.14595282453922417,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.764
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.4875595876956725,
+              "null_ci_low": -0.2683744760130415,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.232
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.7952967740628988,
+              "null_ci_low": 0.0538603916486098,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.478
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6075446021749257,
+              "null_ci_low": -0.07341088385921911,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.848
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.6160741316787544,
+              "null_ci_low": -0.207437299029717,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.596
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.7228363135618964,
+              "null_ci_low": 0.025992412123869574,
+              "observed_spearman": 0.3448749085102136,
+              "two_sided_empirical_p": 0.736
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 6,
+            "n_variants": 113,
+            "null_ci_high": 0.7853451514342835,
+            "null_ci_low": 0.046396221155959226,
+            "observed_spearman": 0.3448749085102136,
+            "two_sided_empirical_p": 0.476
+          }
+        },
+        "structure_metal_site_shell_5a": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.5858536472288949,
+              "null_ci_low": 0.3711071418886551,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.054
+            },
+            "fitness_distribution": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.525027502089524,
+              "null_ci_low": 0.29191347115003063,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.0
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.5898251210712692,
+              "null_ci_low": 0.34636004141093674,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.058
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.6184107518908549,
+              "null_ci_low": 0.37789069887966414,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.224
+            },
+            "mutation_count": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.4148692899272118,
+              "null_ci_low": 0.19388571925257644,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.0
+            },
+            "structure_contact_density": {
+              "direction": "higher_than_covariate_matched_null",
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.5297663315073546,
+              "null_ci_low": 0.36470815699720843,
+              "observed_spearman": 0.5846324586702588,
+              "two_sided_empirical_p": 0.0
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 43,
+            "n_variants": 802,
+            "null_ci_high": 0.5984962915062018,
+            "null_ci_low": 0.3448081870553511,
+            "observed_spearman": 0.5846324586702588,
+            "two_sided_empirical_p": 0.084
+          }
+        }
+      },
+      "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",
+      "path": "results/proteingym_vim2_esm2_t12_35M/metrics.json",
+      "scorer": "ESM2MaskedMarginalScorer",
+      "spearman_catalytic": 0.3448749085102136,
+      "spearman_non_catalytic": 0.5085286406996115,
+      "spearman_overall": 0.5279512817899527
+    },
+    {
+      "control_readouts": {
+        "active_site_neighborhood": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.568492096642089,
+              "null_ci_low": 0.2106049247667444,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.788
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.4852965872044475,
+              "null_ci_low": 0.16766927319190433,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.214
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.6187071852395111,
+              "null_ci_low": 0.19404419162302136,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.938
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.6847033217206595,
+              "null_ci_low": 0.2910432575122883,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.57
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.6108486782038143,
+              "null_ci_low": 0.17988497715416032,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.862
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.5596318003901569,
+              "null_ci_low": 0.19287892213564894,
+              "observed_spearman": 0.433493513524107,
+              "two_sided_empirical_p": 0.586
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 15,
+            "n_variants": 259,
+            "null_ci_high": 0.619058629077671,
+            "null_ci_low": 0.08410886225584419,
+            "observed_spearman": 0.433493513524107,
+            "two_sided_empirical_p": 0.778
+          }
+        },
+        "catalytic": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.6376900587283028,
+              "null_ci_low": 0.1833172352927775,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.012
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.5046612790521035,
+              "null_ci_low": -0.0841547380352344,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.378
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.7883977857829761,
+              "null_ci_low": -0.17315990089574995,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.234
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.6430186136299225,
+              "null_ci_low": 0.029176263643734875,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.08
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.7593783929308016,
+              "null_ci_low": -0.3309620651534013,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.472
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.6522684881476465,
+              "null_ci_low": -0.11729625526699931,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.24
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 3,
+            "n_variants": 57,
+            "null_ci_high": 0.8038448859472417,
+            "null_ci_low": -0.3173091133004926,
+            "observed_spearman": 0.0911344817089076,
+            "two_sided_empirical_p": 0.426
+          }
+        },
+        "curated_catalytic_site": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.646110492364194,
+              "null_ci_low": 0.18120060208477043,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.002
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.5218254153694867,
+              "null_ci_low": -0.08077654119425993,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.334
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.7656229812911082,
+              "null_ci_low": -0.21991187089956554,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.286
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.6374462671831093,
+              "null_ci_low": 0.04793301477032358,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.086
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.751637166964814,
+              "null_ci_low": -0.3456228646069123,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.478
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.6748165989514302,
+              "null_ci_low": -0.0720417804317306,
+              "observed_spearman": 0.0911344817089076,
+              "two_sided_empirical_p": 0.202
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 3,
+            "n_variants": 57,
+            "null_ci_high": 0.7840129830293624,
+            "null_ci_low": -0.34681776934499253,
+            "observed_spearman": 0.0911344817089076,
+            "two_sided_empirical_p": 0.408
+          }
+        },
+        "structure_catalytic_shell_5a": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.5033857045238697,
+              "null_ci_low": 0.26353611040195574,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.24
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.4322770672258264,
+              "null_ci_low": 0.24094412328384518,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.484
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.5518734733030569,
+              "null_ci_low": 0.29011330289044296,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.1
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.550713857925637,
+              "null_ci_low": 0.30432094215389777,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.066
+            },
+            "mutation_count": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.5388705976968716,
+              "null_ci_low": 0.31226938032888574,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.042
+            },
+            "structure_contact_density": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.5746069936101706,
+              "null_ci_low": 0.35964597938494314,
+              "observed_spearman": 0.3071449270634422,
+              "two_sided_empirical_p": 0.0
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 35,
+            "n_variants": 621,
+            "null_ci_high": 0.5721727718229568,
+            "null_ci_low": 0.21866755820551398,
+            "observed_spearman": 0.3071449270634422,
+            "two_sided_empirical_p": 0.312
+          }
+        }
+      },
+      "dataset": "ProteinGym AMIE_PSEAE_Wrenbeck_2017",
+      "path": "results/proteingym_amie_esm2_t12_35M/metrics.json",
+      "scorer": "ESM2MaskedMarginalScorer",
+      "spearman_catalytic": 0.0911344817089076,
+      "spearman_non_catalytic": 0.39910741033015334,
+      "spearman_overall": 0.40821122277295757
+    },
+    {
+      "control_readouts": {
+        "active_site_neighborhood": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.6587638807714786,
+              "null_ci_low": 0.23216040900730017,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.882
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.5091870085748704,
+              "null_ci_low": 0.07778307545602757,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.24
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.627783721854188,
+              "null_ci_low": 0.13794879691447087,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.876
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.6637030311788489,
+              "null_ci_low": 0.21544397375751873,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.69
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.7668312652442162,
+              "null_ci_low": 0.19948596832453455,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.418
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.6672987636456654,
+              "null_ci_low": 0.23116532501834985,
+              "observed_spearman": 0.43273131425395933,
+              "two_sided_empirical_p": 0.702
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 10,
+            "n_variants": 60,
+            "null_ci_high": 0.7030439303350106,
+            "null_ci_low": 0.0794182208018629,
+            "observed_spearman": 0.43273131425395933,
+            "two_sided_empirical_p": 0.984
+          }
+        },
+        "catalytic": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7972027972027972,
+              "null_ci_low": -0.2530194805194805,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.658
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.6484848484848484,
+              "null_ci_low": -0.40559440559440557,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.16
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7763986013986013,
+              "null_ci_low": -0.33636363636363636,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.572
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7090909090909091,
+              "null_ci_low": -0.3,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.338
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.8741258741258742,
+              "null_ci_low": -0.24475524475524477,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.946
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.9003787878787876,
+              "null_ci_low": -0.2551259466437949,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.938
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 2,
+            "n_variants": 12,
+            "null_ci_high": 0.8682467532467532,
+            "null_ci_low": -0.4405594405594406,
+            "observed_spearman": 0.5104895104895105,
+            "two_sided_empirical_p": 0.786
+          }
+        },
+        "curated_catalytic_site": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7972027972027972,
+              "null_ci_low": -0.2937062937062937,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.658
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.6484848484848484,
+              "null_ci_low": -0.3426573426573426,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.138
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7902097902097902,
+              "null_ci_low": -0.3356818181818182,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.56
+            },
+            "model_score_sensitivity": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.7342657342657343,
+              "null_ci_low": -0.3000174825174825,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.336
+            },
+            "mutation_count": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.8882867132867132,
+              "null_ci_low": -0.15384615384615385,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.906
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.8909090909090909,
+              "null_ci_low": -0.21818181818181817,
+              "observed_spearman": 0.5104895104895105,
+              "two_sided_empirical_p": 0.946
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 2,
+            "n_variants": 12,
+            "null_ci_high": 0.8419074289624418,
+            "null_ci_low": -0.4056193806193806,
+            "observed_spearman": 0.5104895104895105,
+            "two_sided_empirical_p": 0.772
+          }
+        },
+        "structure_catalytic_shell_5a": {
+          "covariate_matched": {
+            "combined_available": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.5896904807699395,
+              "null_ci_low": 0.3286810806409728,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.232
+            },
+            "fitness_distribution": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.48224379396347605,
+              "null_ci_low": 0.2463030398485202,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.864
+            },
+            "fitness_variance": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.5493472059209802,
+              "null_ci_low": 0.24351146549312838,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.646
+            },
+            "model_score_sensitivity": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.6812556954615989,
+              "null_ci_low": 0.3865986734150305,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.046
+            },
+            "mutation_count": {
+              "direction": "lower_than_covariate_matched_null",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.7242658132954558,
+              "null_ci_low": 0.42693312996054156,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.006
+            },
+            "structure_contact_density": {
+              "direction": "inside_covariate_matched_null_interval",
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.6175566826630158,
+              "null_ci_low": 0.3546188050123063,
+              "observed_spearman": 0.38079405330942867,
+              "two_sided_empirical_p": 0.13
+            }
+          },
+          "position_matched": {
+            "direction": "inside_position_matched_null_interval",
+            "n_positions": 25,
+            "n_variants": 149,
+            "null_ci_high": 0.628259608293094,
+            "null_ci_low": 0.204225067299124,
+            "observed_spearman": 0.38079405330942867,
+            "two_sided_empirical_p": 0.654
+          }
+        }
+      },
+      "dataset": "ProteinGym Q59976_STRSQ_Romero_2015",
+      "path": "results/proteingym_bgly_esm2_t12_35M/metrics.json",
+      "scorer": "ESM2MaskedMarginalScorer",
+      "spearman_catalytic": 0.5104895104895105,
+      "spearman_non_catalytic": 0.44338518713504693,
+      "spearman_overall": 0.44809350507637674
+    }
+  ]
+}

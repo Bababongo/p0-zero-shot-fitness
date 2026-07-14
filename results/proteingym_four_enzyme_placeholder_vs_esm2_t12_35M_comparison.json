@@ -3,6 +3,56 @@
     {
       "dataset": "ProteinGym BLAT_ECOLX_Firnberg_2014",
       "metrics": {
+        "matched_covariate_null": null,
+        "matched_position_null": null,
+        "n_catalytic": 57,
+        "n_non_catalytic": 4726,
+        "n_variants": 4783,
+        "residue_group_breakdown": {
+          "active_site_neighborhood": {
+            "mean_fitness": 0.26227310195227765,
+            "mean_model_score": 0.6956616052060737,
+            "n": 461,
+            "outside_n": 4322,
+            "outside_spearman": 0.0277853992980867,
+            "spearman": 0.29159110867832605
+          },
+          "structure_ligand_contact_5a": {
+            "mean_fitness": 0.2742036101083033,
+            "mean_model_score": 0.6873285198555956,
+            "n": 277,
+            "outside_n": 4506,
+            "outside_spearman": 0.03606984259146167,
+            "spearman": 0.17773666654110373
+          },
+          "uniprot_active_site": {
+            "mean_fitness": 0.0036385964912280704,
+            "mean_model_score": 0.6599999999999999,
+            "n": 57,
+            "outside_n": 4726,
+            "outside_spearman": 0.034220547632551016,
+            "spearman": 0.1230754021841079
+          },
+          "uniprot_substrate_binding_site": {
+            "mean_fitness": 0.0859490909090909,
+            "mean_model_score": 0.6656363636363636,
+            "n": 55,
+            "outside_n": 4728,
+            "outside_spearman": 0.03677537779322886,
+            "spearman": -0.03497153434193404
+          }
+        },
+        "spearman_catalytic": 0.1230754021841079,
+        "spearman_non_catalytic": 0.034220547632551016,
+        "spearman_overall": 0.04295984731220715,
+        "top_5_enrichment_fitness_ge_0_7": 0.5247394404827208
+      },
+      "path": "results/proteingym_blat_placeholder/metrics.json",
+      "scorer": "PlaceholderConservationScorer"
+    },
+    {
+      "dataset": "ProteinGym BLAT_ECOLX_Firnberg_2014",
+      "metrics": {
         "matched_covariate_null": {
           "available_covariate_sets": {
             "combined_available": [
@@ -836,6 +886,99 @@
     {
       "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",
       "metrics": {
+        "matched_covariate_null": null,
+        "matched_position_null": {
+          "catalytic": {
+            "direction": "inside_position_matched_null_interval",
+            "iterations": 1000,
+            "n_positions": 6,
+            "n_variants": 113,
+            "null_ci_high": 0.3826726535832469,
+            "null_ci_low": -0.353949297888235,
+            "null_mean": 0.020402813248966412,
+            "observed_spearman": 0.12141231129573832,
+            "percentile_rank": 0.683,
+            "two_sided_empirical_p": 0.634
+          },
+          "residue_groups": {
+            "active_site_neighborhood": {
+              "direction": "higher_than_position_matched_null",
+              "iterations": 1000,
+              "n_positions": 24,
+              "n_variants": 448,
+              "null_ci_high": 0.18832479870490806,
+              "null_ci_low": -0.16377004683713048,
+              "null_mean": -0.0009119238412993758,
+              "observed_spearman": 0.2003427362415792,
+              "percentile_rank": 0.985,
+              "two_sided_empirical_p": 0.03
+            },
+            "curated_metal_binding_site": {
+              "direction": "inside_position_matched_null_interval",
+              "iterations": 1000,
+              "n_positions": 6,
+              "n_variants": 113,
+              "null_ci_high": 0.40796648037734695,
+              "null_ci_low": -0.3536450065390957,
+              "null_mean": 0.014140248308268124,
+              "observed_spearman": 0.12141231129573832,
+              "percentile_rank": 0.697,
+              "two_sided_empirical_p": 0.606
+            },
+            "structure_metal_site_shell_5a": {
+              "direction": "higher_than_position_matched_null",
+              "iterations": 1000,
+              "n_positions": 43,
+              "n_variants": 802,
+              "null_ci_high": 0.09780184004698049,
+              "null_ci_low": -0.14907801712656324,
+              "null_mean": -0.02604044416858584,
+              "observed_spearman": 0.17203743387124001,
+              "percentile_rank": 1.0,
+              "two_sided_empirical_p": 0.0
+            }
+          }
+        },
+        "n_catalytic": 113,
+        "n_non_catalytic": 4891,
+        "n_variants": 5004,
+        "residue_group_breakdown": {
+          "active_site_neighborhood": {
+            "mean_fitness": -3.445058462388393,
+            "mean_model_score": 0.6899776785714286,
+            "n": 448,
+            "outside_n": 4556,
+            "outside_spearman": -0.000618984922275493,
+            "spearman": 0.2003427362415792
+          },
+          "curated_metal_binding_site": {
+            "mean_fitness": -4.78489353982301,
+            "mean_model_score": 0.6511504424778761,
+            "n": 113,
+            "outside_n": 4891,
+            "outside_spearman": 0.004523353823228788,
+            "spearman": 0.12141231129573832
+          },
+          "structure_metal_site_shell_5a": {
+            "mean_fitness": -3.265542302306733,
+            "mean_model_score": 0.6875436408977555,
+            "n": 802,
+            "outside_n": 4202,
+            "outside_spearman": -0.023553643846794394,
+            "spearman": 0.17203743387124001
+          }
+        },
+        "spearman_catalytic": 0.12141231129573832,
+        "spearman_non_catalytic": 0.004523353823228788,
+        "spearman_overall": 0.019419140595075473,
+        "top_5_enrichment_fitness_ge_0_7": 0.0
+      },
+      "path": "results/proteingym_vim2_placeholder/metrics.json",
+      "scorer": "PlaceholderConservationScorer"
+    },
+    {
+      "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",
+      "metrics": {
         "matched_covariate_null": {
           "available_covariate_sets": {
             "combined_available": [
@@ -1512,6 +1655,99 @@
     {
       "dataset": "ProteinGym AMIE_PSEAE_Wrenbeck_2017",
       "metrics": {
+        "matched_covariate_null": null,
+        "matched_position_null": {
+          "catalytic": {
+            "direction": "inside_position_matched_null_interval",
+            "iterations": 1000,
+            "n_positions": 3,
+            "n_variants": 57,
+            "null_ci_high": 0.4953672730668308,
+            "null_ci_low": -0.47344241829340145,
+            "null_mean": 0.013057650095613415,
+            "observed_spearman": 0.12021713750725178,
+            "percentile_rank": 0.629,
+            "two_sided_empirical_p": 0.742
+          },
+          "residue_groups": {
+            "active_site_neighborhood": {
+              "direction": "higher_than_position_matched_null",
+              "iterations": 1000,
+              "n_positions": 15,
+              "n_variants": 259,
+              "null_ci_high": 0.20841214447480944,
+              "null_ci_low": -0.22861874708706054,
+              "null_mean": -0.0130195670603562,
+              "observed_spearman": 0.21251323823975224,
+              "percentile_rank": 0.976,
+              "two_sided_empirical_p": 0.048
+            },
+            "curated_catalytic_site": {
+              "direction": "inside_position_matched_null_interval",
+              "iterations": 1000,
+              "n_positions": 3,
+              "n_variants": 57,
+              "null_ci_high": 0.45676746896538895,
+              "null_ci_low": -0.48180907191348593,
+              "null_mean": 0.012220002346064681,
+              "observed_spearman": 0.12021713750725178,
+              "percentile_rank": 0.639,
+              "two_sided_empirical_p": 0.722
+            },
+            "structure_catalytic_shell_5a": {
+              "direction": "higher_than_position_matched_null",
+              "iterations": 1000,
+              "n_positions": 35,
+              "n_variants": 621,
+              "null_ci_high": 0.1244597123009187,
+              "null_ci_low": -0.14980951304012427,
+              "null_mean": -0.011523842621989362,
+              "observed_spearman": 0.17233590547431804,
+              "percentile_rank": 0.998,
+              "two_sided_empirical_p": 0.004
+            }
+          }
+        },
+        "n_catalytic": 57,
+        "n_non_catalytic": 6170,
+        "n_variants": 6227,
+        "residue_group_breakdown": {
+          "active_site_neighborhood": {
+            "mean_fitness": -0.5630150579150579,
+            "mean_model_score": 0.7005019305019305,
+            "n": 259,
+            "outside_n": 5968,
+            "outside_spearman": -0.012415982470651869,
+            "spearman": 0.21251323823975224
+          },
+          "curated_catalytic_site": {
+            "mean_fitness": -0.7149684210526316,
+            "mean_model_score": 0.6424561403508772,
+            "n": 57,
+            "outside_n": 6170,
+            "outside_spearman": -0.011607492633563175,
+            "spearman": 0.12021713750725178
+          },
+          "structure_catalytic_shell_5a": {
+            "mean_fitness": -0.5773594202898551,
+            "mean_model_score": 0.7018035426731078,
+            "n": 621,
+            "outside_n": 5606,
+            "outside_spearman": -0.016525330758235406,
+            "spearman": 0.17233590547431804
+          }
+        },
+        "spearman_catalytic": 0.12021713750725178,
+        "spearman_non_catalytic": -0.011607492633563175,
+        "spearman_overall": -0.004029520354710896,
+        "top_5_enrichment_fitness_ge_0_7": 0.0
+      },
+      "path": "results/proteingym_amie_placeholder/metrics.json",
+      "scorer": "PlaceholderConservationScorer"
+    },
+    {
+      "dataset": "ProteinGym AMIE_PSEAE_Wrenbeck_2017",
+      "metrics": {
         "matched_covariate_null": {
           "available_covariate_sets": {
             "combined_available": [
@@ -2184,6 +2420,99 @@
       },
       "path": "results/proteingym_amie_esm2_t12_35M/metrics.json",
       "scorer": "ESM2MaskedMarginalScorer"
+    },
+    {
+      "dataset": "ProteinGym Q59976_STRSQ_Romero_2015",
+      "metrics": {
+        "matched_covariate_null": null,
+        "matched_position_null": {
+          "catalytic": {
+            "direction": "inside_position_matched_null_interval",
+            "iterations": 1000,
+            "n_positions": 2,
+            "n_variants": 12,
+            "null_ci_high": 0.6947067634778313,
+            "null_ci_low": -0.58312006075949,
+            "null_mean": 0.09553803659350499,
+            "observed_spearman": 0.0,
+            "percentile_rank": 0.389,
+            "two_sided_empirical_p": 0.778
+          },
+          "residue_groups": {
+            "active_site_neighborhood": {
+              "direction": "inside_position_matched_null_interval",
+              "iterations": 1000,
+              "n_positions": 10,
+              "n_variants": 60,
+              "null_ci_high": 0.35369629675910275,
+              "null_ci_low": -0.22726935491676156,
+              "null_mean": 0.050124972465166985,
+              "observed_spearman": 0.33618029286895273,
+              "percentile_rank": 0.965,
+              "two_sided_empirical_p": 0.07
+            },
+            "curated_catalytic_site": {
+              "direction": "inside_position_matched_null_interval",
+              "iterations": 1000,
+              "n_positions": 2,
+              "n_variants": 12,
+              "null_ci_high": 0.6808160596454024,
+              "null_ci_low": -0.540858847200762,
+              "null_mean": 0.08194210457435297,
+              "observed_spearman": 0.0,
+              "percentile_rank": 0.404,
+              "two_sided_empirical_p": 0.808
+            },
+            "structure_catalytic_shell_5a": {
+              "direction": "inside_position_matched_null_interval",
+              "iterations": 1000,
+              "n_positions": 25,
+              "n_variants": 149,
+              "null_ci_high": 0.2308511111307193,
+              "null_ci_low": -0.13120036517414538,
+              "null_mean": 0.04692787386415405,
+              "observed_spearman": 0.2007988081782629,
+              "percentile_rank": 0.957,
+              "two_sided_empirical_p": 0.086
+            }
+          }
+        },
+        "n_catalytic": 12,
+        "n_non_catalytic": 2987,
+        "n_variants": 2999,
+        "residue_group_breakdown": {
+          "active_site_neighborhood": {
+            "mean_fitness": -1.9500333333333333,
+            "mean_model_score": 0.7044999999999999,
+            "n": 60,
+            "outside_n": 2939,
+            "outside_spearman": 0.03947207233594292,
+            "spearman": 0.33618029286895273
+          },
+          "curated_catalytic_site": {
+            "mean_fitness": -2.433666666666667,
+            "mean_model_score": 0.6666666666666666,
+            "n": 12,
+            "outside_n": 2987,
+            "outside_spearman": 0.042208517409636125,
+            "spearman": 0.0
+          },
+          "structure_catalytic_shell_5a": {
+            "mean_fitness": -1.7715100671140938,
+            "mean_model_score": 0.7089932885906041,
+            "n": 149,
+            "outside_n": 2850,
+            "outside_spearman": 0.03818699610487299,
+            "spearman": 0.2007988081782629
+          }
+        },
+        "spearman_catalytic": 0.0,
+        "spearman_non_catalytic": 0.042208517409636125,
+        "spearman_overall": 0.04432827281144781,
+        "top_5_enrichment_fitness_ge_0_7": 0.0
+      },
+      "path": "results/proteingym_bgly_placeholder/metrics.json",
+      "scorer": "PlaceholderConservationScorer"
     },
     {
       "dataset": "ProteinGym Q59976_STRSQ_Romero_2015",

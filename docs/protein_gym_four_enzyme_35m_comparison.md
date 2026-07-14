@@ -42,6 +42,29 @@ This comparison is the first completed P0 enzyme-panel scaling result. It asks w
 | AMIE | Inside null, p = 0.408 | Inside null, p = 0.312 | Inside null, p = 0.778 |
 | Beta-glucosidase | Inside null, p = 0.772 | Inside null, p = 0.654 | Inside null, p = 0.984 |
 
+## Covariate-Matched Null Read
+
+After the pre-report control upgrade, each mechanism slice is also compared against nearest-neighbor residue-position samples matched on local covariates derived from the scored DMS table and structure:
+
+- mutation coverage,
+- experimental fitness variance,
+- experimental fitness distribution,
+- model-score sensitivity,
+- relative sequence position,
+- structure contact density as a burial/exposure proxy,
+- and a strict combined covariate control.
+
+| Dataset | Slice | Strongest Controlled Read |
+| --- | --- | --- |
+| TEM-1 | Active-site neighborhood | Still strongest positive slice: higher than fitness-variance control, p = 0.014; higher than structure-contact control, p = 0.022; borderline under combined control, p = 0.058. |
+| TEM-1 | Ligand contact, 5 A | Suggestive but inside the strict controls: combined p = 0.092. |
+| VIM-2 | Active-site neighborhood | Raw signal remains high, but combined control is inside null, p = 0.176. |
+| VIM-2 | Metal-site shell, 5 A | Structure-contact control is high, p = 0.000, but combined control is only borderline, p = 0.054. |
+| AMIE | Exact catalytic site | Negative control: lower than strict combined covariate null, p = 0.002. |
+| Beta-glucosidase | Catalytic shell, 5 A | Does not survive stricter controls; lower than model-score-sensitivity control, p = 0.046. |
+
+The control upgrade makes the final claim narrower and stronger. TEM-1 active-site neighborhood is the best positive mechanism-local result, VIM-2 is suggestive but not fully controlled, and AMIE/beta-glucosidase prevent a blanket "mechanism slices are special" conclusion.
+
 ## Interpretation
 
 The four-enzyme 35M panel makes P0 more mature because it separates three claims that would otherwise get blurred together:
@@ -57,6 +80,8 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 ## Artifacts
 
 - `results/proteingym_four_enzyme_esm2_t12_35M_comparison.json`
+- `results/proteingym_four_enzyme_covariate_control_summary.json`
+- `results/proteingym_four_enzyme_placeholder_vs_esm2_t12_35M_comparison.json`
 - `results/proteingym_blat_esm2_t12_35M/metrics.json`
 - `results/proteingym_vim2_esm2_t12_35M/metrics.json`
 - `results/proteingym_amie_esm2_t12_35M/metrics.json`
@@ -64,10 +89,8 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 
 ## Next Scientific Step
 
-The next novelty upgrade is not another same-style run. It is adding better controls:
+The pre-report control upgrade added local covariate controls. The remaining external-data upgrade is a true evolutionary conservation control, which requires per-position MSA-derived conservation features that are not stored in this repository:
 
-- conservation-matched null controls,
-- solvent-accessibility-matched null controls,
-- mutation-count-matched controls,
-- fitness-variance-matched controls,
-- and model-family comparisons such as ESM-1v, MSA Transformer, and a conservation baseline.
+- true MSA/per-position conservation controls,
+- model-family comparisons such as ESM-1v and MSA Transformer,
+- and prospective validation on a new enzyme-design target.

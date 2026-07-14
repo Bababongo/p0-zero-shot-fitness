@@ -42,6 +42,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--wild-type-fasta", type=Path, default=None, help="External FASTA path.")
     parser.add_argument("--catalytic-json", type=Path, default=None, help="External catalytic-residue JSON path.")
     parser.add_argument("--residue-groups-json", type=Path, default=None, help="Optional external residue-group JSON path.")
+    parser.add_argument("--position-covariates-json", type=Path, default=None, help="Optional per-position covariate JSON path.")
     parser.add_argument("--dataset-name", default="external dataset", help="Name for external dataset metadata.")
     parser.add_argument("--variant-column", default="mutant", help="Variant column for external CSV.")
     parser.add_argument("--fitness-column", default="DMS_score", help="Fitness column for external CSV.")
@@ -68,6 +69,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Add residue-position-matched null controls for catalytic and residue-group slices.",
     )
     parser.add_argument("--null-seed", type=int, default=2026, help="Random seed for matched-position null controls.")
+    parser.add_argument(
+        "--covariate-null-iterations",
+        type=int,
+        default=0,
+        help="Add covariate-matched null controls for catalytic and residue-group slices.",
+    )
+    parser.add_argument("--covariate-null-seed", type=int, default=707, help="Random seed for covariate-matched controls.")
     return parser
 
 
@@ -87,6 +95,9 @@ def main(argv: list[str] | None = None) -> int:
             scorer=scorer,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     elif args.preset == "proteingym-blat":
         payload = run_proteingym_blat_benchmark(
@@ -96,6 +107,9 @@ def main(argv: list[str] | None = None) -> int:
             bootstrap_seed=args.bootstrap_seed,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     elif args.preset == "proteingym-vim2":
         payload = run_proteingym_vim2_benchmark(
@@ -105,6 +119,9 @@ def main(argv: list[str] | None = None) -> int:
             bootstrap_seed=args.bootstrap_seed,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     elif args.preset == "proteingym-amie":
         payload = run_proteingym_amie_benchmark(
@@ -114,6 +131,9 @@ def main(argv: list[str] | None = None) -> int:
             bootstrap_seed=args.bootstrap_seed,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     elif args.preset == "proteingym-bgly":
         payload = run_proteingym_bgly_benchmark(
@@ -123,6 +143,9 @@ def main(argv: list[str] | None = None) -> int:
             bootstrap_seed=args.bootstrap_seed,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     else:
         required = [args.dms_csv, args.wild_type_fasta, args.catalytic_json]
@@ -143,6 +166,9 @@ def main(argv: list[str] | None = None) -> int:
             bootstrap_seed=args.bootstrap_seed,
             null_iterations=args.null_iterations,
             null_seed=args.null_seed,
+            position_covariates_json=args.position_covariates_json,
+            covariate_null_iterations=args.covariate_null_iterations,
+            covariate_null_seed=args.covariate_null_seed,
         )
     print(json.dumps(payload, indent=2, sort_keys=True))
     return 0

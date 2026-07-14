@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import math
 import random
 
 from p0_zero_shot_fitness.models import VariantRecord
+
+
+PositionCovariates = dict[int, dict[str, float]]
 
 
 def rank_values(values: list[float]) -> list[float]:
@@ -161,6 +165,287 @@ def records_at_positions(records: list[VariantRecord], positions: set[int]) -> l
     return [record for record in records if record.mutation.position in positions]
 
 
+def sample_sd(values: list[float]) -> float:
+    if len(values) < 2:
+        return 0.0
+    value_mean = sum(values) / len(values)
+    return (sum((value - value_mean) ** 2 for value in values) / (len(values) - 1)) ** 0.5
+
+
+def derived_position_covariates(records: list[VariantRecord]) -> PositionCovariates:
+    """Build per-position controls available from any scored DMS table.
+
+    These are not evolutionary conservation scores. They are local, audit-style
+    covariates used to test whether residue-slice results are explained by
+    mutation coverage, experimental variance, model-score sensitivity, or
+    position along the sequence.
+    """
+    grouped: dict[int, list[VariantRecord]] = defaultdict(list)
+    for record in records:
+        grouped[record.mutation.position].append(record)
+
+    all_positions = sorted(grouped)
+    min_position = min(all_positions) if all_positions else 0
+    max_position = max(all_positions) if all_positions else 0
+    position_span = max(1, max_position - min_position)
+    covariates: PositionCovariates = {}
+    for position, position_records in grouped.items():
+        fitness_values = [record.fitness for record in position_records]
+        score_values = [record.model_score for record in position_records]
+        covariates[position] = {
+            "mutation_count": float(len(position_records)),
+            "fitness_mean": sum(fitness_values) / len(fitness_values),
+            "fitness_sd": sample_sd(fitness_values),
+            "fitness_range": max(fitness_values) - min(fitness_values),
+            "model_score_mean": sum(score_values) / len(score_values),
+            "model_score_sd": sample_sd(score_values),
+            "relative_position": (position - min_position) / position_span,
+        }
+    return covariates
+
+
+def merge_position_covariates(*covariate_maps: PositionCovariates | None) -> PositionCovariates:
+    merged: PositionCovariates = {}
+    for covariate_map in covariate_maps:
+        if not covariate_map:
+            continue
+        for position, covariates in covariate_map.items():
+            merged.setdefault(position, {}).update(covariates)
+    return merged
+
+
+def available_covariate_sets(position_covariates: PositionCovariates) -> dict[str, list[str]]:
+    available = {
+        covariate_name
+        for covariates in position_covariates.values()
+        for covariate_name in covariates
+    }
+    requested_sets = {
+        "mutation_count": ["mutation_count"],
+        "fitness_variance": ["fitness_sd"],
+        "fitness_distribution": ["fitness_mean", "fitness_sd", "fitness_range"],
+        "model_score_sensitivity": ["model_score_mean", "model_score_sd"],
+        "relative_position": ["relative_position"],
+        "structure_contact_density": ["structure_contact_count_10a"],
+        "combined_available": [
+            "mutation_count",
+            "fitness_sd",
+            "fitness_range",
+            "model_score_mean",
+            "model_score_sd",
+            "relative_position",
+            "structure_contact_count_10a",
+        ],
+    }
+    return {
+        name: [covariate for covariate in covariates if covariate in available]
+        for name, covariates in requested_sets.items()
+        if any(covariate in available for covariate in covariates)
+    }
+
+
+def _complete_positions(
+    positions: list[int],
+    position_covariates: PositionCovariates,
+    covariate_names: list[str],
+) -> list[int]:
+    return [
+        position
+        for position in positions
+        if all(covariate_name in position_covariates.get(position, {}) for covariate_name in covariate_names)
+    ]
+
+
+def _covariate_standardization(
+    positions: list[int],
+    position_covariates: PositionCovariates,
+    covariate_names: list[str],
+) -> dict[str, tuple[float, float]]:
+    standardization = {}
+    for covariate_name in covariate_names:
+        values = [position_covariates[position][covariate_name] for position in positions]
+        value_mean = sum(values) / len(values)
+        value_sd = sample_sd(values)
+        standardization[covariate_name] = (value_mean, value_sd if value_sd > 0 else 1.0)
+    return standardization
+
+
+def _covariate_distance(
+    left_position: int,
+    right_position: int,
+    position_covariates: PositionCovariates,
+    covariate_names: list[str],
+    standardization: dict[str, tuple[float, float]],
+) -> float:
+    total = 0.0
+    for covariate_name in covariate_names:
+        mean_value, sd_value = standardization[covariate_name]
+        left = (position_covariates[left_position][covariate_name] - mean_value) / sd_value
+        right = (position_covariates[right_position][covariate_name] - mean_value) / sd_value
+        total += (left - right) ** 2
+    return math.sqrt(total)
+
+
+def covariate_matched_null_control(
+    records: list[VariantRecord],
+    target_positions: set[int],
+    position_covariates: PositionCovariates,
+    covariate_names: list[str],
+    iterations: int = 1000,
+    seed: int = 707,
+    nearest_pool_size: int = 25,
+) -> dict[str, object]:
+    target_records = records_at_positions(records, target_positions)
+    all_positions = sorted({record.mutation.position for record in records})
+    target_positions_with_covariates = _complete_positions(
+        sorted(target_positions),
+        position_covariates,
+        covariate_names,
+    )
+    candidate_positions = _complete_positions(
+        [position for position in all_positions if position not in target_positions],
+        position_covariates,
+        covariate_names,
+    )
+    observed = spearman_for_records(records_at_positions(records, set(target_positions_with_covariates)))
+
+    empty_result = {
+        "covariates": covariate_names,
+        "n_positions": len(target_positions),
+        "n_positions_with_covariates": len(target_positions_with_covariates),
+        "n_variants": len(target_records),
+        "iterations": iterations,
+        "observed_spearman": observed,
+        "null_mean": None,
+        "null_ci_low": None,
+        "null_ci_high": None,
+        "percentile_rank": None,
+        "two_sided_empirical_p": None,
+        "direction": None,
+        "nearest_pool_size": nearest_pool_size,
+        "candidate_positions": len(candidate_positions),
+    }
+    if (
+        not covariate_names
+        or len(target_positions_with_covariates) == 0
+        or len(candidate_positions) == 0
+        or observed is None
+        or iterations <= 0
+    ):
+        return empty_result
+
+    standardization = _covariate_standardization(
+        target_positions_with_covariates + candidate_positions,
+        position_covariates,
+        covariate_names,
+    )
+    nearest_candidates: dict[int, list[int]] = {}
+    for target_position in target_positions_with_covariates:
+        ranked_candidates = sorted(
+            candidate_positions,
+            key=lambda candidate_position: _covariate_distance(
+                target_position,
+                candidate_position,
+                position_covariates,
+                covariate_names,
+                standardization,
+            ),
+        )
+        nearest_candidates[target_position] = ranked_candidates[: max(1, nearest_pool_size)]
+
+    rng = random.Random(seed)
+    estimates: list[float] = []
+    for _ in range(iterations):
+        sampled_positions: set[int] = set()
+        ordered_targets = list(target_positions_with_covariates)
+        rng.shuffle(ordered_targets)
+        for target_position in ordered_targets:
+            pool = [position for position in nearest_candidates[target_position] if position not in sampled_positions]
+            if not pool:
+                pool = nearest_candidates[target_position]
+            sampled_positions.add(rng.choice(pool))
+        if len(sampled_positions) < len(target_positions_with_covariates):
+            remaining = [position for position in candidate_positions if position not in sampled_positions]
+            rng.shuffle(remaining)
+            needed = len(target_positions_with_covariates) - len(sampled_positions)
+            sampled_positions.update(remaining[:needed])
+        estimate = spearman_for_records(records_at_positions(records, sampled_positions))
+        if estimate is not None:
+            estimates.append(estimate)
+
+    if not estimates:
+        return empty_result
+
+    null_ci_low = percentile(estimates, 0.025)
+    null_ci_high = percentile(estimates, 0.975)
+    less_equal = sum(estimate <= observed for estimate in estimates) / len(estimates)
+    greater_equal = sum(estimate >= observed for estimate in estimates) / len(estimates)
+    two_sided_p = min(1.0, 2 * min(less_equal, greater_equal))
+    if null_ci_high is not None and observed > null_ci_high:
+        direction = "higher_than_covariate_matched_null"
+    elif null_ci_low is not None and observed < null_ci_low:
+        direction = "lower_than_covariate_matched_null"
+    else:
+        direction = "inside_covariate_matched_null_interval"
+
+    return {
+        "covariates": covariate_names,
+        "n_positions": len(target_positions),
+        "n_positions_with_covariates": len(target_positions_with_covariates),
+        "n_variants": len(records_at_positions(records, set(target_positions_with_covariates))),
+        "iterations": iterations,
+        "observed_spearman": observed,
+        "null_mean": sum(estimates) / len(estimates),
+        "null_ci_low": null_ci_low,
+        "null_ci_high": null_ci_high,
+        "percentile_rank": less_equal,
+        "two_sided_empirical_p": two_sided_p,
+        "direction": direction,
+        "nearest_pool_size": nearest_pool_size,
+        "candidate_positions": len(candidate_positions),
+    }
+
+
+def matched_covariate_null_controls(
+    records: list[VariantRecord],
+    position_covariates: PositionCovariates,
+    iterations: int = 1000,
+    seed: int = 707,
+    nearest_pool_size: int = 25,
+) -> dict[str, object]:
+    covariate_sets = available_covariate_sets(position_covariates)
+    catalytic_positions = {record.mutation.position for record in records if record.is_catalytic}
+    group_names = sorted({group_name for record in records for group_name in record.residue_groups})
+
+    def controls_for_positions(target_positions: set[int], offset: int) -> dict[str, object]:
+        return {
+            control_name: covariate_matched_null_control(
+                records,
+                target_positions,
+                position_covariates,
+                covariate_names,
+                iterations=iterations,
+                seed=seed + offset * 100 + control_offset,
+                nearest_pool_size=nearest_pool_size,
+            )
+            for control_offset, (control_name, covariate_names) in enumerate(covariate_sets.items())
+        }
+
+    residue_groups = {}
+    for offset, group_name in enumerate(group_names, start=1):
+        group_positions = {
+            record.mutation.position
+            for record in records
+            if group_name in record.residue_groups
+        }
+        residue_groups[group_name] = controls_for_positions(group_positions, offset)
+    return {
+        "available_covariate_sets": covariate_sets,
+        "catalytic": controls_for_positions(catalytic_positions, 0),
+        "residue_groups": residue_groups,
+    }
+
+
 def position_matched_null_control(
     records: list[VariantRecord],
     target_positions: set[int],
@@ -293,9 +578,15 @@ def summarize_records(
     bootstrap_seed: int = 13,
     null_iterations: int = 0,
     null_seed: int = 2026,
+    position_covariates: PositionCovariates | None = None,
+    covariate_null_iterations: int = 0,
+    covariate_null_seed: int = 707,
+    covariate_nearest_pool_size: int = 25,
 ) -> dict[str, object]:
     catalytic = [record for record in records if record.is_catalytic]
     non_catalytic = [record for record in records if not record.is_catalytic]
+    derived_covariates = derived_position_covariates(records)
+    merged_covariates = merge_position_covariates(derived_covariates, position_covariates)
     summary: dict[str, object] = {
         "n_variants": len(records),
         "n_catalytic": len(catalytic),
@@ -323,5 +614,13 @@ def summarize_records(
             records,
             iterations=null_iterations,
             seed=null_seed,
+        )
+    if covariate_null_iterations > 0:
+        summary["matched_covariate_null"] = matched_covariate_null_controls(
+            records,
+            merged_covariates,
+            iterations=covariate_null_iterations,
+            seed=covariate_null_seed,
+            nearest_pool_size=covariate_nearest_pool_size,
         )
     return summary

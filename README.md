@@ -26,6 +26,8 @@ Read the four-enzyme 8M comparison: [ProteinGym Four-Enzyme ESM-2 8M Comparison]
 
 Read the four-enzyme 35M comparison: [ProteinGym Four-Enzyme ESM-2 35M Comparison](docs/protein_gym_four_enzyme_35m_comparison.md)
 
+Read the pre-report control upgrade: [P0 Pre-Report Control Upgrade](docs/p0_pre_report_control_upgrade.md)
+
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
 ## Why This Matters
@@ -48,6 +50,8 @@ Protein language models can capture evolutionary and stability constraints, but 
 - top-k enrichment for experimentally high-fitness variants,
 - mutation-class breakdown,
 - matched residue-position null controls for mechanism-relevant residue slices,
+- covariate-matched null controls for mutation coverage, fitness variance, model-score sensitivity, relative position, and structure contact density,
+- a placeholder-vs-ESM-2 baseline comparison across the four-enzyme panel,
 - reproducible CLI output and a simple SVG plot.
 
 ## Install
