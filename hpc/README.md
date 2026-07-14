@@ -11,6 +11,7 @@ On Savio, start with:
 1. `savio_esm2_35m.slurm`
 2. `savio_esm2_35m_vim2.slurm`
 3. `savio_esm2_35m_amie.slurm`
+4. `savio_esm2_35m_bgly.slurm`
 
 Generic templates for other SLURM-style clusters:
 
@@ -25,6 +26,7 @@ The concrete Savio jobs run:
 | `savio_esm2_35m.slurm` | TEM-1 / `proteingym-blat` | `results/proteingym_blat_esm2_t12_35M` |
 | `savio_esm2_35m_vim2.slurm` | VIM-2 / `proteingym-vim2` | `results/proteingym_vim2_esm2_t12_35M` |
 | `savio_esm2_35m_amie.slurm` | AMIE / `proteingym-amie` | `results/proteingym_amie_esm2_t12_35M` |
+| `savio_esm2_35m_bgly.slurm` | Beta-glucosidase / `proteingym-bgly` | `results/proteingym_bgly_esm2_t12_35M` |
 
 Each job writes metrics, scored variants, and a scatter plot under `results/`.
 
@@ -51,3 +53,14 @@ python scripts/compare_metrics.py \
 ```
 
 Then update `docs/public_writeup.md` and `docs/protein_gym_three_enzyme_comparison.md` with the 35M three-enzyme table.
+
+After the beta-glucosidase 35M job finishes, add it to a four-enzyme 35M comparison:
+
+```bash
+python scripts/compare_metrics.py \
+  results/proteingym_blat_esm2_t12_35M/metrics.json \
+  results/proteingym_vim2_esm2_t12_35M/metrics.json \
+  results/proteingym_amie_esm2_t12_35M/metrics.json \
+  results/proteingym_bgly_esm2_t12_35M/metrics.json \
+  --output results/proteingym_four_enzyme_esm2_t12_35M_comparison.json
+```

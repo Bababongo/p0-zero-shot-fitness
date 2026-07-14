@@ -27,8 +27,8 @@ def test_validate_panel_registry_against_local_proteingym_metadata() -> None:
 
     assert payload["n_candidates"] == 17
     assert payload["n_metadata_matches"] == 17
-    assert payload["status_counts"]["ready_for_p0_pipeline"] == 3
-    assert payload["status_counts"]["metadata_ready_needs_local_data_and_annotations"] == 14
+    assert payload["status_counts"]["ready_for_p0_pipeline"] == 4
+    assert payload["status_counts"]["metadata_ready_needs_local_data_and_annotations"] == 13
 
     recommendations = [candidate["dms_id"] for candidate in payload["recommended_first_three"]]
     assert recommendations == [
@@ -52,6 +52,14 @@ def test_validate_panel_registry_against_local_proteingym_metadata() -> None:
     )
     assert vim2_case["status"] == "ready_for_p0_pipeline"
     assert all(vim2_case["local_status"].values())
+
+    bgly_case = next(
+        candidate
+        for candidate in payload["candidate_summaries"]
+        if candidate["dms_id"] == "Q59976_STRSQ_Romero_2015"
+    )
+    assert bgly_case["status"] == "ready_for_p0_pipeline"
+    assert all(bgly_case["local_status"].values())
 
 def test_validate_panel_registry_rejects_missing_required_columns(tmp_path) -> None:
     broken_panel = tmp_path / "broken_panel.csv"

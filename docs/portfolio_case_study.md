@@ -18,7 +18,7 @@ Frontier AI systems for biology need evaluation tasks that reflect where scienti
 
 ## Current Evidence
 
-The current repo runs on three ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. It includes ESM-2 8M and 35M masked-marginal scoring, TEM-1 UniProt/PDB annotation validation, VIM-2 and AMIE structure-derived mechanism shells, and matched-position null controls.
+The current repo runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It includes ESM-2 8M and 35M masked-marginal scoring for the first three enzymes, ESM-2 8M for beta-glucosidase, TEM-1 UniProt/PDB annotation validation, structure-derived mechanism shells, and matched-position null controls.
 
 Key ESM-2 35M results:
 
@@ -28,6 +28,8 @@ Key ESM-2 35M results:
 
 The strongest current interpretation is that model scaling improves global zero-shot fitness prediction, while exact catalytic or metal-binding slices remain harder and noisier than broader mechanism-adjacent neighborhoods. Matched-position controls show that the active-site-neighborhood effect is enzyme-dependent rather than automatic.
 
+Beta-glucosidase adds a fourth pattern at ESM-2 8M: overall Spearman is only 0.1442, but the AF2 catalytic shell reaches 0.3712 and is higher than matched-position null controls with empirical p = 0.018.
+
 ## Next Evidence Upgrade
 
-The next version should add beta-glucosidase, conservation-matched controls, solvent-accessibility-matched controls, and a compact portfolio figure that explains the three-enzyme 35M result.
+The next version should run beta-glucosidase at 35M, add conservation-matched controls, add solvent-accessibility-matched controls, and create a compact portfolio figure that explains the four-enzyme result.

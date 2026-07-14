@@ -8,6 +8,7 @@ from p0_zero_shot_fitness.pipeline import (
     run_external_benchmark,
     run_fixture_benchmark,
     run_proteingym_amie_benchmark,
+    run_proteingym_bgly_benchmark,
     run_proteingym_blat_benchmark,
     run_proteingym_vim2_benchmark,
 )
@@ -26,7 +27,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--preset",
-        choices=["fixture", "proteingym-blat", "proteingym-vim2", "proteingym-amie", "external"],
+        choices=[
+            "fixture",
+            "proteingym-blat",
+            "proteingym-vim2",
+            "proteingym-amie",
+            "proteingym-bgly",
+            "external",
+        ],
         default="fixture",
         help="Benchmark preset to run.",
     )
@@ -100,6 +108,15 @@ def main(argv: list[str] | None = None) -> int:
         )
     elif args.preset == "proteingym-amie":
         payload = run_proteingym_amie_benchmark(
+            args.output_dir,
+            scorer=scorer,
+            bootstrap_iterations=args.bootstrap_iterations,
+            bootstrap_seed=args.bootstrap_seed,
+            null_iterations=args.null_iterations,
+            null_seed=args.null_seed,
+        )
+    elif args.preset == "proteingym-bgly":
+        payload = run_proteingym_bgly_benchmark(
             args.output_dir,
             scorer=scorer,
             bootstrap_iterations=args.bootstrap_iterations,

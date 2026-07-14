@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1, VIM-2, and AMIE ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1, VIM-2, AMIE, and beta-glucosidase ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -16,7 +16,11 @@ Read the first VIM-2 expansion note: [ProteinGym VIM-2 Result](docs/protein_gym_
 
 Read the first AMIE expansion note: [ProteinGym AMIE Result](docs/protein_gym_amie_result.md)
 
+Read the beta-glucosidase expansion note: [ProteinGym Beta-Glucosidase Result](docs/protein_gym_beta_glucosidase_result.md)
+
 Read the three-enzyme comparison: [ProteinGym Three-Enzyme Comparison](docs/protein_gym_three_enzyme_comparison.md)
+
+Read the four-enzyme 8M comparison: [ProteinGym Four-Enzyme ESM-2 8M Comparison](docs/protein_gym_four_enzyme_8m_comparison.md)
 
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
 
@@ -31,9 +35,11 @@ Protein language models can capture evolutionary and stability constraints, but 
 - structure-derived ligand-contact residue grouping from PDB 1M40,
 - ProteinGym AF2-derived VIM-2 metal-site shell grouping,
 - ProteinGym AF2-derived AMIE catalytic-shell grouping,
+- ProteinGym AF2-derived beta-glucosidase catalytic-shell grouping,
 - a validated enzyme-panel registry for multi-enzyme follow-up,
 - a swappable model-scoring interface,
-- ESM-2 8M and 35M masked-marginal scoring across three enzymes,
+- ESM-2 8M masked-marginal scoring across four enzymes,
+- ESM-2 35M masked-marginal scoring across three enzymes, with beta-glucosidase Savio script ready,
 - Spearman correlation overall and by residue group,
 - top-k enrichment for experimentally high-fitness variants,
 - mutation-class breakdown,
@@ -235,6 +241,60 @@ AMIE ESM-2 35M result:
 
 The 35M model improves AMIE overall performance, but the exact catalytic site remains weak and all AMIE mechanism slices remain inside matched-position null intervals.
 
+## Run The Beta-Glucosidase ProteinGym Benchmark
+
+This repo now includes the ProteinGym `Q59976_STRSQ_Romero_2015` processed assay file and metadata for beta-glucosidase.
+
+- `data/proteingym/Q59976_STRSQ_Romero_2015.csv`
+- `data/proteingym/Q59976_STRSQ.fasta`
+- `data/proteingym/Q59976_STRSQ_Romero_2015_metadata.json`
+- `data/proteingym/Q59976_STRSQ_catalytic_residues.json`
+- `data/proteingym/Q59976_STRSQ_residue_groups.json`
+- `data/proteingym/structures/Q59976_STRSQ.pdb`
+
+Beta-glucosidase uses a conservative GH1 motif annotation:
+
+```text
+[178, 383]
+```
+
+These positions correspond to a general acid/base glutamate in the `NEP` motif and a catalytic nucleophile glutamate in the `ITENG` motif, mapped onto the exact ProteinGym target sequence.
+
+Run the beta-glucosidase placeholder baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-bgly \
+  --output-dir results/proteingym_bgly_placeholder \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+Run the beta-glucosidase ESM-2 8M baseline:
+
+```bash
+p0-fitness \
+  --preset proteingym-bgly \
+  --scorer esm2 \
+  --esm-model esm2_t6_8M_UR50D \
+  --output-dir results/proteingym_bgly_esm2_t6_8M \
+  --bootstrap-iterations 1000 \
+  --null-iterations 1000
+```
+
+Beta-glucosidase ESM-2 8M result:
+
+| Slice | Spearman | Outside Spearman | Variants |
+| --- | ---: | ---: | ---: |
+| Overall | 0.1442 | - | 2,999 |
+| Curated catalytic site | 0.4196 | 0.1363 | 12 |
+| AF2 catalytic shell, 5 A | 0.3712 | 0.1101 | 149 |
+| Active-site neighborhood | 0.3595 | 0.1222 | 60 |
+
+The beta-glucosidase AF2 catalytic shell is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.3712`, null 95% interval `-0.0969 to 0.3450`, empirical p = `0.018`.
+
+The exact two-residue catalytic site has only 12 measured variants, so it is useful as a biological label but too small to overclaim alone.
+
 ## Validate The Enzyme Panel Registry
 
 The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
@@ -253,14 +313,23 @@ Current validation summary:
 | --- | ---: |
 | Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
-| Ready for current P0 pipeline | 3 |
-| Need local data and annotations | 14 |
+| Ready for current P0 pipeline | 4 |
+| Need local data and annotations | 13 |
 
 Recommended next panel path:
 
 1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase, active as the first second-enzyme case.
 2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, active as the first non-beta-lactamase hydrolase case.
-3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase, a second non-beta-lactamase enzyme-function case.
+3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase, now active as the second non-beta-lactamase enzyme-function case.
+
+Four-enzyme ESM-2 8M comparison:
+
+| Dataset | Enzyme | Overall | Exact Site | Background | Best Mechanism Slice |
+| --- | --- | ---: | ---: | ---: | --- |
+| `BLAT_ECOLX_Firnberg_2014` | TEM-1 beta-lactamase | 0.4113 | 0.3023 | 0.4042 | Active-site neighborhood, 0.6453 |
+| `A4GRB6_PSEAI_Chen_2020` | VIM-2 metallo-beta-lactamase | 0.4305 | 0.3702 | 0.4123 | Active-site neighborhood, 0.6128 |
+| `AMIE_PSEAE_Wrenbeck_2017` | AMIE aliphatic amidase | 0.3264 | 0.2057 | 0.3157 | Active-site neighborhood, 0.4092 |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.1442 | 0.4196 | 0.1363 | AF2 catalytic shell, 0.3712 |
 
 Three-enzyme ESM-2 35M comparison:
 
@@ -274,17 +343,17 @@ Three-enzyme ESM-2 35M comparison:
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase with ESM-2 8M and 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2 and AMIE use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. TEM-1, VIM-2, AMIE, and beta-glucosidase have ESM-2 8M baselines; TEM-1, VIM-2, and AMIE also have ESM-2 35M baselines. TEM-1 has UniProt and PDB-backed labels. VIM-2, AMIE, and beta-glucosidase use transparent motif/structure-curated labels plus ProteinGym AF2-derived proximity shells.
 
 ## Next Scientific Steps
 
-1. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+1. Run beta-glucosidase ESM-2 35M on Savio.
 2. Add conservation-matched and solvent-accessibility-matched null controls.
 3. Add mutation-count-matched and fitness-variance-matched controls.
 4. Upgrade AMIE labels with stronger primary-source or experimental structure provenance.
 5. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
 6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
-7. Turn the three-enzyme 35M result into a clean portfolio figure and methods card.
+7. Turn the four-enzyme result into a clean portfolio figure and methods card.
 
 ## Portfolio Signal
 

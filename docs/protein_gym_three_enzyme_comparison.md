@@ -8,6 +8,8 @@ The core question is:
 
 > Across enzyme DMS landscapes, do protein language models show different performance in exact catalytic residues, active-site neighborhoods, structure-derived mechanism shells, and non-mechanistic background residues?
 
+For the fourth-enzyme 8M extension with beta-glucosidase, see [ProteinGym Four-Enzyme ESM-2 8M Comparison](protein_gym_four_enzyme_8m_comparison.md).
+
 ## Enzymes
 
 | Dataset | Enzyme | Mechanism Class | Variants |

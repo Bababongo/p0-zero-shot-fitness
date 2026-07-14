@@ -2,12 +2,12 @@
 
 Scientific goal:
 
-> Test whether ESM-2 performance changes across residue groups in TEM-1, VIM-2, and AMIE, especially exact catalytic sites, structure-derived mechanism shells, and active-site neighborhoods.
+> Test whether ESM-2 performance changes across residue groups in TEM-1, VIM-2, AMIE, and beta-glucosidase, especially exact catalytic sites, structure-derived mechanism shells, and active-site neighborhoods.
 
 Why Savio is needed:
 
 - The local 8M ESM-2 run proves the pipeline works.
-- The 35M Savio runs test whether the residue-zone pattern survives a stronger model across three enzymes.
+- The 35M Savio runs test whether the residue-zone pattern survives a stronger model across the enzyme panel.
 - Bigger ESM-2 models need GPU memory and stable runtime, so the work belongs on a compute node rather than a laptop.
 
 Analogy:
@@ -74,14 +74,15 @@ sbatch hpc/savio_esm2_35m.slurm
 
 This submits the TEM-1 35M ESM-2 run.
 
-The next two jobs scale the newer enzyme-panel cases:
+The next jobs scale the newer enzyme-panel cases:
 
 ```bash
 sbatch hpc/savio_esm2_35m_vim2.slurm
 sbatch hpc/savio_esm2_35m_amie.slurm
+sbatch hpc/savio_esm2_35m_bgly.slurm
 ```
 
-These are the next real scaling steps beyond the local 8M VIM-2 and AMIE results.
+These are the next real scaling steps beyond the local 8M VIM-2, AMIE, and beta-glucosidase results.
 
 ## Step 6 - Watch The Job
 
@@ -99,6 +100,8 @@ tail -80 logs/p0-vim2-35m-*.out
 tail -80 logs/p0-vim2-35m-*.err
 tail -80 logs/p0-amie-35m-*.out
 tail -80 logs/p0-amie-35m-*.err
+tail -80 logs/p0-bgly-35m-*.out
+tail -80 logs/p0-bgly-35m-*.err
 ```
 
 ## Step 7 - Check Outputs
@@ -107,6 +110,7 @@ tail -80 logs/p0-amie-35m-*.err
 ls -lh results/proteingym_blat_esm2_t12_35M
 ls -lh results/proteingym_vim2_esm2_t12_35M
 ls -lh results/proteingym_amie_esm2_t12_35M
+ls -lh results/proteingym_bgly_esm2_t12_35M
 ```
 
 Expected files:
@@ -120,6 +124,7 @@ To inspect a result:
 ```bash
 cat results/proteingym_vim2_esm2_t12_35M/metrics.json
 cat results/proteingym_amie_esm2_t12_35M/metrics.json
+cat results/proteingym_bgly_esm2_t12_35M/metrics.json
 ```
 
 ## Step 8 - Compare Across Enzymes
@@ -130,6 +135,17 @@ python scripts/compare_metrics.py \
   results/proteingym_vim2_esm2_t12_35M/metrics.json \
   results/proteingym_amie_esm2_t12_35M/metrics.json \
   --output results/proteingym_three_enzyme_esm2_t12_35M_comparison.json
+```
+
+After beta-glucosidase finishes:
+
+```bash
+python scripts/compare_metrics.py \
+  results/proteingym_blat_esm2_t12_35M/metrics.json \
+  results/proteingym_vim2_esm2_t12_35M/metrics.json \
+  results/proteingym_amie_esm2_t12_35M/metrics.json \
+  results/proteingym_bgly_esm2_t12_35M/metrics.json \
+  --output results/proteingym_four_enzyme_esm2_t12_35M_comparison.json
 ```
 
 Scientific interpretation:

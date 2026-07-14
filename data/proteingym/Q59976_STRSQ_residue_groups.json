@@ -1,0 +1,53 @@
+{
+  "protein_id": "Q59976_STRSQ",
+  "assay_id": "Q59976_STRSQ_Romero_2015",
+  "residue_numbering": "1-indexed positions in the 501-aa ProteinGym target sequence",
+  "annotation_status": "conservative_gh1_motif_with_proteingym_af2_structure_shell",
+  "residue_groups": {
+    "active_site_neighborhood": [
+      176,
+      177,
+      178,
+      179,
+      180,
+      381,
+      382,
+      383,
+      384,
+      385
+    ],
+    "curated_catalytic_site": [
+      178,
+      383
+    ],
+    "structure_catalytic_shell_5a": [
+      27,
+      89,
+      133,
+      134,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      233,
+      234,
+      235,
+      306,
+      307,
+      308,
+      309,
+      381,
+      382,
+      383,
+      384,
+      385,
+      428,
+      430
+    ]
+  },
+  "source": "GH1 catalytic motif mapping plus a ProteinGym AF2 structure-derived catalytic-site shell.",
+  "evidence": "The active_site_neighborhood group is a +/-2 residue window around the curated Glu178 and Glu383 catalytic-site candidates. The structure_catalytic_shell_5a group was derived from data/proteingym/structures/Q59976_STRSQ.pdb using scripts/derive_residue_shell.py and includes residues with any heavy atom within 5.0 Angstrom of either curated catalytic glutamate. The source record is data/proteingym/source_records/Q59976_STRSQ_catalytic_shell_5A.json."
+}

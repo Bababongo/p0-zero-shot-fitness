@@ -10,13 +10,13 @@ Core question:
 
 ## 1. Executive Summary
 
-P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of enzymes. The project now runs on three ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, and AMIE aliphatic amidase. It scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and slices performance by exact catalytic sites, structure-derived mechanism shells, active-site neighborhoods, and background residues.
+P0 is a benchmark project that evaluates whether a protein language model can predict experimental mutation effects equally well across different biological regions of enzymes. The project now runs on four ProteinGym enzyme DMS datasets: TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. It scores single amino-acid variants with ESM-2, compares model scores against experimental fitness, and slices performance by exact catalytic sites, structure-derived mechanism shells, active-site neighborhoods, and background residues.
 
 The scientific motivation is simple: a protein language model can look good overall while still failing on the residues that matter most for enzyme engineering. Enzyme function is not only about broad evolutionary conservation or stability. It can depend on active-site chemistry, substrate positioning, cofactors, binding-pocket geometry, and transition-state stabilization. P0 turns that concern into a measurable benchmark.
 
 The project is not just a notebook. It is a small production-style Python repo with a command-line interface, typed data models, mutation parsing, residue annotation, model scoring, statistical metrics, plots, tests, GitHub Actions, and Savio HPC run scripts.
 
-The main result is that ESM-2 clearly improves with scale from 8M to 35M parameters across TEM-1, VIM-2, and AMIE. However, exact catalytic or metal-binding slices remain weaker, noisier, or less interpretable than broader mechanism-adjacent slices. The strongest controlled 35M signal is TEM-1 active-site neighborhood; VIM-2 and AMIE show useful raw mechanism-slice signal, but those slices remain inside matched-position null intervals.
+The main scaling result is that ESM-2 clearly improves from 8M to 35M parameters across TEM-1, VIM-2, and AMIE. However, exact catalytic or metal-binding slices remain weaker, noisier, or less interpretable than broader mechanism-adjacent slices. The strongest controlled 35M signal is TEM-1 active-site neighborhood; VIM-2 and AMIE show useful raw mechanism-slice signal, but those slices remain inside matched-position null intervals. Beta-glucosidase has now been added at the 8M scale; its overall correlation is modest, but its AF2 catalytic shell is higher than matched random residue-position controls.
 
 The short interpretation:
 
@@ -27,7 +27,7 @@ The short interpretation:
 - A v2 matched-position null-control upgrade shows that exact active-site-only slices are not unusual relative to same-size random residue-position controls, while the TEM-1 active-site-neighborhood slice is higher than matched null controls for both ESM-2 8M and 35M.
 - The project demonstrates how to evaluate not only whether a model works, but where it works.
 
-P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is now a real three-enzyme benchmark seed: the enzyme-panel registry exists, validates against ProteinGym metadata, and VIM-2 plus AMIE have been added with placeholder, ESM-2 8M, and ESM-2 35M baselines.
+P0 v1 and v2 are complete as portfolio artifacts. The v3 scaffold is now a real four-enzyme benchmark seed: the enzyme-panel registry exists, validates against ProteinGym metadata, VIM-2 and AMIE have placeholder, ESM-2 8M, and ESM-2 35M baselines, and beta-glucosidase has placeholder plus ESM-2 8M baselines with a Savio 35M script ready.
 
 ## 1.1 v2 Addendum: Matched Residue-Position Null Controls
 
@@ -75,17 +75,18 @@ Current validation result:
 | --- | ---: |
 | Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
-| Ready for current P0 pipeline | 3 |
-| Need local data and annotations | 14 |
+| Ready for current P0 pipeline | 4 |
+| Need local data and annotations | 13 |
 
 Completed first expansions:
 
 1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase placeholder, ESM-2 8M, and ESM-2 35M baselines.
 2. `AMIE_PSEAE_Wrenbeck_2017` - AMIE aliphatic amidase placeholder, ESM-2 8M, and ESM-2 35M baselines.
+3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase placeholder and ESM-2 8M baselines, with Savio 35M script ready.
 
 Recommended next expansion:
 
-1. Add `Q59976_STRSQ_Romero_2015` - beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+1. Run beta-glucosidase ESM-2 35M on Savio.
 2. Add conservation-matched and solvent-accessibility-matched controls.
 3. Upgrade AMIE labels with stronger primary-source or experimental-structure provenance.
 
@@ -745,13 +746,13 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add beta-glucosidase as the next non-beta-lactamase enzyme-function case, then add conservation-matched and solvent-accessibility-matched controls to test whether active-site-neighborhood signal is just conservation or buried-core stability. I would also upgrade AMIE label provenance and compare ESM-1v or MSA-based baselines against the sequence-only ESM-2 result.
+I would run beta-glucosidase at ESM-2 35M next, then add conservation-matched and solvent-accessibility-matched controls to test whether active-site-neighborhood signal is just conservation or buried-core stability. I would also upgrade AMIE label provenance and compare ESM-1v or MSA-based baselines against the sequence-only ESM-2 result.
 
 ## 20. Limitations
 
 The project has clear limitations:
 
-1. The completed ESM scoring results use three enzymes; the panel still needs more enzyme classes and stronger annotation provenance.
+1. The completed ESM-2 35M scoring results use three enzymes, while beta-glucosidase currently has an ESM-2 8M result and a queued 35M-ready workflow.
 2. The active-site-only group is small.
 3. The ligand-contact group comes from one inhibitor-bound structure.
 4. DMS fitness reflects an assay context, not pure catalytic chemistry.
@@ -765,7 +766,7 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Add beta-glucosidase as the next public non-beta-lactamase enzyme-function case.
+1. Run beta-glucosidase ESM-2 35M on Savio.
 2. Add conservation-matched and solvent-accessibility-matched controls.
 3. Add mutation-count-matched and fitness-variance-matched controls.
 4. Upgrade AMIE catalytic-site and substrate-pocket labels with stronger provenance.
@@ -774,7 +775,7 @@ High-priority next steps:
 7. Add ESM-1v as a variant-effect baseline.
 8. Add an MSA-based baseline if compute and data setup allow.
 9. Add more ligand-bound TEM-1 structures to test contact-label robustness.
-10. Turn the three-enzyme 35M result into a clean portfolio figure and methods card.
+10. Turn the four-enzyme result into a clean portfolio figure and methods card.
 
 ## 22. Portfolio Value
 
@@ -802,18 +803,20 @@ The project includes a public writeup, social post draft, beginner code walkthro
 
 ## 23. Current Status
 
-P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete and its first three-enzyme ESM-2 35M panel complete.
+P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete, its first three-enzyme ESM-2 35M panel complete, and a fourth beta-glucosidase ESM-2 8M result complete.
 
 Complete means:
 
 - real dataset selected,
 - ESM-2 8M run locally,
 - ESM-2 35M run on Savio for TEM-1, VIM-2, and AMIE,
+- ESM-2 8M run locally for beta-glucosidase,
 - outputs copied back,
 - metrics compared,
 - enzyme-panel registry validated,
 - VIM-2 data, placeholder baseline, ESM-2 8M baseline, and ESM-2 35M baseline added,
 - AMIE data, placeholder baseline, ESM-2 8M baseline, and ESM-2 35M baseline added,
+- beta-glucosidase data, placeholder baseline, ESM-2 8M baseline, and Savio 35M script added,
 - GitHub updated,
 - Obsidian updated,
 - tests passing,

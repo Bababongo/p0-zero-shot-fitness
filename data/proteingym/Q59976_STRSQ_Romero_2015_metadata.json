@@ -1,0 +1,14 @@
+{
+  "DMS_filename": "Q59976_STRSQ_Romero_2015.csv",
+  "DMS_id": "Q59976_STRSQ_Romero_2015",
+  "DMS_number_single_mutants": "2999",
+  "UniProt_ID": "Q59976_STRSQ",
+  "includes_multiple_mutants": "FALSE",
+  "molecule_name": "\u03b2-glucosidase",
+  "pdb_file": "Q59976_STRSQ.pdb",
+  "raw_DMS_mutant_column": "mutant",
+  "raw_DMS_phenotype_name": "enrichment",
+  "selection_assay": "Enzyme function",
+  "selection_type": "Activity",
+  "seq_len": "501"
+}

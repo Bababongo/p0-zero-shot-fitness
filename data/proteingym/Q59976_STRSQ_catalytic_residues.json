@@ -1,0 +1,25 @@
+{
+  "protein_id": "Q59976_STRSQ",
+  "assay_id": "Q59976_STRSQ_Romero_2015",
+  "residue_numbering": "1-indexed positions in the 501-aa ProteinGym target sequence",
+  "annotation_status": "conservative_gh1_motif_annotation_with_proteingym_af2_geometry_check",
+  "catalytic_residues": [178, 383],
+  "mapped_from_gh1_catalytic_motifs": [
+    {
+      "role": "general acid/base glutamate candidate",
+      "residue": "Glu",
+      "target_position": 178,
+      "target_sequence_window": "LGDRVKTWTTLNEPWCSAFLGYGS",
+      "motif": "NEP"
+    },
+    {
+      "role": "catalytic nucleophile glutamate candidate",
+      "residue": "Glu",
+      "target_position": 383,
+      "target_sequence_window": "LSSDFPALPLVITENGAAFHDYADPE",
+      "motif": "ITENG"
+    }
+  ],
+  "source": "GH1 beta-glycosidase catalytic-residue pattern mapped onto the ProteinGym Q59976_STRSQ target sequence.",
+  "evidence": "CAZypedia GH1 describes retaining GH1 enzymes with known active-site residues, including a general acid/base glutamate in a typical NEP sequence and a catalytic nucleophile glutamate in a YITENG-like motif. In Q59976_STRSQ, these motifs map to Glu178 and Glu383. The ProteinGym AF2 structure data/proteingym/structures/Q59976_STRSQ.pdb uses chain A with matching 1-501 residue numbering, so these exact positions can also seed a structure-derived active-site shell."
+}

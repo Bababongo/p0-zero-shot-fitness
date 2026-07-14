@@ -10,6 +10,8 @@ I later added a matched residue-position null control. That changed the most car
 
 I then expanded the benchmark seed to VIM-2 metallo-beta-lactamase and AMIE aliphatic amidase, and ran ESM-2 35M on all three enzymes. Scaling improved global zero-shot performance across the panel, but the mechanism-slice story became more nuanced: TEM-1 retained a matched-null active-site-neighborhood signal, while VIM-2 and AMIE showed useful raw mechanism signals that remained inside matched-position null intervals.
 
+I later added beta-glucosidase as a fourth enzyme at the local ESM-2 8M scale. Its overall correlation is modest, but its AF2-derived catalytic shell is higher than matched random residue-position controls, giving the panel a different mechanism-slice pattern to test with the next 35M run.
+
 ## Why I Built This
 
 Protein language models are often evaluated with broad variant-effect prediction metrics. That is useful, but enzymes are not just sequence objects. Enzyme fitness can depend on active-site chemistry, catalytic residues, cofactors, substrate positioning, and transition-state stabilization.
@@ -177,6 +179,14 @@ The current strongest claim is therefore:
 
 > Scaling improves global zero-shot performance, but exact catalytic chemistry remains harder than broader sequence and structure constraints. Broader active-site neighborhoods can contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
 
+I also added beta-glucosidase as a fourth enzyme at ESM-2 8M:
+
+| Dataset | Enzyme | Overall ESM-2 8M | Exact Site | Best Mechanism Slice |
+| --- | --- | ---: | ---: | --- |
+| `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | 0.1442 | 0.4196 | AF2 catalytic shell, 0.3712 |
+
+The beta-glucosidase AF2 catalytic shell is higher than same-size random residue-position controls at 8M, with empirical p = `0.018`. The next step is to run the matching Savio 35M job before folding it into the main scaling claim.
+
 ## What This Repo Demonstrates
 
 This project is not just a notebook result. It is a small, reproducible benchmark scaffold:
@@ -186,6 +196,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - labels UniProt active-site and substrate-binding variants,
 - labels structure-derived ligand-contact variants from PDB 1M40,
 - labels AF2-derived mechanism shells for VIM-2 and AMIE,
+- labels an AF2-derived catalytic shell for beta-glucosidase,
 - labels active-site-neighborhood variants,
 - adds matched residue-position null controls for mechanism-relevant slices,
 - runs a swappable scorer interface,
@@ -197,11 +208,11 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Add beta-glucosidase as the next non-beta-lactamase enzyme-function case.
+1. Run beta-glucosidase ESM-2 35M on Savio.
 2. Add conservation-matched and solvent-accessibility-matched null controls.
 3. Add ESM-1v or an MSA-based baseline.
 4. Run ESM-2 150M as the next scaling step.
-5. Turn the three-enzyme 35M result into a short portfolio figure and methods card.
+5. Turn the four-enzyme result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 

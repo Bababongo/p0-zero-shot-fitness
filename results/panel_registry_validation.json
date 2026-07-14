@@ -81,10 +81,10 @@
       "enzyme_class_or_family": "Glycoside hydrolase",
       "estimated_masked_marginal_score_units": 1502499,
       "local_status": {
-        "has_local_catalytic_json": false,
-        "has_local_dms_csv": false,
-        "has_local_fasta": false,
-        "has_local_residue_groups_json": false
+        "has_local_catalytic_json": true,
+        "has_local_dms_csv": true,
+        "has_local_fasta": true,
+        "has_local_residue_groups_json": true
       },
       "main_annotation_need": "Catalytic acid/base residues and glycoside-binding pocket contacts",
       "metadata_found": true,
@@ -95,7 +95,7 @@
       "selection_type": "Activity",
       "sequence_length": 501,
       "single_mutants": 2999,
-      "status": "metadata_ready_needs_local_data_and_annotations",
+      "status": "ready_for_p0_pipeline",
       "structure_file": "Q59976_STRSQ.pdb",
       "tier": 1,
       "uniprot_id": "Q59976_STRSQ"
@@ -458,7 +458,7 @@
     }
   ],
   "status_counts": {
-    "metadata_ready_needs_local_data_and_annotations": 14,
-    "ready_for_p0_pipeline": 3
+    "metadata_ready_needs_local_data_and_annotations": 13,
+    "ready_for_p0_pipeline": 4
   }
 }
