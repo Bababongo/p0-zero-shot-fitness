@@ -1,0 +1,14 @@
+{
+  "DMS_filename": "AMIE_PSEAE_Wrenbeck_2017.csv",
+  "DMS_id": "AMIE_PSEAE_Wrenbeck_2017",
+  "DMS_number_single_mutants": "6227",
+  "UniProt_ID": "AMIE_PSEAE",
+  "includes_multiple_mutants": "FALSE",
+  "molecule_name": "Aliphatic amidase",
+  "pdb_file": "AMIE_PSEAE.pdb",
+  "raw_DMS_mutant_column": "mutant",
+  "raw_DMS_phenotype_name": "isobutyramide_normalized_fitness",
+  "selection_assay": "Enzyme function",
+  "selection_type": "Growth",
+  "seq_len": "346"
+}

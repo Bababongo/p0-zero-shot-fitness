@@ -74,7 +74,6 @@ These are the highest-value next enzymes because they are biologically diverse, 
 | Dataset | Protein | Enzyme Type | Single Mutants | Why Add It |
 | --- | --- | --- | ---: | --- |
 | `A4GRB6_PSEAI_Chen_2020` | VIM-2 beta-lactamase | Metallo-beta-lactamase | 5,004 | Tests whether beta-lactamase findings transfer from serine to metal-dependent chemistry. |
-| `ANFDC1_EXTERNAL` | AnFdc1 ferulic acid decarboxylase | UbiD-family prFMN enzyme | 0 | Safe external prospective target connected to the Fdc1 engineering project; needs local sequence, structure, cofactor labels, and variant data. |
 | `AMIE_PSEAE_Wrenbeck_2017` | Aliphatic amidase | Hydrolase | 6,227 | Classic enzyme-function DMS with substrate-specific framing. |
 | `Q59976_STRSQ_Romero_2015` | Beta-glucosidase | Glycoside hydrolase | 2,999 | Direct enzyme-function DMS in a different fold and chemistry class. |
 | `TPK1_HUMAN_Weile_2017` | Thiamin pyrophosphokinase 1 | Kinase / phosphotransferase | 3,181 | Compact human enzyme complementation case. |
@@ -169,11 +168,10 @@ Current validator result:
 
 | Check | Result |
 | --- | ---: |
-| Candidate enzyme datasets | 18 |
+| Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
 | Ready for current P0 pipeline | 2 |
 | Need local data and annotations | 15 |
-| External targets needing dataset and annotations | 1 |
 
 The ready datasets are:
 
@@ -181,8 +179,6 @@ The ready datasets are:
 - `A4GRB6_PSEAI_Chen_2020` - VIM-2 metallo-beta-lactamase.
 
 The other 15 ProteinGym candidates have matching metadata, but still need local DMS CSV, FASTA, catalytic-residue JSON, and residue-group JSON files before they can run through the current P0 pipeline.
-
-AnFdc1 is intentionally marked as an external prospective target. It is not expected to match ProteinGym metadata yet. It needs a local FASTA, structure, cofactor and substrate-pocket annotations, and either an existing variant table or a planned experimental variant table.
 
 ## First Second-Enzyme Case
 
@@ -211,15 +207,15 @@ The active-site-neighborhood slice is higher than matched random residue-positio
 Start with:
 
 1. Run ESM-2 35M on `A4GRB6_PSEAI_Chen_2020`.
-2. Assemble the AnFdc1 external target package: FASTA, structure, prFMN/cofactor residues, substrate-pocket labels, and tested variants.
-3. Add `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+2. Add `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+3. Add `Q59976_STRSQ_Romero_2015` - beta-glucosidase.
 
 Why these three:
 
-- VIM-2 and amidase cover public DMS cases with thousands of single mutants.
-- AnFdc1 connects the benchmark to the Fdc1 engineering project without relying on a pathogen-linked target.
+- VIM-2, amidase, and beta-glucosidase cover public DMS cases with thousands of single mutants.
+- They avoid pathogen-linked targets while still testing mechanistically distinct enzyme chemistry.
 - All three require explicit active-site, pocket, or cofactor residue zones.
-- Together, they move P0 beyond TEM-1 while keeping the portfolio story aligned with safe enzyme engineering.
+- Together, they move P0 beyond TEM-1 without making the scope explode.
 
 ## Success Criteria
 

@@ -2,7 +2,7 @@
 
 **Question:** Do protein language models fail differently on catalytic residues than on the rest of the protein?
 
-This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1 and VIM-2 ProteinGym benchmarks, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
+This repo is a fixture-first benchmark scaffold for comparing zero-shot protein language model scores against enzyme deep mutational scanning data. It now includes real TEM-1 and VIM-2 ProteinGym benchmarks, a materialized AMIE aliphatic-amidase dataset awaiting mechanism labels, ESM-2 masked-marginal scoring, matched residue-position null controls, structure-derived mechanism slices, and a validated enzyme-panel registry for expanding the question beyond one enzyme.
 
 Read the public-facing result writeup: [Do Protein Language Models Fail Differently On Catalytic Residues?](docs/public_writeup.md)
 
@@ -155,6 +155,16 @@ The AF2 structure metal-site shell is higher than same-size random residue-posit
 
 The active-site-neighborhood slice is higher than same-size random residue-position controls for ESM-2 8M: observed Spearman `0.6128`, null 95% interval `0.1787 to 0.5736`, empirical p = `0.012`.
 
+## Next Dataset: AMIE Aliphatic Amidase
+
+AMIE has been materialized from the ProteinGym substitutions archive:
+
+- `data/proteingym/AMIE_PSEAE_Wrenbeck_2017.csv`
+- `data/proteingym/AMIE_PSEAE.fasta`
+- `data/proteingym/AMIE_PSEAE_Wrenbeck_2017_metadata.json`
+
+It still needs curated catalytic-site and substrate-pocket labels before it should run through the P0 mechanism-slice benchmark.
+
 ## Validate The Enzyme Panel Registry
 
 The v3 upgrade expands P0 from one TEM-1 case study into a mechanism-stratified enzyme benchmark plan. The registry validator checks that candidate enzyme datasets match local ProteinGym metadata, estimates masked-marginal scoring cost, and recommends the first three datasets to add.
@@ -171,17 +181,16 @@ Current validation summary:
 
 | Check | Result |
 | --- | ---: |
-| Candidate enzyme datasets | 18 |
+| Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
 | Ready for current P0 pipeline | 2 |
 | Need local data and annotations | 15 |
-| External targets needing dataset and annotations | 1 |
 
 Recommended next panel path:
 
 1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase, already active as the first second-enzyme case.
-2. `ANFDC1_EXTERNAL` - AnFdc1 ferulic acid decarboxylase, an external prospective enzyme-engineering target.
-3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, the next public ProteinGym hydrolase case.
+2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase, the next public ProteinGym hydrolase case.
+3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase, a second non-beta-lactamase enzyme-function case.
 
 First real result:
 
@@ -221,8 +230,8 @@ The fixture version is intentionally offline and deterministic. The real TEM-1 P
 
 1. Run ESM-2 35M on VIM-2 for model-size comparison.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/ligand rule is selected.
-3. Assemble AnFdc1 FASTA, structure, prFMN/cofactor residues, substrate-pocket labels, and any tested variants.
-4. Add aliphatic amidase as the next public ProteinGym hydrolase case.
+3. Materialize aliphatic amidase from the public ProteinGym archive.
+4. Add aliphatic amidase catalytic-site and substrate-pocket labels.
 5. Add conservation-matched and solvent-accessibility-matched null controls.
 6. Compare larger ESM-2 models, ESM-1v, MSA Transformer, and a conservation baseline.
 

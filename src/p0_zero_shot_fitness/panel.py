@@ -38,8 +38,8 @@ PROTEINGYM_REQUIRED_FIELDS = [
 
 FIRST_PANEL_RECOMMENDATION_ORDER = [
     "A4GRB6_PSEAI_Chen_2020",
-    "ANFDC1_EXTERNAL",
     "AMIE_PSEAE_Wrenbeck_2017",
+    "Q59976_STRSQ_Romero_2015",
 ]
 
 
@@ -108,8 +108,6 @@ def cost_units(single_mutants: int, sequence_length: int) -> int:
 
 
 def cost_category(units: int) -> str:
-    if units == 0:
-        return "unknown"
     if units < 1_000_000:
         return "small"
     if units < 2_500_000:
@@ -117,12 +115,6 @@ def cost_category(units: int) -> str:
     if units < 5_000_000:
         return "large"
     return "very_large"
-
-
-def source_type(candidate: PanelCandidate) -> str:
-    if candidate.dms_id.endswith("_EXTERNAL"):
-        return "external"
-    return "proteingym"
 
 
 def local_annotation_status(candidate: PanelCandidate, data_dir: Path) -> dict[str, bool]:
@@ -149,14 +141,11 @@ def candidate_mismatches(candidate: PanelCandidate, metadata: dict[str, str]) ->
 
 
 def validation_status(
-    candidate_source_type: str,
     metadata_found: bool,
     missing_metadata_fields: list[str],
     mismatches: list[str],
     local_status: dict[str, bool],
 ) -> str:
-    if candidate_source_type == "external" and not metadata_found:
-        return "external_target_needs_dataset_and_annotations"
     if not metadata_found:
         return "missing_proteingym_metadata"
     if missing_metadata_fields or mismatches:
@@ -171,11 +160,10 @@ def summarize_candidate(
     metadata_by_id: dict[str, dict[str, str]],
     data_dir: Path,
 ) -> JsonDict:
-    candidate_source_type = source_type(candidate)
     metadata = metadata_by_id.get(candidate.dms_id)
     units = cost_units(candidate.single_mutants, candidate.sequence_length)
     if metadata is None:
-        missing_metadata_fields = [] if candidate_source_type == "external" else PROTEINGYM_REQUIRED_FIELDS
+        missing_metadata_fields = PROTEINGYM_REQUIRED_FIELDS
         mismatches: list[str] = []
         metadata_found = False
     else:
@@ -187,7 +175,6 @@ def summarize_candidate(
     return {
         "tier": candidate.tier,
         "dms_id": candidate.dms_id,
-        "source_type": candidate_source_type,
         "uniprot_id": candidate.uniprot_id,
         "molecule_name": candidate.molecule_name,
         "enzyme_class_or_family": candidate.enzyme_class_or_family,
@@ -204,7 +191,6 @@ def summarize_candidate(
         "metadata_mismatches": mismatches,
         "local_status": local_status,
         "status": validation_status(
-            candidate_source_type,
             metadata_found,
             missing_metadata_fields,
             mismatches,
@@ -218,8 +204,7 @@ def recommended_first_panel(candidates: list[JsonDict]) -> list[JsonDict]:
     recommendations = [
         by_id[dms_id]
         for dms_id in FIRST_PANEL_RECOMMENDATION_ORDER
-        if dms_id in by_id
-        and (by_id[dms_id]["metadata_found"] or by_id[dms_id]["source_type"] == "external")
+        if dms_id in by_id and by_id[dms_id]["metadata_found"]
     ]
     if len(recommendations) >= 3:
         return recommendations[:3]
@@ -255,7 +240,6 @@ def validate_panel_registry(panel_csv: Path, proteingym_metadata_csv: Path, data
         "recommended_first_three": [
             {
                 "dms_id": candidate["dms_id"],
-                "source_type": candidate["source_type"],
                 "molecule_name": candidate["molecule_name"],
                 "enzyme_class_or_family": candidate["enzyme_class_or_family"],
                 "estimated_masked_marginal_score_units": candidate["estimated_masked_marginal_score_units"],

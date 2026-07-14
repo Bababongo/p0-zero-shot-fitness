@@ -73,11 +73,10 @@ Current validation result:
 
 | Check | Result |
 | --- | ---: |
-| Candidate enzyme datasets | 18 |
+| Candidate enzyme datasets | 17 |
 | ProteinGym metadata matches | 17 |
 | Ready for current P0 pipeline | 2 |
 | Need local data and annotations | 15 |
-| External targets needing dataset and annotations | 1 |
 
 Completed first expansion:
 
@@ -86,8 +85,8 @@ Completed first expansion:
 Recommended next expansion:
 
 1. `A4GRB6_PSEAI_Chen_2020` - VIM-2 beta-lactamase structure-derived residue-zone refinement.
-2. `ANFDC1_EXTERNAL` - AnFdc1 ferulic acid decarboxylase as the external Fdc1 engineering bridge.
-3. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase as the next public ProteinGym hydrolase.
+2. `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase as the next public ProteinGym hydrolase.
+3. `Q59976_STRSQ_Romero_2015` - beta-glucosidase as a second non-beta-lactamase enzyme-function case.
 
 This is scientifically important because it turns P0 from "one interesting TEM-1 result" into a controlled plan for asking whether residue-zone behavior generalizes across mechanisms.
 
@@ -690,7 +689,7 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would assemble AnFdc1 as an external enzyme-engineering target and add aliphatic amidase as the next public ProteinGym hydrolase, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
+I would add structure-derived VIM-2 contact labels next, then run ESM-2 35M on VIM-2. After that I would add aliphatic amidase and beta-glucosidase as the next public ProteinGym enzyme-function cases, then test ESM-1v, MSA Transformer, conservation-matched controls, and solvent-accessibility-matched controls.
 
 ## 20. Limitations
 
@@ -712,8 +711,8 @@ High-priority next steps:
 
 1. Run ESM-2 35M on VIM-2.
 2. Add experimental ligand-bound VIM-2 contact labels if a suitable structure/contact rule is selected.
-3. Assemble the AnFdc1 external target package: FASTA, structure, prFMN/cofactor residues, substrate-pocket labels, and tested variants.
-4. Add aliphatic amidase as the next public ProteinGym hydrolase panel member.
+3. Materialize aliphatic amidase from the public ProteinGym archive.
+4. Add aliphatic amidase catalytic-site and substrate-pocket labels.
 5. Run ESM-2 150M using the existing Savio workflow.
 6. Add ESM-1v as a variant-effect baseline.
 7. Add an MSA-based baseline if compute and data setup allow.

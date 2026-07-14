@@ -6,6 +6,7 @@ This repository includes processed ProteinGym substitution assays for:
 
 - `BLAT_ECOLX_Firnberg_2014` - TEM-1 beta-lactamase.
 - `A4GRB6_PSEAI_Chen_2020` - VIM-2 metallo-beta-lactamase.
+- `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
 
 ProteinGym source:
 
@@ -98,6 +99,24 @@ The VIM-2 residue-group file defines:
 - `structure_metal_site_shell_5a`: residues with any heavy atom within 5.0 Angstrom of any curated metal-binding residue heavy atom in the ProteinGym AF2 structure `A4GRB6_PSEAI.pdb`.
 
 The structure shell is not a ligand-bound experimental contact map. It is a structure-derived metal-site proximity slice from the ProteinGym AF2 model. A ligand-bound VIM-2 contact group should still be added later if a suitable experimental structure and reproducible ligand/contact rule are selected.
+
+## AMIE Assay
+
+This repository includes the raw local files for the next public ProteinGym enzyme-function case:
+
+- `data/proteingym/AMIE_PSEAE_Wrenbeck_2017.csv`
+- Dataset ID: `AMIE_PSEAE_Wrenbeck_2017`
+- Protein: aliphatic amidase (`AMIE_PSEAE`)
+- Variants: 6,227 single amino-acid substitutions
+- Fitness column: `DMS_score`
+- Mutation column: `mutant`
+
+Local support files currently present:
+
+- `data/proteingym/AMIE_PSEAE.fasta`
+- `data/proteingym/AMIE_PSEAE_Wrenbeck_2017_metadata.json`
+
+AMIE is not yet runnable through the P0 benchmark because it still needs curated catalytic-residue and residue-group JSON files. The next biology step is to verify catalytic-site and substrate-pocket labels from primary sources before adding those files.
 
 ## Model Outputs
 
