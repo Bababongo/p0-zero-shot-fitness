@@ -65,6 +65,29 @@ The `positions` object should contain all amino-acid positions used by the DMS a
 
 ## Run Template
 
+On Savio, use:
+
+```bash
+sbatch hpc/savio_generate_proteinmpnn_profiles.slurm
+sbatch hpc/savio_score_proteinmpnn_profiles.slurm
+```
+
+Then compare model families:
+
+```bash
+python scripts/compare_model_family_metrics.py \
+  results/proteingym_vim2_esm2_t12_35M/metrics.json \
+  results/proteingym_vim2_msa_conservation/metrics.json \
+  results/proteingym_vim2_proteinmpnn/metrics.json \
+  results/proteingym_amie_esm2_t12_35M/metrics.json \
+  results/proteingym_amie_msa_conservation/metrics.json \
+  results/proteingym_amie_proteinmpnn/metrics.json \
+  results/proteingym_bgly_esm2_t12_35M/metrics.json \
+  results/proteingym_bgly_msa_conservation/metrics.json \
+  results/proteingym_bgly_proteinmpnn/metrics.json \
+  --output results/proteingym_ready_enzyme_model_family_comparison.json
+```
+
 After generating a ProteinMPNN profile for one enzyme, score it with:
 
 ```bash

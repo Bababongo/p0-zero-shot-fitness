@@ -40,7 +40,27 @@ python scripts/audit_proteinmpnn_targets.py \
   --output-json results/proteinmpnn_target_audit.json
 ```
 
-## Step 2 - Generate ProteinMPNN Profiles
+## Step 2 - Install Or Point To ProteinMPNN
+
+If ProteinMPNN is not already on Savio:
+
+```bash
+cd /global/scratch/users/ezechinyereukabiala
+git clone https://github.com/dauparas/ProteinMPNN.git
+conda create -y --prefix /global/scratch/users/ezechinyereukabiala/conda_envs/proteinmpnn python=3.10
+source activate /global/scratch/users/ezechinyereukabiala/conda_envs/proteinmpnn
+python -m pip install --upgrade pip
+python -m pip install torch numpy scipy biopython
+```
+
+If ProteinMPNN is already installed somewhere else, set this before submitting:
+
+```bash
+export PROTEINMPNN_ROOT=/path/to/ProteinMPNN
+export PROTEINMPNN_ENV=/path/to/proteinmpnn/conda/env
+```
+
+## Step 3 - Generate ProteinMPNN Profiles
 
 Generate one fixed-backbone amino-acid log-probability profile per ready enzyme:
 
@@ -90,7 +110,29 @@ Repeat with the AMIE and beta-glucosidase FASTA/profile paths.
 
 If using the public ProteinMPNN repo, the probability-generation step should be run in a separate ProteinMPNN environment. The key setting is to generate per-position amino-acid probabilities from the fixed backbone, then pass the resulting NPZ through `scripts/convert_proteinmpnn_npz_to_profile.py`.
 
-## Step 3 - Score The Profiles Through P0
+Submit the profile-generation job:
+
+```bash
+sbatch hpc/savio_generate_proteinmpnn_profiles.slurm
+```
+
+Watch it:
+
+```bash
+squeue -u ezechinyereukabiala
+tail -80 logs/p0-pmpnn-prof-*.out
+tail -80 logs/p0-pmpnn-prof-*.err
+```
+
+Check expected profiles:
+
+```bash
+ls -lh results/proteingym_vim2_proteinmpnn/profile.json
+ls -lh results/proteingym_amie_proteinmpnn/profile.json
+ls -lh results/proteingym_bgly_proteinmpnn/profile.json
+```
+
+## Step 4 - Score The Profiles Through P0
 
 VIM-2:
 
@@ -134,7 +176,43 @@ python scripts/score_structure_profile_baseline.py \
   --covariate-null-iterations 1000
 ```
 
-## Step 4 - Interpretation
+Or score all three ready profiles with:
+
+```bash
+sbatch hpc/savio_score_proteinmpnn_profiles.slurm
+```
+
+Watch it:
+
+```bash
+squeue -u ezechinyereukabiala
+tail -80 logs/p0-pmpnn-score-*.out
+tail -80 logs/p0-pmpnn-score-*.err
+```
+
+## Step 5 - Compare Model Families
+
+After scoring finishes:
+
+```bash
+python scripts/compare_model_family_metrics.py \
+  results/proteingym_vim2_esm2_t12_35M/metrics.json \
+  results/proteingym_vim2_msa_conservation/metrics.json \
+  results/proteingym_vim2_proteinmpnn/metrics.json \
+  results/proteingym_amie_esm2_t12_35M/metrics.json \
+  results/proteingym_amie_msa_conservation/metrics.json \
+  results/proteingym_amie_proteinmpnn/metrics.json \
+  results/proteingym_bgly_esm2_t12_35M/metrics.json \
+  results/proteingym_bgly_msa_conservation/metrics.json \
+  results/proteingym_bgly_proteinmpnn/metrics.json \
+  --output results/proteingym_ready_enzyme_model_family_comparison.json
+```
+
+This is the step that answers:
+
+> Does structure-conditioned ProteinMPNN agree with ESM-2 and MSA conservation on mechanism-local residues?
+
+## Step 6 - Interpretation
 
 Do not frame ProteinMPNN as an activity predictor.
 

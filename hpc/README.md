@@ -48,6 +48,12 @@ After ProteinMPNN profile JSON files are generated, score the three ready enzyme
 sbatch hpc/savio_score_proteinmpnn_profiles.slurm
 ```
 
+The profile-generation job is:
+
+```bash
+sbatch hpc/savio_generate_proteinmpnn_profiles.slurm
+```
+
 ## After Jobs Finish
 
 Run:
