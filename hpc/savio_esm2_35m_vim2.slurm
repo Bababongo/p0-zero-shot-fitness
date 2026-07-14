@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=p0-esm2-35m
+#SBATCH --job-name=p0-vim2-35m
 #SBATCH --partition=savio3_gpu
 #SBATCH --account=fc_pkss
 #SBATCH --qos=a40_gpu3_normal
-#SBATCH --output=logs/p0-esm2-35m-%j.out
-#SBATCH --error=logs/p0-esm2-35m-%j.err
-#SBATCH --time=02:00:00
+#SBATCH --output=logs/p0-vim2-35m-%j.out
+#SBATCH --error=logs/p0-vim2-35m-%j.err
+#SBATCH --time=03:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
@@ -36,12 +36,12 @@ fi
 python -m pip install -e ".[esm]"
 
 python -m p0_zero_shot_fitness.cli \
-  --preset proteingym-blat \
+  --preset proteingym-vim2 \
   --scorer esm2 \
   --esm-model esm2_t12_35M_UR50D \
   --device cuda \
   --bootstrap-iterations 1000 \
   --null-iterations 1000 \
-  --output-dir results/proteingym_blat_esm2_t12_35M
+  --output-dir results/proteingym_vim2_esm2_t12_35M
 
-echo "[DONE] P0 ESM-2 35M benchmark finished."
+echo "[DONE] P0 VIM-2 ESM-2 35M benchmark finished."

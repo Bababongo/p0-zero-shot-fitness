@@ -9,6 +9,8 @@ They intentionally avoid hard-coding account names, partitions, or module names.
 On Savio, start with:
 
 1. `savio_esm2_35m.slurm`
+2. `savio_esm2_35m_vim2.slurm`
+3. `savio_esm2_35m_amie.slurm`
 
 Generic templates for other SLURM-style clusters:
 
@@ -16,7 +18,15 @@ Generic templates for other SLURM-style clusters:
 2. `esm2_150m.slurm`
 3. `esm2_650m.slurm`
 
-Each job runs the same ProteinGym TEM-1 benchmark and writes outputs under `results/`.
+The concrete Savio jobs run:
+
+| Script | Dataset | Output |
+| --- | --- | --- |
+| `savio_esm2_35m.slurm` | TEM-1 / `proteingym-blat` | `results/proteingym_blat_esm2_t12_35M` |
+| `savio_esm2_35m_vim2.slurm` | VIM-2 / `proteingym-vim2` | `results/proteingym_vim2_esm2_t12_35M` |
+| `savio_esm2_35m_amie.slurm` | AMIE / `proteingym-amie` | `results/proteingym_amie_esm2_t12_35M` |
+
+Each job writes metrics, scored variants, and a scatter plot under `results/`.
 
 ## What To Edit
 
@@ -34,11 +44,10 @@ Run:
 
 ```bash
 python scripts/compare_metrics.py \
-  results/proteingym_blat_esm2_t6_8M/metrics.json \
   results/proteingym_blat_esm2_t12_35M/metrics.json \
-  results/proteingym_blat_esm2_t30_150M/metrics.json \
-  results/proteingym_blat_esm2_t33_650M/metrics.json \
-  --output results/proteingym_blat_esm2_scaling_comparison.json
+  results/proteingym_vim2_esm2_t12_35M/metrics.json \
+  results/proteingym_amie_esm2_t12_35M/metrics.json \
+  --output results/proteingym_three_enzyme_esm2_t12_35M_comparison.json
 ```
 
-Then update `docs/public_writeup.md` with the scaling table.
+Then update `docs/public_writeup.md` and `docs/protein_gym_three_enzyme_comparison.md` with the 35M three-enzyme table.
