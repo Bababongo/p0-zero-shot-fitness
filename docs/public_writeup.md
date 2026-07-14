@@ -202,7 +202,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 ## Next Experiments
 
 1. Add conservation-matched and solvent-accessibility-matched null controls.
-2. Add ESM-1v or an MSA-based baseline.
+2. Add the ProteinMPNN structure-conditioned baseline.
 3. Run ESM-2 150M as the next scaling step.
 4. Turn the four-enzyme result into a short portfolio figure and methods card.
 

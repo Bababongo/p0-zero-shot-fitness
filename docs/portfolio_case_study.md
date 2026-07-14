@@ -33,4 +33,4 @@ Beta-glucosidase is the most useful scaling counterexample. At 8M, overall Spear
 
 ## Next Evidence Upgrade
 
-The next version should compare against ESM-1v or MSA Transformer, create an ESM-2-vs-MSA interpretation figure, and test the story prospectively on a new enzyme-design target.
+The next version should add the ProteinMPNN structure-conditioned baseline, create an ESM-2-vs-MSA interpretation figure, and test the story prospectively on a new enzyme-design target.

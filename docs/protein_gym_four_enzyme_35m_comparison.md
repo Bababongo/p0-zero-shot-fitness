@@ -124,6 +124,7 @@ The beta-glucosidase result is especially useful. At 8M, the AF2 catalytic shell
 
 The pre-report control upgrade added local covariate controls, the MSA upgrade added a true evolutionary-conservation baseline, and the conservation-plus-SASA control added the strictest mechanism-slice test so far. The next scientific upgrades are now:
 
-- model-family comparisons such as ESM-1v and MSA Transformer,
+- a ProteinMPNN structure-conditioned baseline using `docs/protein_mpnn_structure_baseline_plan.md`,
+- MSA Transformer only if ProteinMPNN leaves a specific model-family ambiguity,
 - additional ligand-bound or cofactor-aware labels where clean experimental structures are available,
 - and prospective validation on a new enzyme-design target.

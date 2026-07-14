@@ -61,8 +61,8 @@ Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic 
 
 ## Next Scientific Upgrade
 
-1. Compare against ESM-1v or MSA Transformer.
-2. Compare whether ESM-1v or MSA Transformer changes the mechanism-slice story.
+1. Run the ProteinMPNN structure-conditioned baseline.
+2. Compare whether fixed-backbone inverse folding changes the mechanism-slice story.
 3. Add prospective validation on a new enzyme-design target.
 
 ## Website Blurb

@@ -298,4 +298,4 @@ If asked what P0 proves:
 
 If asked what you would improve next:
 
-> I would compare ESM-2 against ESM-1v and MSA Transformer, add more ligand-bound or cofactor-aware structure labels where clean experimental structures exist, and test the story prospectively on a new enzyme-design target. The MSA and conservation-plus-SASA controls already show that classical conservation and structural exposure explain part of the mechanism-slice signal, so the next step is to ask where language-model pretraining adds value beyond those baselines.
+> I would next add ProteinMPNN as a structure-conditioned baseline. The current project already compares ESM-2 against MSA conservation and conservation-plus-SASA controls, so ProteinMPNN is the cleaner next model-family test: it asks whether a fixed-backbone inverse-folding model sees the same catalytic, ligand-contact, and metal-shell signals. I would only add MSA Transformer after that if ProteinMPNN leaves a specific ambiguity about MSA-aware neural models.

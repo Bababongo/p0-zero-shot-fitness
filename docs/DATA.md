@@ -7,6 +7,7 @@ This repository includes processed ProteinGym substitution assays for:
 - `BLAT_ECOLX_Firnberg_2014` - TEM-1 beta-lactamase.
 - `A4GRB6_PSEAI_Chen_2020` - VIM-2 metallo-beta-lactamase.
 - `AMIE_PSEAE_Wrenbeck_2017` - aliphatic amidase.
+- `Q59976_STRSQ_Romero_2015` - beta-glucosidase.
 
 ProteinGym source:
 
@@ -146,6 +147,8 @@ The AMIE residue-group file defines:
 The `results/` directory contains reproducible benchmark outputs from:
 
 - placeholder conservation scorer,
-- ESM-2 8M masked-marginal scorer.
+- ESM-2 8M masked-marginal scorer,
+- ESM-2 35M masked-marginal scorer,
+- MSA conservation baseline scorer.
 
-ESM model weights are not stored in this repository.
+ESM model weights and raw ProteinGym MSA `.a2m` files are not stored in this repository. ProteinMPNN is planned as the next structure-conditioned baseline; see `docs/protein_mpnn_structure_baseline_plan.md`.

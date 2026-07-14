@@ -44,5 +44,5 @@ Repo: https://github.com/Bababongo/p0-zero-shot-fitness
 Next:
 
 - run larger ESM-2 models on LBNL compute,
-- add ESM-1v or an MSA baseline,
+- add a ProteinMPNN structure-conditioned baseline,
 - expand to more enzyme DMS assays.

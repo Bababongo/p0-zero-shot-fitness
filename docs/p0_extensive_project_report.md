@@ -753,7 +753,7 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would add conservation-matched and solvent-accessibility-matched controls to test whether active-site-neighborhood signal is just conservation or buried-core stability. I would also upgrade AMIE label provenance and compare ESM-1v or MSA-based baselines against the sequence-only ESM-2 result.
+I would next add a ProteinMPNN structure-conditioned baseline. The project already has MSA conservation and conservation-plus-SASA controls, so ProteinMPNN is the cleanest next model-family comparison: it asks whether the same mechanism-local signals are visible to a fixed-backbone inverse-folding model.
 
 ## 20. Limitations
 
@@ -763,7 +763,7 @@ The project has clear limitations:
 2. The ligand-contact groups come from one inhibitor-bound TEM-1 structure and one inhibitor-bound VIM-2 structure.
 3. DMS fitness reflects an assay context, not pure catalytic chemistry.
 4. ESM-2 is sequence-only and does not explicitly model ligand chemistry or transition states.
-5. The benchmark does not yet include ESM-1v, MSA Transformer, or structure-aware baselines.
+5. The benchmark does not yet include the planned ProteinMPNN structure-conditioned baseline.
 6. The project is retrospective, not a prospective design campaign.
 
 These limitations do not weaken the project. They make the claims precise.
@@ -773,8 +773,8 @@ These limitations do not weaken the project. They make the claims precise.
 High-priority next steps:
 
 1. Add an explicit ESM-2-vs-MSA interpretation figure.
-2. Add ESM-1v as a variant-effect baseline.
-3. Compare against MSA Transformer if compute and dependency setup allow.
+2. Run the ProteinMPNN structure-conditioned baseline across the four-enzyme panel.
+3. Compare against MSA Transformer only if ProteinMPNN changes the interpretation or leaves a clear ambiguity.
 4. Add more ligand-bound or cofactor-aware labels where clean experimental structures exist.
 5. Upgrade AMIE substrate-pocket labels with stronger provenance.
 6. Add prospective validation on a new enzyme-design target.

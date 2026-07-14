@@ -400,9 +400,10 @@ The fixture version is intentionally offline and deterministic. The real Protein
 ## Next Scientific Steps
 
 1. Add an explicit ESM-2-vs-MSA interpretation figure.
-2. Compare ESM-2 against ESM-1v and MSA Transformer.
-3. Add prospective validation on a new enzyme-design target.
-4. Turn the four-enzyme result into a clean methods card.
+2. Run the ProteinMPNN structure-conditioned baseline using `docs/protein_mpnn_structure_baseline_plan.md`.
+3. Add MSA Transformer only if the ProteinMPNN result leaves a model-family ambiguity worth resolving.
+4. Add prospective validation on a new enzyme-design target.
+5. Turn the four-enzyme result into a clean methods card.
 
 ## Portfolio Signal
 

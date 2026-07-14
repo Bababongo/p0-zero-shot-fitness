@@ -183,4 +183,4 @@ This weakens a simple "VIM-2 mechanism neighborhoods are always unusually high" 
 
 ## Next Step
 
-The ligand-bound VIM-2 contact-label upgrade is complete. The next VIM-2-specific upgrade is model-family comparison: test whether ESM-1v, MSA Transformer, or MSA conservation behaves differently on the exact metal site, AF2 metal shell, and 5ACX/WL3 inhibitor-contact group.
+The ligand-bound VIM-2 contact-label upgrade is complete. The next VIM-2-specific upgrade is model-family comparison: test whether a ProteinMPNN structure-conditioned baseline behaves differently on the exact metal site, AF2 metal shell, and 5ACX/WL3 inhibitor-contact group.
