@@ -20,6 +20,7 @@ Do protein language models fail differently near catalytic and mechanism-relevan
 - Residue-slice evaluation for exact catalytic or metal-binding sites, active-site neighborhoods, structure-derived mechanism shells, and background residues.
 - Experimental VIM-2 ligand-pocket labeling from the 5ACX/WL3 inhibitor-bound structure.
 - Bootstrap intervals, matched residue-position null controls, and covariate-matched null controls.
+- A model-family comparison across ESM-2, MSA conservation, and ProteinMPNN.
 - Savio SLURM workflows for GPU scoring and artifact recovery.
 
 ## Result Snapshot
@@ -41,6 +42,8 @@ The pre-report control upgrade narrows the claim further. TEM-1 active-site neig
 
 The MSA and conservation-plus-SASA upgrades narrow the claim again. ESM-2 35M beats MSA conservation overall on TEM-1 and slightly on VIM-2, but MSA conservation beats ESM-2 overall on AMIE and beta-glucosidase. The new VIM-2 5ACX/WL3 ligand-contact group gives a stronger biology label and the highest raw VIM-2 slice, but after matching mechanism slices on both MSA conservation and approximate solvent exposure, no 35M mechanism slice cleanly clears the null interval.
 
+The ProteinMPNN upgrade adds the structure-conditioned model-family test. On VIM-2, ProteinMPNN is strongest overall at 0.6259, but weak at curated metal-binding residues at 0.2583 versus 0.6197 outside the group. That is the cleanest interview result from this phase: fixed-backbone compatibility can be globally useful while still missing mechanism-local metal-site behavior.
+
 Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic shell cleared matched controls. At 35M, global performance improved sharply, but the shell no longer cleared matched controls.
 
 ## What This Proves
@@ -61,10 +64,10 @@ Beta-glucosidase is the useful scaling counterexample. At 8M, its AF2 catalytic 
 
 ## Next Scientific Upgrade
 
-1. Run the ProteinMPNN structure-conditioned baseline.
-2. Compare whether fixed-backbone inverse folding changes the mechanism-slice story.
+1. Build one visual comparing ESM-2, MSA conservation, and ProteinMPNN.
+2. Add TEM-1 ProteinMPNN only after staging a target-aligned BLAT_ECOLX structure or defensible remap.
 3. Add prospective validation on a new enzyme-design target.
 
 ## Website Blurb
 
-**Mechanism-sliced zero-shot protein fitness.** I built a reproducible Python benchmark that scores enzyme DMS mutations with ESM-2 and asks where inside enzymes the model works. Across TEM-1, VIM-2, AMIE, and beta-glucosidase, ESM-2 35M improves global mutation ranking, but mechanism-slice effects are enzyme-specific and require matched controls. The project demonstrates biology-aware evaluation, HPC execution, production Python, and scientific communication.
+**Mechanism-sliced zero-shot protein fitness.** I built a reproducible Python benchmark that scores enzyme DMS mutations with ESM-2, MSA conservation, and ProteinMPNN, then asks where inside enzymes each model family works. Across TEM-1, VIM-2, AMIE, and beta-glucosidase, global mutation ranking improves under different model families, but mechanism-slice effects are enzyme-specific and require matched controls. The project demonstrates biology-aware evaluation, HPC execution, production Python, and scientific communication.

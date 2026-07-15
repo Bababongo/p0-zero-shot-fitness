@@ -1,0 +1,340 @@
+{
+  "comparison": [
+    {
+      "dataset": "ProteinGym A4GRB6_PSEAI_Chen_2020",
+      "runs": [
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 448,
+              "outside_spearman": 0.48967944377935363,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.142,
+              "spearman": 0.6133324605084269,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.178
+            },
+            "curated_metal_binding_site": {
+              "n": 113,
+              "outside_spearman": 0.5085286406996115,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.476,
+              "spearman": 0.3448749085102136,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.894
+            },
+            "structure_metal_site_shell_5a": {
+              "n": 802,
+              "outside_spearman": 0.47777501640065423,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.084,
+              "spearman": 0.5846324586702588,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.11
+            },
+            "structure_wl3_inhibitor_contact_5a": {
+              "n": 247,
+              "outside_spearman": 0.5207342985260611,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.186,
+              "spearman": 0.6612974896237143,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.876
+            }
+          },
+          "path": "results/proteingym_vim2_esm2_t12_35M/metrics.json",
+          "scorer": "ESM2MaskedMarginalScorer",
+          "spearman_catalytic": 0.3448749085102136,
+          "spearman_non_catalytic": 0.5085286406996115,
+          "spearman_overall": 0.5279512817899527
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 448,
+              "outside_spearman": 0.44622581700737846,
+              "position_null_direction": "higher_than_position_matched_null",
+              "position_null_p": 0.03,
+              "spearman": 0.6341571647079359
+            },
+            "curated_metal_binding_site": {
+              "n": 113,
+              "outside_spearman": 0.4723951993115539,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.5445445445445446,
+              "spearman": 0.30786921532825706
+            },
+            "structure_metal_site_shell_5a": {
+              "n": 802,
+              "outside_spearman": 0.4275887062601638,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.06,
+              "spearman": 0.5698919512723136
+            },
+            "structure_wl3_inhibitor_contact_5a": {
+              "n": null,
+              "outside_spearman": null,
+              "spearman": null
+            }
+          },
+          "path": "results/proteingym_vim2_msa_conservation/metrics.json",
+          "scorer": "MSAConservationLogOddsScorer",
+          "spearman_catalytic": 0.30786921532825706,
+          "spearman_non_catalytic": 0.4723951993115539,
+          "spearman_overall": 0.49307608621754995
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 448,
+              "outside_spearman": 0.6252646937438627,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.282,
+              "spearman": 0.5077941162192391,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.746
+            },
+            "curated_metal_binding_site": {
+              "n": 113,
+              "outside_spearman": 0.619710098533825,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.178,
+              "spearman": 0.2583338878168874,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.982
+            },
+            "structure_metal_site_shell_5a": {
+              "n": 802,
+              "outside_spearman": 0.6551580359721196,
+              "position_null_direction": "lower_than_position_matched_null",
+              "position_null_p": 0.0,
+              "spearman": 0.449522671471625,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.29
+            },
+            "structure_wl3_inhibitor_contact_5a": {
+              "n": null,
+              "outside_spearman": null,
+              "spearman": null
+            }
+          },
+          "path": "results/proteingym_vim2_proteinmpnn/metrics.json",
+          "scorer": "ProteinMPNNProfileScorer",
+          "spearman_catalytic": 0.2583338878168874,
+          "spearman_non_catalytic": 0.619710098533825,
+          "spearman_overall": 0.6259428621111488
+        }
+      ]
+    },
+    {
+      "dataset": "ProteinGym AMIE_PSEAE_Wrenbeck_2017",
+      "runs": [
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 259,
+              "outside_spearman": 0.39015330842270535,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.778,
+              "spearman": 0.433493513524107,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.874
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 621,
+              "outside_spearman": 0.40688830187420655,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.312,
+              "spearman": 0.3071449270634422,
+              "strict_null_direction": "lower_than_covariate_matched_null",
+              "strict_null_p": 0.004
+            },
+            "uniprot_active_site": {
+              "n": null,
+              "outside_spearman": null,
+              "spearman": null
+            }
+          },
+          "path": "results/proteingym_amie_esm2_t12_35M/metrics.json",
+          "scorer": "ESM2MaskedMarginalScorer",
+          "spearman_catalytic": 0.0911344817089076,
+          "spearman_non_catalytic": 0.39910741033015334,
+          "spearman_overall": 0.40821122277295757
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 259,
+              "outside_spearman": 0.4100578687309255,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.652,
+              "spearman": 0.46197876240446856
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 621,
+              "outside_spearman": 0.41032745952809735,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.222,
+              "spearman": 0.3110468486222754
+            },
+            "uniprot_active_site": {
+              "n": null,
+              "outside_spearman": null,
+              "spearman": null
+            }
+          },
+          "path": "results/proteingym_amie_msa_conservation/metrics.json",
+          "scorer": "MSAConservationLogOddsScorer",
+          "spearman_catalytic": 0.29442474814500347,
+          "spearman_non_catalytic": 0.4217135752020171,
+          "spearman_overall": 0.4305916961728464
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 259,
+              "outside_spearman": 0.33440955261060806,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.772,
+              "spearman": 0.3884326304942673,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.212
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 621,
+              "outside_spearman": 0.35358904551631354,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.422,
+              "spearman": 0.2578642867838169,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.38
+            },
+            "uniprot_active_site": {
+              "n": null,
+              "outside_spearman": null,
+              "spearman": null
+            }
+          },
+          "path": "results/proteingym_amie_proteinmpnn/metrics.json",
+          "scorer": "ProteinMPNNProfileScorer",
+          "spearman_catalytic": 0.2661762084904901,
+          "spearman_non_catalytic": 0.3370998208544771,
+          "spearman_overall": 0.3457211999922314
+        }
+      ]
+    },
+    {
+      "dataset": "ProteinGym Q59976_STRSQ_Romero_2015",
+      "runs": [
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 60,
+              "outside_spearman": 0.43411071025665676,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.984,
+              "spearman": 0.43273131425395933,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.716
+            },
+            "curated_catalytic_site": {
+              "n": 12,
+              "outside_spearman": 0.44338518713504693,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.772,
+              "spearman": 0.5104895104895105,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.4
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 149,
+              "outside_spearman": 0.4285792792460989,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.654,
+              "spearman": 0.38079405330942867,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.166
+            }
+          },
+          "path": "results/proteingym_bgly_esm2_t12_35M/metrics.json",
+          "scorer": "ESM2MaskedMarginalScorer",
+          "spearman_catalytic": 0.5104895104895105,
+          "spearman_non_catalytic": 0.44338518713504693,
+          "spearman_overall": 0.44809350507637674
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 60,
+              "outside_spearman": 0.5525484897694193,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.266,
+              "spearman": 0.3759204202734922
+            },
+            "curated_catalytic_site": {
+              "n": 12,
+              "outside_spearman": 0.5584743921714409,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.9140546006066734,
+              "spearman": 0.4405594405594406
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 149,
+              "outside_spearman": 0.5477149066384368,
+              "position_null_direction": "lower_than_position_matched_null",
+              "position_null_p": 0.044,
+              "spearman": 0.3595551577056657
+            }
+          },
+          "path": "results/proteingym_bgly_msa_conservation/metrics.json",
+          "scorer": "MSAConservationLogOddsScorer",
+          "spearman_catalytic": 0.4405594405594406,
+          "spearman_non_catalytic": 0.5584743921714409,
+          "spearman_overall": 0.5614833390200183
+        },
+        {
+          "groups": {
+            "active_site_neighborhood": {
+              "n": 60,
+              "outside_spearman": 0.3558406456540366,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.854,
+              "spearman": 0.32186718532925807,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.356
+            },
+            "curated_catalytic_site": {
+              "n": 12,
+              "outside_spearman": 0.35710134790773945,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.484,
+              "spearman": 0.6363636363636364,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.052
+            },
+            "structure_catalytic_shell_5a": {
+              "n": 149,
+              "outside_spearman": 0.3661442715265406,
+              "position_null_direction": "inside_position_matched_null_interval",
+              "position_null_p": 0.332,
+              "spearman": 0.26334759059701895,
+              "strict_null_direction": "inside_covariate_matched_null_interval",
+              "strict_null_p": 0.56
+            }
+          },
+          "path": "results/proteingym_bgly_proteinmpnn/metrics.json",
+          "scorer": "ProteinMPNNProfileScorer",
+          "spearman_catalytic": 0.6363636363636364,
+          "spearman_non_catalytic": 0.35710134790773945,
+          "spearman_overall": 0.36178161553341276
+        }
+      ]
+    }
+  ],
+  "comparison_type": "P0 model-family comparison",
+  "model_families": [
+    "ESM-2 masked marginal sequence model",
+    "MSA conservation baseline",
+    "ProteinMPNN fixed-backbone structure profile"
+  ]
+}

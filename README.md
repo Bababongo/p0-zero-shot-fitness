@@ -28,6 +28,8 @@ Read the four-enzyme 8M comparison: [ProteinGym Four-Enzyme ESM-2 8M Comparison]
 
 Read the four-enzyme 35M comparison: [ProteinGym Four-Enzyme ESM-2 35M Comparison](docs/protein_gym_four_enzyme_35m_comparison.md)
 
+Read the ProteinMPNN model-family comparison: [ProteinMPNN Model-Family Comparison](docs/protein_mpnn_model_family_comparison.md)
+
 Read the pre-report control upgrade: [P0 Pre-Report Control Upgrade](docs/p0_pre_report_control_upgrade.md)
 
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.
@@ -57,6 +59,8 @@ Protein language models can capture evolutionary and stability constraints, but 
 - approximate solvent-accessibility/SASA controls for structure-aware matched null tests,
 - a true MSA conservation baseline across the four-enzyme panel,
 - conservation-plus-SASA matched controls for mechanism-slice interpretation,
+- ProteinMPNN fixed-backbone structure profiles for VIM-2, AMIE, and beta-glucosidase,
+- a model-family comparison across ESM-2, MSA conservation, and ProteinMPNN,
 - a placeholder-vs-ESM-2 baseline comparison across the four-enzyme panel,
 - reproducible CLI output and a simple SVG plot.
 
@@ -381,6 +385,16 @@ Four-enzyme MSA conservation baseline:
 
 The MSA baseline makes the result more intellectually honest: ESM-2 35M is stronger overall for TEM-1 and slightly stronger for VIM-2, but family-specific conservation is stronger overall for AMIE and beta-glucosidase.
 
+Ready-enzyme ProteinMPNN model-family comparison:
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ProteinMPNN Overall | ProteinMPNN Mechanism Read |
+| --- | ---: | ---: | ---: | --- |
+| `A4GRB6_PSEAI_Chen_2020` | 0.5280 | 0.4931 | 0.6259 | Strong overall, weak at curated metal site: 0.2583 vs 0.6197 background |
+| `AMIE_PSEAE_Wrenbeck_2017` | 0.4082 | 0.4306 | 0.3457 | Does not rescue weak catalytic-site behavior |
+| `Q59976_STRSQ_Romero_2015` | 0.4481 | 0.5615 | 0.3618 | High exact catalytic-site rho, but only 12 variants and weak shell |
+
+ProteinMPNN strengthens the core P0 story. Fixed-backbone compatibility can be strong globally, especially for VIM-2, while mechanism-local residues still behave differently. The comparison is documented in `docs/protein_mpnn_model_family_comparison.md`.
+
 Four-enzyme conservation-plus-SASA matched control:
 
 | Dataset | Slice | Observed Spearman | Conservation+SASA Null 95% Interval | Empirical p | Read |
@@ -395,15 +409,15 @@ This is the strongest control so far. It says the raw mechanism-slice lifts are 
 
 ## Current Scope
 
-The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, MSA conservation baselines, and conservation-plus-SASA matched controls. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance plus an experimental 5ACX/WL3 ligand-contact group, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
+The fixture version is intentionally offline and deterministic. The real ProteinGym runs now cover TEM-1 beta-lactamase, VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. All four enzymes have ESM-2 8M, ESM-2 35M, MSA conservation baselines, and conservation-plus-SASA matched controls. VIM-2, AMIE, and beta-glucosidase also have ProteinMPNN fixed-backbone structure baselines. TEM-1 and AMIE have UniProt-backed catalytic labels. VIM-2 has reference-record and PDB-backed metal-site provenance plus an experimental 5ACX/WL3 ligand-contact group, with a transparent caveat that the original A4GRB6 UniProt accession is inactive/deleted.
 
 ## Next Scientific Steps
 
-1. Add an explicit ESM-2-vs-MSA interpretation figure.
-2. Run the ProteinMPNN structure-conditioned baseline using `docs/protein_mpnn_structure_baseline_plan.md`.
-3. Add MSA Transformer only if the ProteinMPNN result leaves a model-family ambiguity worth resolving.
+1. Add an explicit ESM-2-vs-MSA-vs-ProteinMPNN interpretation figure.
+2. Add TEM-1 ProteinMPNN only after staging a target-aligned BLAT_ECOLX structure or a defensible profile remap.
+3. Add MSA Transformer only if a specific model-family ambiguity remains worth resolving.
 4. Add prospective validation on a new enzyme-design target.
-5. Turn the four-enzyme result into a clean methods card.
+5. Turn the model-family result into a clean methods card.
 
 ## Portfolio Signal
 

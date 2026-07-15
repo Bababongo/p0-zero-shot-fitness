@@ -175,6 +175,32 @@ Matched-position null controls at 35M:
 
 This makes the project more novel and more careful. The result is not a blanket claim that active-site neighborhoods are always special. The result is that model scale improves global zero-shot fitness prediction, while mechanism-specific claims require residue-zone controls. TEM-1 remains the strongest positive functional-neighborhood case. VIM-2, AMIE, and beta-glucosidase show why controls matter.
 
+## 1.6 v4 Addendum: ProteinMPNN Model-Family Comparison
+
+P0 now includes a structure-conditioned ProteinMPNN baseline for the three enzymes whose available structures directly match the ProteinGym DMS target sequence: VIM-2, AMIE, and beta-glucosidase. TEM-1 is intentionally excluded from this first pass because `1M40.pdb` starts at residue 26 and does not directly match the full 286-aa DMS target sequence.
+
+The comparison now separates three model families:
+
+| Model family | Biological signal |
+| --- | --- |
+| ESM-2 masked marginal | Sequence-context plausibility |
+| MSA conservation | Family-level evolutionary constraint |
+| ProteinMPNN | Fixed-backbone structure compatibility |
+
+Ready-enzyme result:
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ProteinMPNN Overall | ProteinMPNN Exact Site | ProteinMPNN Background |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| VIM-2 | 0.5280 | 0.4931 | 0.6259 | 0.2583 | 0.6197 |
+| AMIE | 0.4082 | 0.4306 | 0.3457 | 0.2662 | 0.3371 |
+| Beta-glucosidase | 0.4481 | 0.5615 | 0.3618 | 0.6364 | 0.3571 |
+
+The most important result is VIM-2. ProteinMPNN is strongest overall, but it is much weaker at curated metal-binding residues than in the non-metal background. That is exactly the kind of model-family disagreement P0 was built to expose.
+
+The final interpretation becomes sharper:
+
+> Global mutation ranking can be improved by different model families, but mechanism-local residues still need separate evaluation. Fixed-backbone compatibility does not fully explain catalytic or metal-site behavior.
+
 ## 2. The 30-Second Explanation
 
 P0 asks whether protein language models fail differently near catalytic residues. I started with a public TEM-1 beta-lactamase deep mutational scanning dataset from ProteinGym, scored mutations with ESM-2, and compared model scores to experimental fitness. I then expanded the benchmark to VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase. Instead of only reporting one overall correlation, I split each assay into biologically meaningful residue groups: exact catalytic or metal-binding sites, structure-derived mechanism shells, active-site neighborhoods, and the rest of the protein.
@@ -753,7 +779,7 @@ The placeholder scorer is an engineering sanity check. It lets me prove the pipe
 
 ### Question: What would you do next?
 
-I would next add a ProteinMPNN structure-conditioned baseline. The project already has MSA conservation and conservation-plus-SASA controls, so ProteinMPNN is the cleanest next model-family comparison: it asks whether the same mechanism-local signals are visible to a fixed-backbone inverse-folding model.
+I added a ProteinMPNN structure-conditioned baseline after the MSA conservation and conservation-plus-SASA controls. The clean next move is a single ESM-2-vs-MSA-vs-ProteinMPNN figure and a target-aligned TEM-1 ProteinMPNN run if a defensible full-length structure or remap is staged.
 
 ## 20. Limitations
 
@@ -763,7 +789,7 @@ The project has clear limitations:
 2. The ligand-contact groups come from one inhibitor-bound TEM-1 structure and one inhibitor-bound VIM-2 structure.
 3. DMS fitness reflects an assay context, not pure catalytic chemistry.
 4. ESM-2 is sequence-only and does not explicitly model ligand chemistry or transition states.
-5. The benchmark does not yet include the planned ProteinMPNN structure-conditioned baseline.
+5. The first ProteinMPNN pass excludes TEM-1 because the available structure is not target-aligned to the full DMS sequence.
 6. The project is retrospective, not a prospective design campaign.
 
 These limitations do not weaken the project. They make the claims precise.
@@ -772,9 +798,9 @@ These limitations do not weaken the project. They make the claims precise.
 
 High-priority next steps:
 
-1. Add an explicit ESM-2-vs-MSA interpretation figure.
-2. Run the ProteinMPNN structure-conditioned baseline across the four-enzyme panel.
-3. Compare against MSA Transformer only if ProteinMPNN changes the interpretation or leaves a clear ambiguity.
+1. Add an explicit ESM-2-vs-MSA-vs-ProteinMPNN interpretation figure.
+2. Add TEM-1 ProteinMPNN only after staging a target-aligned BLAT_ECOLX structure or defensible profile remap.
+3. Compare against MSA Transformer only if ProteinMPNN leaves a specific MSA-aware model ambiguity.
 4. Add more ligand-bound or cofactor-aware labels where clean experimental structures exist.
 5. Upgrade AMIE substrate-pocket labels with stronger provenance.
 6. Add prospective validation on a new enzyme-design target.
@@ -806,7 +832,7 @@ The project includes a public writeup, social post draft, beginner code walkthro
 
 ## 23. Current Status
 
-P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete and its first four-enzyme ESM-2 35M panel complete.
+P0 v1 and v2 are complete. P0 v3 has its first infrastructure step complete, its first four-enzyme ESM-2 35M panel complete, its MSA conservation baseline complete, and its first ProteinMPNN model-family comparison complete for the three target-aligned ready enzymes.
 
 Complete means:
 
@@ -814,6 +840,8 @@ Complete means:
 - ESM-2 8M run locally,
 - ESM-2 35M run on Savio for TEM-1, VIM-2, AMIE, and beta-glucosidase,
 - ESM-2 8M run locally for beta-glucosidase,
+- MSA conservation baseline completed across the four-enzyme panel,
+- ProteinMPNN baseline completed for VIM-2, AMIE, and beta-glucosidase,
 - outputs copied back,
 - metrics compared,
 - enzyme-panel registry validated,

@@ -12,3 +12,4 @@ dist/
 *.zip
 data/proteingym/msas/
 logs/
+results/*_proteinmpnn/mpnn_raw/

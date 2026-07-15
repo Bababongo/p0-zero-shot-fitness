@@ -23,6 +23,8 @@ This repo implements a reproducible Python benchmark for enzyme variant-effect p
 - matched residue-position null controls,
 - covariate-matched controls for mutation coverage, DMS variance, model-score sensitivity, relative sequence position, structure contact density, and approximate solvent accessibility,
 - MSA conservation baseline across all four enzymes,
+- ProteinMPNN fixed-backbone structure baselines for VIM-2, AMIE, and beta-glucosidase,
+- a model-family comparison across sequence-context, family-conservation, and structure-conditioned signals,
 - Savio/LBNL SLURM scripts for 35M model runs,
 - public-facing reports and portfolio artifacts.
 
@@ -91,6 +93,33 @@ ProteinGym A2M files include match-state and query-only/lowercase positions. The
 | Beta-glucosidase | 442 / 501 | 0.4481 | 0.5615 | 0.5105 | 0.4406 |
 
 Interpretation: ESM-2 35M is strongest overall for TEM-1 and slightly ahead for VIM-2, while family-specific MSA conservation is stronger overall for AMIE and beta-glucosidase. This makes the benchmark sharper: the question is not just whether ESM-2 works, but whether it adds value beyond classical family conservation in the same mechanism slices.
+
+### ProteinMPNN Structure-Conditioned Baseline
+
+P0 now adds a fixed-backbone ProteinMPNN comparison for the three enzymes whose available structures directly match the ProteinGym DMS target sequence: VIM-2, AMIE, and beta-glucosidase.
+
+TEM-1 is intentionally excluded from this first ProteinMPNN pass because the available `1M40.pdb` structure starts at residue 26 and does not directly match the full 286-aa DMS target sequence.
+
+ProteinMPNN asks a different question from ESM-2 and MSA conservation:
+
+```text
+score = log P(mutant amino acid | backbone) - log P(wild-type amino acid | backbone)
+```
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ProteinMPNN Overall | ProteinMPNN Mechanism Read |
+| --- | ---: | ---: | ---: | --- |
+| VIM-2 | 0.5280 | 0.4931 | 0.6259 | Strong overall, but weak at the curated metal site: 0.2583 vs 0.6197 background |
+| AMIE | 0.4082 | 0.4306 | 0.3457 | Does not rescue weak catalytic-site behavior |
+| Beta-glucosidase | 0.4481 | 0.5615 | 0.3618 | High exact catalytic-site score, but only 12 variants and weak broader catalytic shell |
+
+The VIM-2 result is the clearest model-family finding. ProteinMPNN is best overall on VIM-2, but its curated metal-site correlation is much lower than its non-metal background. This supports the core P0 argument: a model can rank mutations well globally while behaving differently on residues tied to mechanism.
+
+The full comparison is in:
+
+```text
+docs/protein_mpnn_model_family_comparison.md
+results/proteingym_ready_enzyme_model_family_comparison.json
+```
 
 ## Metrics
 
@@ -234,7 +263,8 @@ Novelty comes from:
 - showing positive and negative cases,
 - running true MSA conservation baselines and SASA-matched controls,
 - adding conservation-plus-SASA matched controls to test whether mechanism slices remain unusual after matching both family conservation and structural exposure,
-- adding an experimental 5ACX/WL3 ligand-bound VIM-2 contact group with mmCIF target-sequence mapping.
+- adding an experimental 5ACX/WL3 ligand-bound VIM-2 contact group with mmCIF target-sequence mapping,
+- comparing ESM-2, MSA conservation, and ProteinMPNN on the same residue labels and controls.
 
 The intellectual move is to treat zero-shot PLM scores as something to audit mechanistically, not just leaderboard-rank globally.
 
@@ -247,6 +277,7 @@ The intellectual move is to treat zero-shot PLM scores as something to audit mec
 - Approximate SASA is useful for control matching but not a substitute for a dedicated structural-biology package.
 - Spearman on exact catalytic residues can be noisy because the number of catalytic positions is small.
 - The conservation-plus-SASA control is a matched-null analysis, not a prospective supervised model; it controls interpretation of mechanism slices rather than replacing ESM-2 as a global predictor.
+- The first ProteinMPNN pass excludes TEM-1 because the available experimental structure is not target-aligned to the full ProteinGym sequence.
 
 ## Reproducibility
 
@@ -294,8 +325,8 @@ python scripts/score_msa_conservation_baseline.py \
 
 If asked what P0 proves:
 
-> I built a zero-shot enzyme fitness benchmark around a mechanism-aware question. Instead of only asking whether ESM-2 correlates with DMS fitness globally, I split residues into catalytic sites, active-site neighborhoods, ligand or metal shells, and background residues. Then I added matched null controls so I could tell whether a mechanism slice was genuinely unusual or just confounded by mutation coverage, variance, model-score spread, position, burial, conservation, or solvent exposure. The result is nuanced: ESM-2 35M works globally across four enzymes, VIM-2 and TEM-1 show the strongest raw mechanism-local signals, and AMIE/beta-glucosidase show that PLMs can still fail on chemistry-relevant residues.
+> I built a zero-shot enzyme fitness benchmark around a mechanism-aware question. Instead of only asking whether ESM-2 correlates with DMS fitness globally, I split residues into catalytic sites, active-site neighborhoods, ligand or metal shells, and background residues. Then I added matched null controls so I could tell whether a mechanism slice was genuinely unusual or just confounded by mutation coverage, variance, model-score spread, position, burial, conservation, or solvent exposure. I also compared ESM-2 against MSA conservation and ProteinMPNN, so the benchmark separates sequence-context, family-conservation, and fixed-backbone structure signals. The result is nuanced: ESM-2 35M works globally across four enzymes, ProteinMPNN is strongest overall on VIM-2 but weak at metal-site residues, and AMIE/beta-glucosidase show that model-family performance remains enzyme-specific.
 
 If asked what you would improve next:
 
-> I would next add ProteinMPNN as a structure-conditioned baseline. The current project already compares ESM-2 against MSA conservation and conservation-plus-SASA controls, so ProteinMPNN is the cleaner next model-family test: it asks whether a fixed-backbone inverse-folding model sees the same catalytic, ligand-contact, and metal-shell signals. I would only add MSA Transformer after that if ProteinMPNN leaves a specific ambiguity about MSA-aware neural models.
+> I would next add a target-aligned TEM-1 structure for ProteinMPNN, then make one clear model-family figure comparing ESM-2, MSA conservation, and ProteinMPNN. I would only add MSA Transformer if there is a specific ambiguity about MSA-aware neural models, and I would prioritize prospective validation on a new enzyme-design target over adding more retrospective models.

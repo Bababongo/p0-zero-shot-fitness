@@ -12,6 +12,8 @@ to:
 
 That matters for P0 because catalytic, ligand-contact, and metal-shell residues are not only sequence-context questions. They are also fixed-backbone compatibility questions. ProteinMPNN gives a lightweight way to ask whether the current ESM-2 mechanism-slice results are mostly sequence/evolutionary signal or whether a backbone-conditioned model sees a different pattern.
 
+Status: completed for the three target-aligned ready enzymes: VIM-2, AMIE, and beta-glucosidase. TEM-1 remains excluded until a target-aligned BLAT_ECOLX structure or defensible profile remap is staged.
+
 ## Scientific Role
 
 Treat ProteinMPNN as a structure-conditioned baseline, not as a direct enzyme-activity model.
@@ -122,7 +124,7 @@ The converter checks that ProteinMPNN's native sequence indices match the FASTA.
 
 ## Minimum Valuable Comparison
 
-Run ProteinMPNN on all four enzymes and compare:
+Run ProteinMPNN on ready target-aligned enzymes and compare:
 
 - overall Spearman,
 - exact catalytic or metal-site Spearman,
@@ -131,6 +133,22 @@ Run ProteinMPNN on all four enzymes and compare:
 - conservation-plus-SASA matched controls.
 
 Do not start with MSA Transformer unless the ProteinMPNN comparison changes the story or leaves a clear ambiguity.
+
+## Completed Result
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ProteinMPNN Overall | ProteinMPNN Mechanism Read |
+| --- | ---: | ---: | ---: | --- |
+| VIM-2 | 0.5280 | 0.4931 | 0.6259 | Strong overall, weak at curated metal site: 0.2583 vs 0.6197 background |
+| AMIE | 0.4082 | 0.4306 | 0.3457 | Weaker than ESM-2 and MSA overall |
+| Beta-glucosidase | 0.4481 | 0.5615 | 0.3618 | High exact catalytic-site score, but only 12 variants and weak broader shell |
+
+The strongest read is VIM-2. ProteinMPNN is the best overall model family there, but it drops sharply on the curated metal-binding residues and metal-site shell. That supports the P0 thesis: good global mutation ranking does not imply good mechanism-local behavior.
+
+Detailed writeup:
+
+```text
+docs/protein_mpnn_model_family_comparison.md
+```
 
 ## Readiness Audit
 

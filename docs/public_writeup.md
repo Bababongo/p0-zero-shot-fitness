@@ -10,6 +10,8 @@ I later added a matched residue-position null control. That changed the most car
 
 I then expanded the benchmark seed to VIM-2 metallo-beta-lactamase, AMIE aliphatic amidase, and beta-glucosidase, and ran ESM-2 35M across all four enzymes. Scaling improved global zero-shot performance across the panel, but the mechanism-slice story became more nuanced: TEM-1 retained a matched-null active-site-neighborhood signal, while VIM-2, AMIE, and beta-glucosidase showed useful raw mechanism signals that remained inside matched-position null intervals at 35M.
 
+The latest upgrade adds a ProteinMPNN structure-conditioned baseline for the three enzymes with target-aligned structures: VIM-2, AMIE, and beta-glucosidase. This turns the project into a model-family comparison across ESM-2 sequence context, MSA conservation, and fixed-backbone structure compatibility.
+
 ## Why I Built This
 
 Protein language models are often evaluated with broad variant-effect prediction metrics. That is useful, but enzymes are not just sequence objects. Enzyme fitness can depend on active-site chemistry, catalytic residues, cofactors, substrate positioning, and transition-state stabilization.
@@ -179,6 +181,18 @@ The current strongest claim is therefore:
 
 > Scaling improves global zero-shot performance, but exact catalytic chemistry remains harder to interpret than broader sequence and structure constraints. Broader active-site neighborhoods can contain stronger zero-shot signal, but the pattern is enzyme-dependent and must be tested against matched controls.
 
+## ProteinMPNN Model-Family Result
+
+The new ProteinMPNN comparison asks whether fixed-backbone compatibility explains the same mechanism-local patterns:
+
+| Dataset | ESM-2 35M Overall | MSA Overall | ProteinMPNN Overall | ProteinMPNN Mechanism Read |
+| --- | ---: | ---: | ---: | --- |
+| VIM-2 | 0.5280 | 0.4931 | 0.6259 | Strong overall, weak at curated metal site: 0.2583 vs 0.6197 background |
+| AMIE | 0.4082 | 0.4306 | 0.3457 | Weaker than ESM-2 and MSA overall |
+| Beta-glucosidase | 0.4481 | 0.5615 | 0.3618 | High exact catalytic-site score, but only 12 variants and weak broader shell |
+
+The VIM-2 result is the cleanest new signal. ProteinMPNN is best overall, but much weaker at metal-site residues than outside them. That supports the broader P0 point: good global mutation ranking does not mean a model handles mechanism-local residues the same way.
+
 Beta-glucosidase is the clearest example of why the controls matter. At 8M, its AF2 catalytic shell was higher than same-size random residue-position controls, with empirical p = `0.018`. At 35M, global Spearman improved from `0.1442` to `0.4481`, but the catalytic shell fell inside the matched-position null interval. The stronger model improved the average task without making the mechanism slice statistically special.
 
 ## What This Repo Demonstrates
@@ -194,6 +208,7 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 - adds matched residue-position null controls for mechanism-relevant slices,
 - runs a swappable scorer interface,
 - supports ESM-2 masked-marginal scoring,
+- supports MSA conservation and ProteinMPNN structure-profile baselines,
 - computes overall and subgroup Spearman correlations,
 - reports bootstrap confidence intervals,
 - writes scored variants, metrics, and SVG plots,
@@ -201,10 +216,10 @@ This project is not just a notebook result. It is a small, reproducible benchmar
 
 ## Next Experiments
 
-1. Add conservation-matched and solvent-accessibility-matched null controls.
-2. Add the ProteinMPNN structure-conditioned baseline.
-3. Run ESM-2 150M as the next scaling step.
-4. Turn the four-enzyme result into a short portfolio figure and methods card.
+1. Build one ESM-2-vs-MSA-vs-ProteinMPNN model-family figure.
+2. Add TEM-1 ProteinMPNN only after staging a target-aligned BLAT_ECOLX structure or defensible profile remap.
+3. Run a larger ESM-2 model only if it answers a specific remaining question.
+4. Turn the model-family result into a short portfolio figure and methods card.
 
 ## Why This Matters For AI Biology
 
