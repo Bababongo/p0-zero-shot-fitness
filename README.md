@@ -8,6 +8,8 @@ Read the public-facing result writeup: [Do Protein Language Models Fail Differen
 
 Read the final report: [P0 Final Report - Mechanism-Sliced Zero-Shot Fitness](docs/p0_final_report.md)
 
+Read the final project package: [P0 Final Project Package](docs/p0_final_project_package.md)
+
 Read the full project report: [P0 Extensive Project Report](docs/p0_extensive_project_report.md)
 
 Read the portfolio card: [Mechanism-Sliced Zero-Shot Fitness](docs/p0_portfolio_card.md)

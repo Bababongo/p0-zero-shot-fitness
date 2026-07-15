@@ -25,6 +25,8 @@ Do protein language models fail differently near catalytic and mechanism-relevan
 - A model-family comparison across ESM-2, MSA conservation, and ProteinMPNN.
 - Savio SLURM workflows for GPU scoring and artifact recovery.
 
+Full package: [P0 Final Project Package](p0_final_project_package.md)
+
 ## Result Snapshot
 
 | Enzyme | Overall Spearman | Exact Site | Active-Site Neighborhood | Matched-Null Read |
