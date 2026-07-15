@@ -30,6 +30,8 @@ Read the four-enzyme 35M comparison: [ProteinGym Four-Enzyme ESM-2 35M Compariso
 
 Read the ProteinMPNN model-family comparison: [ProteinMPNN Model-Family Comparison](docs/protein_mpnn_model_family_comparison.md)
 
+Model-family figure: [P0 model-family comparison SVG](docs/assets/p0_model_family_comparison.svg)
+
 Read the pre-report control upgrade: [P0 Pre-Report Control Upgrade](docs/p0_pre_report_control_upgrade.md)
 
 New to Python? Start with the [beginner code walkthrough](docs/code_walkthrough_for_beginners.md), then run `examples/beginner_walkthrough.py`.

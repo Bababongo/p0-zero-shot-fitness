@@ -8,6 +8,8 @@ I built a reproducible enzyme DMS benchmark showing that ESM-2 scale improves gl
 
 ![P0 four-enzyme ESM-2 35M portfolio figure](assets/p0_four_enzyme_35m_portfolio_figure.svg)
 
+![P0 model-family comparison](assets/p0_model_family_comparison.svg)
+
 ## Scientific Question
 
 Do protein language models fail differently near catalytic and mechanism-relevant residues than across the rest of an enzyme?

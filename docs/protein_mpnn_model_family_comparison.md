@@ -1,5 +1,7 @@
 # ProteinMPNN Model-Family Comparison
 
+![P0 model-family comparison](assets/p0_model_family_comparison.svg)
+
 ## Question
 
 Does a structure-conditioned inverse-folding model see the same mechanism-local mutation patterns as ESM-2 and MSA conservation?

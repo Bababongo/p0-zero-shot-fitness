@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="860" viewBox="0 0 1500 860" role="img" aria-labelledby="title desc">
+<title id="title">P0 model-family comparison</title>
+<desc id="desc">A comparison of ESM-2, MSA conservation, and ProteinMPNN Spearman correlations across VIM-2, AMIE, and beta-glucosidase.</desc>
+<rect width="1500" height="860" rx="28" fill="#f8f5ee"/>
+<text x="58" y="66" font-family="Inter, Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#17201c">P0 model-family comparison</text>
+<text x="58" y="103" font-family="Inter, Helvetica, Arial, sans-serif" font-size="17" fill="#65746d">Same DMS assays, same mechanism labels, different biological inductive biases.</text>
+<text x="58" y="145" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5" fill="#65746d">OVERALL BARS + EXACT CATALYTIC/METAL-SITE DOTS</text>
+<rect x="58" y="170" width="32" height="14" rx="7" fill="#2c7fb8"/>
+<text x="100" y="181" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">ESM-2</text>
+<rect x="213" y="170" width="32" height="14" rx="7" fill="#5a7d38"/>
+<text x="255" y="181" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">MSA</text>
+<rect x="368" y="170" width="32" height="14" rx="7" fill="#b55b32"/>
+<text x="410" y="181" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">ProteinMPNN</text>
+<circle cx="555" cy="177" r="7" fill="#1f1f1f"/>
+<text x="570" y="181" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">exact catalytic or metal-site Spearman</text>
+<line x1="315.0" y1="206" x2="315.0" y2="735" stroke="#d8d1c5" stroke-width="1"/>
+<text x="315.0" y="765" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">0.00</text>
+<line x1="602.5" y1="206" x2="602.5" y2="735" stroke="#d8d1c5" stroke-width="1"/>
+<text x="602.5" y="765" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">0.25</text>
+<line x1="890.0" y1="206" x2="890.0" y2="735" stroke="#d8d1c5" stroke-width="1"/>
+<text x="890.0" y="765" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">0.50</text>
+<line x1="1120.0" y1="206" x2="1120.0" y2="735" stroke="#d8d1c5" stroke-width="1"/>
+<text x="1120.0" y="765" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">0.70</text>
+<text x="717.5" y="795" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" fill="#65746d">Spearman correlation against experimental DMS fitness</text>
+<text x="58" y="236" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#17201c">VIM-2</text>
+<text x="58" y="262" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">metallo-beta-lactamase</text>
+<text x="205" y="236" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ESM-2</text>
+<line x1="315" y1="230" x2="1120" y2="230" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="220" width="607.1" height="20" rx="10" fill="#2c7fb8"/>
+<text x="932.1" y="235" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.528</text>
+<circle cx="899.8" cy="230" r="7" fill="#ffffff" stroke="#2c7fb8" stroke-width="2"/>
+<circle cx="711.6" cy="230" r="7" fill="#1f1f1f"/>
+<text x="205" y="272" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">MSA</text>
+<line x1="315" y1="266" x2="1120" y2="266" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="256" width="567.0" height="20" rx="10" fill="#5a7d38"/>
+<text x="892.0" y="271" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.493</text>
+<circle cx="858.3" cy="266" r="7" fill="#ffffff" stroke="#5a7d38" stroke-width="2"/>
+<circle cx="669.0" cy="266" r="7" fill="#1f1f1f"/>
+<text x="205" y="308" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ProteinMPNN</text>
+<line x1="315" y1="302" x2="1120" y2="302" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="292" width="719.8" height="20" rx="10" fill="#b55b32"/>
+<text x="1044.8" y="307" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.626</text>
+<circle cx="1027.7" cy="302" r="7" fill="#ffffff" stroke="#b55b32" stroke-width="2"/>
+<circle cx="612.1" cy="302" r="7" fill="#1f1f1f"/>
+<rect x="1160" y="212" width="282" height="82" rx="18" fill="#eee9df" stroke="#b9ad9c" stroke-width="1"/>
+<text x="1183" y="238" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#17201c">Read</text>
+<text x="1183" y="261" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#65746d">
+<tspan x="1183" dy="0">ProteinMPNN wins overall,</tspan>
+<tspan x="1183" dy="17">but drops at metal-site</tspan>
+<tspan x="1183" dy="17">residues.</tspan>
+</text>
+<text x="58" y="404" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#17201c">AMIE</text>
+<text x="58" y="430" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">aliphatic amidase</text>
+<text x="205" y="404" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ESM-2</text>
+<line x1="315" y1="398" x2="1120" y2="398" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="388" width="469.4" height="20" rx="10" fill="#2c7fb8"/>
+<text x="794.4" y="403" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.408</text>
+<circle cx="774.0" cy="398" r="7" fill="#ffffff" stroke="#2c7fb8" stroke-width="2"/>
+<circle cx="419.8" cy="398" r="7" fill="#1f1f1f"/>
+<text x="205" y="440" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">MSA</text>
+<line x1="315" y1="434" x2="1120" y2="434" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="424" width="495.2" height="20" rx="10" fill="#5a7d38"/>
+<text x="820.2" y="439" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.431</text>
+<circle cx="800.0" cy="434" r="7" fill="#ffffff" stroke="#5a7d38" stroke-width="2"/>
+<circle cx="653.6" cy="434" r="7" fill="#1f1f1f"/>
+<text x="205" y="476" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ProteinMPNN</text>
+<line x1="315" y1="470" x2="1120" y2="470" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="460" width="397.6" height="20" rx="10" fill="#b55b32"/>
+<text x="722.6" y="475" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.346</text>
+<circle cx="702.7" cy="470" r="7" fill="#ffffff" stroke="#b55b32" stroke-width="2"/>
+<circle cx="621.1" cy="470" r="7" fill="#1f1f1f"/>
+<rect x="1160" y="380" width="282" height="82" rx="18" fill="#eee9df" stroke="#b9ad9c" stroke-width="1"/>
+<text x="1183" y="406" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#17201c">Read</text>
+<text x="1183" y="429" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#65746d">
+<tspan x="1183" dy="0">MSA is strongest overall;</tspan>
+<tspan x="1183" dy="17">ProteinMPNN does not</tspan>
+<tspan x="1183" dy="17">rescue catalysis.</tspan>
+</text>
+<text x="58" y="572" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#17201c">Beta-glucosidase</text>
+<text x="58" y="598" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" fill="#65746d">GH1 glycoside hydrolase</text>
+<text x="205" y="572" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ESM-2</text>
+<line x1="315" y1="566" x2="1120" y2="566" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="556" width="515.3" height="20" rx="10" fill="#2c7fb8"/>
+<text x="840.3" y="571" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.448</text>
+<circle cx="824.9" cy="566" r="7" fill="#ffffff" stroke="#2c7fb8" stroke-width="2"/>
+<circle cx="902.1" cy="566" r="7" fill="#1f1f1f"/>
+<text x="205" y="608" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">MSA</text>
+<line x1="315" y1="602" x2="1120" y2="602" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="592" width="645.7" height="20" rx="10" fill="#5a7d38"/>
+<text x="970.7" y="607" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.561</text>
+<circle cx="957.2" cy="602" r="7" fill="#ffffff" stroke="#5a7d38" stroke-width="2"/>
+<circle cx="821.6" cy="602" r="7" fill="#1f1f1f"/>
+<text x="205" y="644" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#65746d">ProteinMPNN</text>
+<line x1="315" y1="638" x2="1120" y2="638" stroke="#b9ad9c" stroke-width="1" opacity="0.45"/>
+<rect x="315" y="628" width="416.0" height="20" rx="10" fill="#b55b32"/>
+<text x="741.0" y="643" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#17201c">0.362</text>
+<circle cx="725.7" cy="638" r="7" fill="#ffffff" stroke="#b55b32" stroke-width="2"/>
+<circle cx="1046.8" cy="638" r="7" fill="#1f1f1f"/>
+<rect x="1160" y="548" width="282" height="82" rx="18" fill="#eee9df" stroke="#b9ad9c" stroke-width="1"/>
+<text x="1183" y="574" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#17201c">Read</text>
+<text x="1183" y="597" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#65746d">
+<tspan x="1183" dy="0">High exact-site score,</tspan>
+<tspan x="1183" dy="17">but n is tiny and the</tspan>
+<tspan x="1183" dy="17">broader shell is weak.</tspan>
+</text>
+<rect x="58" y="805" width="1384" height="42" rx="16" fill="#e7eee9" stroke="#b9ad9c" stroke-width="1"/>
+<text x="84" y="831" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#17201c">Takeaway</text>
+<text x="170" y="831" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" fill="#17201c">Global fitness ranking and mechanism-local behavior can diverge across model families.</text>
+</svg>
